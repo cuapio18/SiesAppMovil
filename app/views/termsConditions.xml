@@ -1,0 +1,572 @@
+<Alloy>
+	<Window id="winTermsConditions" class="container">
+		
+		<AlertDialog id="alertDialogTermsCond" title="Confirmar compra" message="Introduce tu contraseña para confirmar tu compra." cancel="1">
+			
+			<ButtonNames>
+				<ButtonName>Confirmar</ButtonName>
+				<ButtonName>Cancelar</ButtonName>
+				<!--<ButtonName platform="android">android</ButtonName>-->
+			</ButtonNames>
+			
+			<View layout="vertical" platform="android">
+				<!--<ImageView id="avImage" image="http://www.solucoesindustriais.com.br/images/produtos/imagens_10042/p_transportadores-de-correntes-plasticas-12.jpg" height="40dp" width="40dp"/>
+				<Label id="avLabel">custom view label</Label>-->
+				<!--<View width="Ti.UI.FILL" height="Ti.UI.SIZE" top="10" bottom="10">
+					<Label left="25" right="25">Contraseña</Label>
+				</View>-->
+				<TextField id="tfPass" hintText="********" width="Ti.UI.FILL" height="Ti.UI.SIZE" passwordMask="true" left="25" right="25"></TextField>
+			</View>
+			
+		</AlertDialog>
+		
+		<ScrollView id="scrollviewTermsConditions">
+			
+			<View class="section">
+				
+				<Label class="title_section">CONDICIONES DE VENTA:</Label>
+				
+				<View class="subsection">
+					<View class="section_left">
+						<Label class="label_left text_bold">•</Label>
+					</View>
+					<View class="section_right">
+						<Label class="label_right text_bold">50 % de anticipo de avance de obra.</Label>
+					</View>
+				</View>
+				
+				<View class="subsection">
+					<View class="section_left">
+						<Label class="label_left text_bold">•</Label>
+					</View>
+					<View class="section_right">
+						<Label class="label_right text_bold">50 % contra documentos de embarque.</Label>
+					</View>
+				</View>
+				
+				<View class="subsection">
+					<View class="section_left">
+						<Label class="label_left text_bold">•</Label>
+					</View>
+					<View class="section_right">
+						<Label class="label_right">
+							Vigencia de la oferta: 30 Días calendario, a partir de la fecha de la cotización.
+						</Label>
+					</View>
+				</View>
+				
+				<View class="subsection">
+					<View class="section_left">
+						<Label class="label_left text_bold">•</Label>
+					</View>
+					<View class="section_right">
+						<Label class="label_right">
+							El importe de esta cotización debe ser cubierto en moneda nacional.
+						</Label>
+					</View>
+				</View>
+				
+				<View class="subsection">
+					<View class="section_left">
+						<Label class="label_left text_bold">•</Label>
+					</View>
+					<View class="section_right">
+						<Label class="label_right">
+							Las condiciones generales de compra-venta a que está sujeto el desarrollo del equipo se listan en los Términos y Condiciones de Venta anexo.
+						</Label>
+					</View>
+				</View>
+				
+			</View>
+			
+			<View class="section" layout="horizontal">
+				<View class="subsection">
+					<View class="section_left" width="13%">
+						<Label class="label_left text_bold">Nota:</Label>
+					</View>
+					<View class="section_right" width="87%">
+						<Label class="label_right"> Agradeceremos tomar nota del siguiente número de cuenta para depósitos ó transferencias electrónicas:</Label>
+					</View>
+				</View>
+			</View>
+			
+			<View class="section" borderColor="#ccc">
+				
+				<View width="Ti.UI.FILL" height="Ti.UI.SIZE" top="10" bottom="20">
+					<Label>DEPOSITOS EN MONEDA NACIONAL</Label>
+				</View>
+				
+				<View class="subsection">
+					<View class="section_left" width="40%">
+						<Label class="label_left" left="10">BENEFICIARIO:</Label>
+					</View>
+					<View class="section_right" width="60%">
+						<Label class="label_right" right="10">SOCIEDAD INDUSTRIAL EQUIPOS Y SERVICIOS, S.A. DE C.V.</Label>
+					</View>
+				</View>
+				
+				<View class="subsection">
+					<View class="section_left" width="40%">
+						<Label class="label_left" left="10">BANCO:</Label>
+					</View>
+					<View class="section_right" width="60%">
+						<Label class="label_right" right="10">BBVA BANCOMER, S.A.</Label>
+					</View>
+				</View>
+				
+				<View class="subsection">
+					<View class="section_left" width="40%">
+						<Label class="label_left" left="10">NO. DE CUENTA</Label>
+					</View>
+					<View class="section_right" width="60%">
+						<Label class="label_right" right="10">012 180 00132610817 9 (INCLUYE CLAVE INTERBANCARIA)</Label>
+					</View>
+				</View>
+				
+				<View class="subsection">
+					<View class="section_left" width="40%">
+						<Label class="label_left" left="10">NO. DE CUENTA</Label>
+					</View>
+					<View class="section_right" width="60%">
+						<Label class="label_right" right="10">00132610817</Label>
+					</View>
+				</View>
+				
+				<View class="subsection">
+					<View class="section_left" width="40%">
+						<Label class="label_left" left="10">SUCURSAL:</Label>
+					</View>
+					<View class="section_right" width="60%">
+						<Label class="label_right" right="10">1825</Label>
+					</View>
+				</View>
+				
+				<View class="subsection" bottom="10">
+					<View class="section_left" width="40%">
+						<Label class="label_left" left="10">PLAZA:</Label>
+					</View>
+					<View class="section_right" width="60%">
+						<Label class="label_right" right="10">CIUDAD DE MEXICO</Label>
+					</View>
+				</View>
+				
+			</View>
+			
+			<View class="section">
+				<Label class="text_bold">TÉRMINOS Y CONDICIONES DE VENTA</Label>
+			</View>
+		
+			<View class="section">
+				<Label>
+				Sociedad Industrial Equipos y Servicios, S. A. de C. V. (SIES) establece y el CLIENTE (COMPRADOR), acepta, las condiciones comerciales aquí anunciadas, las cuales son aplicables a todos los presupuestos presentados y son vigentes durante todo el proceso de la negociación y hasta la liquidación del pago total por los productos o servicios contratados, sin que puedan ser modificadas, salvo convenio escrito aceptado por ambas partes.
+				</Label>
+			</View>
+			
+			<View class="section">
+				
+				<Label class="title_section">1. VIGENCIA DE PRECIOS</Label>
+				
+				<View class="subsection">
+					<View class="section_left">
+						<Label class="label_left">1.1.</Label>
+					</View>
+					<View class="section_right">
+						<Label class="label_right">Los precios ofertados no incluyen el IVA, el cual se mostrará en la factura como un cargo independiente.</Label>
+					</View>
+				</View>
+				
+				<View class="subsection">
+					<View class="section_left">
+						<Label>1.2.</Label>
+					</View>
+					<View class="section_right">
+						<Label>Los precios cotizados son expresados en la moneda que se menciona en la propuesta motivo de este convenio y tienen una vigencia de 30 días a partir de la fecha de la cotización.</Label>
+					</View>
+				</View>
+				
+				<View class="subsection">
+					<View class="section_left">
+						<Label>1.3.</Label>
+					</View>
+					<View class="section_right">
+						<Label>Una vez transcurrido el plazo de vigencia, el COMPRADOR deberá solicitar la confirmación de precios y de tiempo de entrega</Label>
+					</View>
+				</View>
+				
+				<View class="subsection">
+					<View class="section_left">
+						<Label>1.4.</Label>
+					</View>
+					<View class="section_right">
+						<Label>Todos los precios estipulados en nuestra propuesta están sujetos a cambios por causas ajenas a SIES y los ajustes que ocurran, en caso de ocurrir deberán ser comprobados a satisfacción del COMPRADOR.</Label>
+					</View>
+				</View>
+				
+			</View>
+			
+			<View class="section">
+				
+				<Label class="title_section">2. ENTREGA</Label>
+				
+				<View class="subsection">
+					<View class="section_left">
+						<Label class="label_left">2.1.</Label>
+					</View>
+					<View class="section_right">
+						<Label class="label_right">El o los equipos fabricados se entregan en patio Planta SIES en la Ciudad de México (Ex - works) y no se incluyen maniobras de montaje a transporte, salvo que la propuesta especifique otra cosa.</Label>
+					</View>
+				</View>
+				
+				<View class="subsection">
+					<View class="section_left">
+						<Label class="label_left">2.2.</Label>
+					</View>
+					<View class="section_right">
+						<Label class="label_right">Se incluye empaque o los medios de protección necesarios para evitar deterioros en las condiciones normales de transporte a destino establecido por el COMPRADOR.</Label>
+					</View>
+				</View>
+				
+				<View class="subsection">
+					<View class="section_left">
+						<Label class="label_left">2.3.</Label>
+					</View>
+					<View class="section_right">
+						<Label class="label_right">El transporte de o los equipos de Planta SIES a destino y sus riesgos, deberán ser cubiertos por el COMPRADOR.</Label>
+					</View>
+				</View>
+				
+				<View class="subsection">
+					<View class="section_left">
+						<Label class="label_left">2.4.</Label>
+					</View>
+					<View class="section_right">
+						<Label class="label_right">El plazo de entrega ofrecido en la propuesta esta sujeto a la carga de trabajo en el área de Producción de SIES al momento de cerrar el pedido quién confirmará la fecha de entrega.</Label>
+					</View>
+				</View>
+				
+				<View class="subsection">
+					<View class="section_left">
+						<Label class="label_left">2.5.</Label>
+					</View>
+					<View class="section_right">
+						<Label class="label_right">
+							Para iniciar el proceso de producción de una orden es indispensable la recepción de orden de compra por escrito por parte del COMPRADOR donde acepta la propuesta base de este convenio, acompañado de especificaciones, dibujos autorizados, muestras, ritmos de operación y cualquier información que identifique el producto a manejar y/o el proceso al que se incorpora el equipo, etc.
+						</Label>
+					</View>
+				</View>
+				
+				<View class="subsection">
+					<View class="section_left">
+						<Label class="label_left">2.6.</Label>
+					</View>
+					<View class="section_right">
+						<Label class="label_right">
+							En caso de que el COMPRADOR requiera planos para aprobar la fabricación, el plazo de entrega se considera a partir de la fecha de recepción de los planos aprobados para fabricación.
+						</Label>
+					</View>
+				</View>
+				
+			</View>
+			
+			<View class="section">
+				
+				<Label class="title_section">3. GARANTÍA</Label>
+				
+				<View class="subsection">
+					<View class="section_left">
+						<Label class="label_left">3.1.</Label>
+					</View>
+					<View class="section_right">
+						<Label class="label_right">
+							SIES garantiza el equipo por un período de un año calendario contado a partir de la fecha de entrega del equipo en planta. Si el envío del equipo a destino es postergado por parte del COMPRADOR, la garantía no se prolonga.
+						</Label>
+					</View>
+				</View>
+				
+				<View class="subsection">
+					<View class="section_left">
+						<Label class="label_left">3.2.</Label>
+					</View>
+					<View class="section_right">
+						<Label class="label_right">
+							SIES está obligado a corregir toda falla de funcionamiento proveniente de algún defecto de diseño, materiales defectuosos o la fabricación, con las limitaciones que se mencionan.
+						</Label>
+					</View>
+				</View>
+				
+				<View class="subsection">
+					<View class="section_left">
+						<Label class="label_left">3.3.</Label>
+					</View>
+					<View class="section_right">
+						<Label class="label_right">
+							La garantía ampara la reparación y el reemplazo de materiales y mano de obra defectuosa en la fabricación de equipos fabricados por SIES, que se reporte dentro del plazo de vigencia de la garantía. En materiales eléctricos se transmite la garantía que otorgue el fabricante correspondiente, aportando SIES todo el apoyo para la presentación de algún reclamo.
+						</Label>
+					</View>
+				</View>
+				
+				<View class="subsection">
+					<View class="section_left">
+						<Label class="label_left">3.4.</Label>
+					</View>
+					<View class="section_right">
+						<Label class="label_right">
+							No cubre daños en el equipo, causados por mal manejo por personal ajeno a SIES durante maniobras, transporte, instalación; almacenaje a la intemperie sin protección adecuada, daños causados por descomposiciones químicas, por uso de materiales abrasivos, por falta de limpieza en la operación, uso indebido, negligencia, sabotaje, operación inapropiada, reparaciones realizadas por personal ajeno sin la aprobación previa de SIES o por instalación de partes no manufacturadas o entregadas en el suministro original por SIES.
+						</Label>
+					</View>
+				</View>
+				
+				<View class="subsection">
+					<View class="section_left">
+						<Label class="label_left">3.5.</Label>
+					</View>
+					<View class="section_right">
+						<Label class="label_right">
+							Toda reclamación de garantías, deberá ser presentada por escrito dentro del período de vigencia de la misma, reportando la o las fallas encontradas y deberá asegurar las facilidades a SIES para inspeccionarlas y corregirlas. En caso necesario, el equipo deberá ser regresado a la planta de SIES para su corrección.
+						</Label>
+					</View>
+				</View>
+				
+				<View class="subsection">
+					<View class="section_left">
+						<Label class="label_left">3.6.</Label>
+					</View>
+					<View class="section_right">
+						<Label class="label_right">
+							Si por cualquier motivo SIES no atiende la reclamación de garantía en una semana después de haberla solicitado el COMPRADOR, este tiene el derecho a efectuar las reparaciones por cuenta de SIES, asumiendo SIES el compromiso de pagar al comprador la reparación realizada, previa comprobación de gastos.
+						</Label>
+					</View>
+				</View>
+				
+				<View class="subsection">
+					<View class="section_left">
+						<Label class="label_left">3.7.</Label>
+					</View>
+					<View class="section_right">
+						<Label class="label_right">
+							En el caso de diseños proporcionados por el COMPRADOR, SIES asume la obligación de otorgar garantía en los materiales, en los términos de este documento, pero no aplica al funcionamiento u operación integral del equipo
+						</Label>
+					</View>
+				</View>
+				
+			</View>
+			
+			<View class="section">
+				
+				<Label class="title_section">4. MODIFICACIONES Y CAMBIOS</Label>
+				
+				<View class="subsection">
+					<View class="section_left">
+						<Label class="label_left">4.1.</Label>
+					</View>
+					<View class="section_right">
+						<Label class="label_right">
+							Cualquier modificación o cambio en los datos técnicos de operación o de los planos de fabricación, que afecten la construcción del equipo, modifican el plazo de entrega y pueden modificar el costo del equipo, lo cual será reportado para autorización, previo a la realización de la modificación. Los materiales y componentes utilizados que no se puedan recuperar o cancelar, se cobran al COMPRADOR y se entregaran junto con el equipo.
+						</Label>
+					</View>
+				</View>
+				
+				<View class="subsection">
+					<View class="section_left">
+						<Label class="label_left">4.2.</Label>
+					</View>
+					<View class="section_right">
+						<Label class="label_right">
+							SIES evaluará el efecto en tiempo y costo para realizar los cambios solicitados, para en su caso, notificar los costos correspondientes.
+						</Label>
+					</View>
+				</View>
+				
+			</View>
+			
+			<View class="section">
+				
+				<Label class="title_section">5. VALIDEZ DE TÉRMINOS DE LA OPERACIÓN</Label>
+				
+				<View class="subsection">
+					<View class="section_left">
+						<Label class="label_left">5.1.</Label>
+					</View>
+					<View class="section_right">
+						<Label class="label_right">
+							No son aceptables modificaciones unilaterales de cantidades a suministrar, cambios de precio, modificaciones de especificaciones técnicas o de condiciones de operación convenidas en la propuesta autorizada para fabricación; salvo convenio firmado por las partes, donde queden autorizadas las modificaciones a realizar, los costos implicados y las afectaciones en plazos de entrega.
+						</Label>
+					</View>
+				</View>
+				
+			</View>
+			
+			<View class="section">
+				
+				<Label class="title_section">6. CAMBIOS DE DISEÑO</Label>
+				
+				<View class="subsection">
+					<View class="section_left">
+						<Label class="label_left">6.1.</Label>
+					</View>
+					<View class="section_right">
+						<Label class="label_right">
+							SIES se reserva el derecho de hacer cambios o modificaciones en el diseño o construcción de los equipos fabricados por él, si considera que mejoran sus características de operación, su resistencia o prolongará la vida útil del equipo.
+						</Label>
+					</View>
+				</View>
+				
+			</View>
+			
+			<View class="section">
+				
+				<Label class="title_section">7. PENALIZACIONES Y CARGOS POR DAÑOS CONSECUENCIALES.</Label>
+				
+				<View class="subsection">
+					<View class="section_left">
+						<Label class="label_left">7.1.</Label>
+					</View>
+					<View class="section_right">
+						<Label class="label_right">
+							SIES no acepta por ningún motivo ni bajo ningún concepto, penalizaciones o multas por incumplimiento en fechas de entrega. Tampoco acepta cargos por daños consecuenciales por fallas de los equipos en operación o durante los ajustes de operación.
+						</Label>
+					</View>
+				</View>
+				
+				<View class="subsection">
+					<View class="section_left">
+						<Label class="label_left">7.2.</Label>
+					</View>
+					<View class="section_right">
+						<Label class="label_right">
+							El COMPRADOR renuncia expresamente a exigir al VENDEDOR el pago de daños y perjuicios derivados de problemas operativos y/o entregas extemporáneas en tanto el retraso se deba a caso fortuito, de fuerza mayor, pruebas de equipos de desarrollo, ajustes operativos y de proceso, etc.
+						</Label>
+					</View>
+				</View>
+				
+			</View>
+			
+			<View class="section">
+				
+				<Label class="title_section">8. INSPECCIÓN Y PRUEBAS</Label>
+				
+				<View class="subsection">
+					<View class="section_left">
+						<Label class="label_left">8.1.</Label>
+					</View>
+					<View class="section_right">
+						<Label class="label_right">
+							El COMPRADOR tiene el derecho de realizar inspecciones durante la construcción del equipo, así como verificar la calidad de los materiales y los componentes utilizados en la integración de los mismos mediante visitas concertadas por sus representantes autorizados, ya sea durante el proceso de fabricación o al término de este. Las pruebas que se realizan solo son mecánicas y eléctricas y se realizan en las instalaciones de SIES previo acuerdo de fecha y hora para realizarla.
+						</Label>
+					</View>
+				</View>
+				
+				<View class="subsection">
+					<View class="section_left">
+						<Label class="label_left">8.2.</Label>
+					</View>
+					<View class="section_right">
+						<Label class="label_right">
+							En caso de que, al realizar la prueba, el equipo no cumple con las especificaciones o funcionamiento convenido, SIES deberá solucionar la no conformidad, así como repetir la prueba.
+						</Label>
+					</View>
+				</View>
+				
+				<View class="subsection">
+					<View class="section_left">
+						<Label class="label_left">8.3.</Label>
+					</View>
+					<View class="section_right">
+						<Label class="label_right">
+							En caso de que el COMPRADOR requiera realizar pruebas con producto o con acoplamiento a otros equipos, los gastos generados serán a cargo del COMPRADOR, salvo convenio diferente.
+						</Label>
+					</View>
+				</View>
+				
+				<View class="subsection">
+					<View class="section_left">
+						<Label class="label_left">8.4.</Label>
+					</View>
+					<View class="section_right">
+						<Label class="label_right">
+							Será responsabilidad de El COMPRADOR sin costo para SIES, suministrar los productos, materia prima o materiales necesarios para realizar las pruebas
+						</Label>
+					</View>
+				</View>
+				
+				<View class="subsection">
+					<View class="section_left">
+						<Label class="label_left">8.5.</Label>
+					</View>
+					<View class="section_right">
+						<Label class="label_right">
+							En caso de que las pruebas se realicen fuera de las instalaciones de SIES, los costos y condiciones de la prueba serán negociados independientes a la negociación del equipo.
+						</Label>
+					</View>
+				</View>
+				
+			</View>
+			
+			<View class="section">
+				
+				<Label class="title_section">9. CANCELACIONES</Label>
+				
+				<Label bottom="20">Cuando por algún motivo el comprador decida cancelar la orden de compra y el contrato, aplican las siguientes consideraciones:</Label>
+				
+				<View class="subsection">
+					<View class="section_left">
+						<Label class="label_left">9.1.</Label>
+					</View>
+					<View class="section_right">
+						<Label class="label_right">
+							Cuando el avance del equipo en fabricación tenga un avance del 70 % o más en materiales y construcción, SIES cobrará el monto total del precio convenido.
+						</Label>
+					</View>
+				</View>
+				
+				<View class="subsection">
+					<View class="section_left">
+						<Label class="label_left">9.2.</Label>
+					</View>
+					<View class="section_right">
+						<Label class="label_right">
+							Si el avance en fabricación es menor al 70 %, SIES cobrará al COMPRADOR el equivalente en dinero al porcentaje de avance en la manufactura al momento de la notificación de cancelación.
+						</Label>
+					</View>
+				</View>
+				
+				<View class="subsection">
+					<View class="section_left">
+						<Label class="label_left">9.3.</Label>
+					</View>
+					<View class="section_right">
+						<Label class="label_right">
+							Se repercutirán al comprador los gastos por cancelación o devolución que apliquen nuestros proveedores, así como el tiempo aplicado por personal de SIES en desarrollo de Ingeniería y la mano de obra utilizada al momento de cancelación, independientemente del porcentaje de avance en la fabricación.
+						</Label>
+					</View>
+				</View>
+				
+				<View class="subsection">
+					<View class="section_left">
+						<Label class="label_left">9.4.</Label>
+					</View>
+					<View class="section_right">
+						<Label class="label_right">
+							En caso de cancelación cuando no exista ningún avance por parte de SIES, no existe indemnización reclamada.
+						</Label>
+					</View>
+				</View>
+				
+			</View>
+			
+			<View id="containerAllBtns">
+				
+				<View class="containerBtn">
+					<Button id="btnAcepPurchase" onClick="confirmPurchase">Aceptar</Button>
+				</View>
+				
+				<View class="containerBtn">
+					<Button id="btnCan">Cancelar</Button>
+				</View>
+				
+			</View>
+			
+		</ScrollView>
+		
+	</Window>
+</Alloy>

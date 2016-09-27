@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<resources>
+	<style name="materialTheme" parent="@style/Theme.AppCompat.Light.DarkActionBar">
+		<item name="colorPrimary">#009688</item>
+		<item name="colorPrimaryDark"> #00796b</item>
+		<item name="colorAccent">#ffeb3b</item>
+		<!--<item name="colorControlNormal">#757575</item>
+		<item name="colorControlActivated">#FF6E40</item>
+		<item name="colorControlHighlight">#63627A</item>
+		<item name="colorSwitchThumbNormal">#006e65</item>-->
+		<item name="android:colorButtonNormal">#006e65</item>
+		<!--<item name="android:colorEdgeEffect">#943b4a</item>-->
+	</style>
+</resources>

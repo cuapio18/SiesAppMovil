@@ -1,0 +1,46 @@
+<Alloy>
+	
+	<TabGroup id="tabGroupQuotations">
+		
+		<ActionBar id="actionbarHomeQuotation" title="Sies"></ActionBar>
+		
+		<Menu>
+			<MenuItem title="Buscar" id="searchQuotation"></MenuItem>
+			<MenuItem title="Ajustes" onClick="showSettings"></MenuItem>
+			<MenuItem title="Salir" onClick="logutApp"></MenuItem>
+		</Menu>
+		
+		<Tab id="tabQuotations" title="Cotizaciones">
+			
+			<Window id="winListQuotations">
+				<Require src="quotations"></Require>
+			</Window>
+			
+		</Tab>
+		
+		<Tab id="tabAddQuotation" title="Nueva Cot.">
+			
+			<Require src="conveyors_list"></Require>
+			<!--<Window id="window">
+				<TableView id="tableview">
+					
+		        </TableView>
+				<ActivityIndicator id="activity_indicator" />
+				
+			</Window>-->
+			<!--<Window id="winAddQuotation">-->
+				<!--<Require src="list_static_cell"></Require>-->
+			<!--</Window>-->
+			
+		</Tab>
+		
+		<!--<ActionBar id="actionbarHomeQuotation" title="Sies"></ActionBar>
+		
+		<Menu>
+			<MenuItem title="Ajustes"></MenuItem>
+			<MenuItem title="Salir" onClick="logutApp"></MenuItem>
+		</Menu>-->
+		
+	</TabGroup>
+		
+</Alloy>

@@ -1,0 +1,102 @@
+".container" : {
+  layout: 'vertical',
+  //modal: true,
+  title: 'Términos y Condiciones',
+  //fullscreen: true
+},
+"#scrollviewTermsConditions": {
+	layout: 'vertical',
+	width: Ti.UI.FILL,
+	height: Titanium.UI.SIZE,
+	showVerticalScrollIndicator: true
+},
+/*"Label": {
+	left: 20,
+	right: 20,
+	//textAlign: 'center',
+	bottom: 20,
+	font:{
+      //fontSize :18,
+      //fontWeight : 'bold'
+      //fontFamily: customFont
+   }
+},*/
+"#containerAllBtns": {
+	layout: 'horizontal',
+	width: Ti.UI.FILL,
+	height: Ti.UI.SIZE,
+	top: 10,
+	bottom: 20
+},
+
+".containerBtn": {
+	width: '50%',
+	height: Titanium.UI.SIZE
+},
+"Button": {
+	color: "#fff",
+	width: Titanium.UI.FILL,
+	height: Titanium.UI.SIZE
+},
+"#btnAcepPurchase": {
+	left: 20,
+	right: 10
+},
+"#btnCan": {
+	left: 10,
+	right: 20
+},
+".section":{
+	layout: 'vertical',
+	width: Titanium.UI.FILL,
+	height: Titanium.UI.SIZE,
+	top: 10,
+	bottom: 10,
+	left: 20,
+	right: 20
+	//backgroundColor: 'pink'
+},
+".title_section": {
+	width: Titanium.UI.SIZE,
+	height: Titanium.UI.SIZE,
+	font:{
+      fontWeight : 'bold'
+   },
+   left: 0,
+   bottom: 20
+   //borderColor: 'blue'
+},
+'.subsection': {
+	layout: 'horizontal',
+	width: Titanium.UI.FILL,
+	height: Titanium.UI.SIZE,
+	//backgroundColor: 'red'
+	//borderColor: 'red'
+},
+".section_left": {
+	width: '10%',
+	height: Titanium.UI.SIZE,
+	top: 0,
+	//backgroundColor: 'blue'
+},
+".section_right": {
+	width: '90%',
+	height: Titanium.UI.SIZE,
+	top: 0,
+	//backgroundColor: 'yellow'
+},
+".label_left": {
+	top: 0,
+	left: 0
+},
+".label_right": {
+	top: 0,
+	left: 0,
+	//right: 0,
+	//borderColor: 'gray'
+},
+".text_bold": {
+	font:{
+      fontWeight : 'bold'
+   }
+}

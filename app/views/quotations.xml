@@ -1,0 +1,24 @@
+<Alloy>
+	
+	<!--<Window>-->
+				
+		<ListView id="listViewQuotations" defaultItemTemplate="templateQuotation" >
+			
+			<Templates>
+				<ItemTemplate name="templateQuotation">
+					<View id="container_conveyor" onLongpress="longCB">
+						<ImageView bindId="img_quotation" id="img_quotation" />
+						<Label bindId="title_quotation" id="title_quotation" />
+						<Label bindId="date_quotation" id="date_quotation" />
+						<Label bindId="status_quotation" id="status_quotation" />
+					</View>
+				</ItemTemplate>
+			</Templates>
+			
+			<ListSection name="sectionQuotations"></ListSection>
+			
+		</ListView>
+		
+	<!--</Window>-->
+
+</Alloy>

@@ -1,0 +1,77 @@
+<Alloy>
+	<Window class="container">
+		
+		<ActionBar id="actionbarAddQuotFour" title="Arma tu Cotización"></ActionBar>
+		
+		<Menu>
+			<MenuItem title="Adjuntar archivo" showAsAction="Ti.Android.SHOW_AS_ACTION_ALWAYS" icon="Ti.Android.R.drawable.ic_menu_upload"></MenuItem>
+			<MenuItem title="Agregar" showAsAction="Ti.Android.SHOW_AS_ACTION_ALWAYS" icon="Ti.Android.R.drawable.ic_menu_add"></MenuItem>
+		</Menu>
+		
+		<View id="containerOne">
+			<ScrollView id="scrollviewFullQuotation">
+				
+				<!--<Label id="labelTilteWeaponQuotation">Arma tu Cotización</Label>-->
+				
+				<ListView id="listView" defaultItemTemplate="template">
+			
+					<Templates>
+						<ItemTemplate name="template">
+							<View id="container_model_conv" onLongpress="longModelConv">
+								<Label bindId="modelConveyor" id="modelConveyor" />
+								<Label bindId="quantityConveyor" id="quantityConveyor" />
+								<Label bindId="priceConveyor" id="priceConveyor" />
+								<Label bindId="totalConveyor" id="totalConveyor" />	
+							</View>
+						</ItemTemplate>
+					</Templates>
+		
+					<ListSection>
+						<ListItem modelConveyor:text="Modelo 1" quantityConveyor:text="Cantidad: 1" priceConveyor:text="Precio unit: $1,111.00" totalConveyor:text="Total: $1,111.00"/>
+						<ListItem modelConveyor:text="Modelo 2" quantityConveyor:text="Cantidad: 2" priceConveyor:text="Precio unit: $1,111.00" totalConveyor:text="Total: $1,111.00"/>
+						<ListItem modelConveyor:text="Modelo 3" quantityConveyor:text="Cantidad: 1" priceConveyor:text="Precio unit: $1,111.00" totalConveyor:text="Total: $1,111.00"/>
+						<ListItem modelConveyor:text="Modelo 4" quantityConveyor:text="Cantidad: 2" priceConveyor:text="Precio unit: $1,111.00" totalConveyor:text="Total: $1,111.00"/>
+						<ListItem modelConveyor:text="Modelo 5" quantityConveyor:text="Cantidad: 1" priceConveyor:text="Precio unit: $1,111.00" totalConveyor:text="Total: $1,111.00"/>
+						<ListItem modelConveyor:text="Modelo 6" quantityConveyor:text="Cantidad: 2" priceConveyor:text="Precio unit: $1,111.00" totalConveyor:text="Total: $1,111.00"/>
+						<ListItem modelConveyor:text="Modelo 7" quantityConveyor:text="Cantidad: 1" priceConveyor:text="Precio unit: $1,111.00" totalConveyor:text="Total: $1,111.00"/>
+						<ListItem modelConveyor:text="Modelo 8" quantityConveyor:text="Cantidad: 2" priceConveyor:text="Precio unit: $1,111.00" totalConveyor:text="Total: $1,111.00"/>
+					</ListSection>
+					
+		        </ListView>
+				
+			</ScrollView>
+		</View>
+		
+		<View id="containerTwo">
+			
+			<View class="viewSection">
+				
+				<View class="viewGeneral">
+					<Button id="btnOne" onClick="btnOneQuotation">Comprar</Button>
+				</View>
+				
+				<View class="viewGeneral">
+					<Button id="btnSaveQuot" onClick="saveQuotation">Guardar</Button>
+				</View>
+				
+			</View>
+			
+		</View>
+		
+		<!--<TableView id="table">
+            <TableViewSection id="sectionFruit" headerTitle="Fruit">
+                <TableViewRow title="Apple"/>
+                <TableViewRow title="Bananas"/>
+            </TableViewSection>
+            <TableViewSection id="sectionVeg" headerTitle="Vegetables">
+                <TableViewRow title="Carrots"/>
+                <TableViewRow title="Potatoes"/>
+            </TableViewSection>
+            <TableViewSection id="sectionFish" headerTitle="Fish">
+                <TableViewRow title="Cod"/>
+                <TableViewRow title="Haddock"/>
+            </TableViewSection>
+     </TableView>-->
+		
+	</Window>
+</Alloy>

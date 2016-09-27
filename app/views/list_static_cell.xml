@@ -1,0 +1,11 @@
+<Alloy>
+	<!--<Window id="winAddQuot"></Window>>-->
+	<View id="cell" onLongpress="longAcce">
+		<ImageView id="imageview" />
+		<View class="gradient_view" />
+		<View id="overlay_view">
+			<Label id="title_label" />
+			<Label id="price_accessory"></Label>
+		</View>
+	</View>
+</Alloy>

@@ -1,0 +1,12 @@
+<Alloy>
+	<Window class="container">
+		<!--<Label id="miLabel">Sies App!</Label>-->
+		<ImageView id="imglogotipo"></ImageView>
+		<TextField id="tfuser"></TextField>
+		<TextField id="tfpass"></TextField>
+		<Button id="btnlogin">Ingresar</Button>
+		<Label id="labelrememberuser">Recordar usuario</Label>
+		<Switch id="basicSwitch" value="true"/>
+		<Label id="labelforgetpassword">¿Olvidaste tu contraseña?</Label>
+	</Window>
+</Alloy>

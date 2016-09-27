@@ -1,0 +1,112 @@
+
+/*".container" : {
+  
+}*/
+/*"#actionbar":{
+	color: "fff",
+}*/
+/*".img_quot": {
+	top: "1%",
+	//bottom: "2%",
+	left: "2%",
+	//right: "2%"
+}*/
+
+
+/*"#winAddQuotations": {
+	//navBarHidden: true,
+	//backgroundColor: 'black',
+	//orientationModes: [Ti.UI.PORTRAIT],
+	//clipMode: true
+	//layout: "horizontal"
+}
+
+"#search_icon": {
+	top: 40,
+	left: 20,
+	width: 20,
+	height: 20,
+	//image: '/search_icon.png'
+}
+
+"#lists_container": {
+	//top: 70,
+	left: 0,
+	width: Ti.UI.FILL,
+	height: Ti.UI.FILL,
+	contentWidth: 'auto', 
+	contentHeight: 'auto',
+	scrollType: 'vertical',
+	//opacity: 0
+}
+
+"#cell": {
+	top: 10,
+	left: 10,
+	//bottom: 10,
+	width: Alloy.Globals.layout.lists.cell.width,
+	height: Alloy.Globals.layout.lists.cell.height,
+	backgroundColor: '#b0332a',
+	clipMode: true,
+}
+
+"#imageview": {
+	width: Ti.UI.FILL,
+	height: Ti.UI.FILL,
+	preventDefaultImage: true,
+	touchEnabled: false
+}
+
+"#title_label": {
+	left: 4,
+	right: 4,
+	bottom: 4,
+	width: Ti.UI.FILL,//Ti.UI.FILL,
+	height: Ti.UI.SIZE,//Ti.UI.FILL,
+	font: {
+		fontSize: 22,
+		fontFamily: 'FontAwesome'
+	},
+	textAlign: 'center',
+	color: '#ffffff',
+	touchEnabled: false,
+	backgroundColor: "black",
+	opacity: 0.5
+}
+
+"#overlay_view": {
+	backgroundColor: '#ffffff',
+	opacity: 0,
+	touchEnabled: false
+}
+
+".gradient_view": {
+	top: 0,
+	left: 0,
+	width: Ti.UI.FILL,
+	height: Ti.UI.FILL,
+	backgroundGradient: {
+        type: 'linear',
+        startPoint: { x: '0%', y: '0%' },
+        endPoint: { x: '0%', y: '100%' },
+        colors: [ { color: '#33000000', offset: 0 },
+        		  { color: '#aa000000', offset: 1 } ]
+   },
+   touchEnabled: false
+}
+
+"#tableview": {
+	top: 0,
+	left: 0,
+	width: Ti.UI.FILL,
+	height: Ti.UI.FILL,
+	backgroundColor: 'transparent',
+	pullBackgroundColor: '#b0332a',
+	showVerticalScrollIndicator: false,
+	opacity: 0
+}*/
+"#searchQuotation": {
+	showAsAction: Ti.Android.SHOW_AS_ACTION_ALWAYS,
+	icon: Ti.Android.R.drawable.ic_menu_search
+}
+

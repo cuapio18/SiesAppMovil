@@ -1,0 +1,43 @@
+
+".container" : {
+  layout: 'vertical'
+}
+"#modelConveyor" : {
+    color: 'black',
+    font: { fontFamily:'Arial', fontSize: '20dp', fontWeight:'bold' },
+    left: '20dp', top: 0
+},
+"#quantityConveyor" : {
+    color: 'gray',
+    font: { fontFamily:'Arial', fontSize: '14dp' },
+    left: '20dp', top: 25
+}
+"#priceConveyor" : {
+    //width: '50dp', height: '50dp', left: 0
+	color: 'gray',
+    font: { fontFamily:'Arial', fontSize: '14dp' },
+    left: '20dp', top: 45
+},
+"#totalConveyor": {
+	color: 'gray',
+    font: { fontFamily:'Arial', fontSize: '14dp' },
+    left: '170dp', top: 45
+},
+"ListItem": {
+	top:10,
+	bottom: 10
+},
+"MenuItem": {
+    showAsAction: Ti.Android.SHOW_AS_ACTION_ALWAYS
+},
+"#edit_quotation": {
+	//showAsAction: Ti.Android.SHOW_AS_ACTION_ALWAYS,
+	icon: Ti.Android.R.drawable.ic_menu_edit,
+},
+"#labelTotalQuotation": {
+	top: 300
+},
+"#listView": {
+	width: Titanium.UI.FILL,
+	height: Titanium.UI.SIZE
+}

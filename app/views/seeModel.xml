@@ -1,0 +1,12 @@
+<Alloy>
+	<Window class="container">
+		
+		<ActionBar title="Ver Modelo"></ActionBar>
+		<!--
+		<WebView url="https://www.youtube.com/watch?v=iD2BFG73AWg" enableZoomControls="false" scalesPageToFit="true" scrollsToTop="false" showScrollbars="false"></WebView>
+	-->
+	<!--6<VideoPlayer id="videoPlayer" ns="Ti.Media" top="2" url="https://www.youtube.com/watch?v=iD2BFG73AWg"
+                     height="300" width="300" backgroundColor="red" autoplay="true" />-->
+		<Label>Ver modelo</Label>
+	</Window>
+</Alloy>

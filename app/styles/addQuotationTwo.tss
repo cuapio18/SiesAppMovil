@@ -1,0 +1,55 @@
+".container": {
+	layout: "vertical"
+}
+
+"#containerOne": {
+	//layout: "vertical",
+	width: Ti.UI.FILL,
+	height: "85%",
+	//backgroundColor: "yellow"
+}
+
+"#containerTwo": {
+	width: Ti.UI.FILL,
+	height: "15%",
+	//backgroundColor: "green"
+}
+
+/*"#labelTitleAddQuoTwo": {
+	height: Ti.UI.SIZE,
+	top: 15,
+	bottom: 15,
+	font: {
+		fontSize: 28,
+    	fontFamily: 'HelveticaNeue-Light'
+	},
+	color: '#c0c0c0'
+}*/
+
+"#btnSearchConveyor": {
+	width: Ti.UI.FILL,
+	height: Ti.UI.SIZE,
+	left: 18,
+	right: 18,
+	color: "#fff",
+}
+
+"#lists_container":  {
+	layout: "vertical",
+	width: Ti.UI.FILL,
+	height: Ti.UI.FILL,
+	contentWidth: 'auto', 
+	contentHeight: 'auto',
+	scrollType: 'vertical',
+}
+
+"#containerAccesorios": {
+	//backgroundColor: 'red',
+	width: Ti.UI.FILL,
+	height: Ti.UI.FILL,
+	layout: "horizontal"
+}
+/*"#containerTitleAddQuo": {
+	 width: Ti.UI.FILL,
+	 height: Ti.UI.SIZE
+}*/

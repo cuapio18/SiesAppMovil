@@ -1,0 +1,20 @@
+<Alloy>
+	<Window class="container">
+
+		<ActionBar id="actionbarAddQuotTwo" title="Accesorios"></ActionBar>
+		
+		<View id="containerOne">
+			<ScrollView id="lists_container">
+				<!--<View id="containerTitleAddQuo">
+					<Label id="labelTitleAddQuoTwo">Accesorios</Label>
+				</View>-->
+				<View id="containerAccesorios"></View>
+			</ScrollView>
+		</View>
+		
+		<View id="containerTwo">
+			<Button id="btnSearchConveyor">Buscar</Button>
+		</View>
+
+	</Window>
+</Alloy>

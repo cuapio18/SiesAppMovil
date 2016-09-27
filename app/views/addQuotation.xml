@@ -1,0 +1,94 @@
+<Alloy>
+	<Window class="container">
+		
+		<ActionBar id="actionbarAddQuot" title="Detalles" displayHomeAsUp="true"></ActionBar>
+		
+		<View id="containerOne">
+			
+			<ScrollView id="scrollviewConveyorDetails">
+			
+				<!--<Label id="labelTitleAddQuo">Detalles</Label>-->
+				
+				<View class="viewSection">
+					
+					<View class="viewGeneral">
+						<Label class="label_align_left" id="labelTituloSoporte">Soporte:</Label>
+						<Picker class="picker_align_left" id="pickerSoporte">
+							<PickerRow title="Seleccione"></PickerRow>
+						</Picker>
+						<Label class="label_align_left" id="labelTituloLargo">Largo:</Label>
+						<Picker class="picker_align_left" id="pickerLargo">
+							<PickerRow title="Seleccione"></PickerRow>
+						</Picker>
+					</View>
+					
+					<View class="viewGeneral">
+						<ImageView id="imgTransportador" image="http://cdn2.hubspot.net/hub/190295/file-469091524-jpg/Improve_Manufacturing_Maintenance_Management.jpg?t=1464211488457"></ImageView>
+					</View>		
+					
+				</View>
+				
+				<View class="viewSection">
+					
+					<View class="viewGeneral">
+						<Label class="label_align_left" id="labelTituloAltura">Altura de salida:</Label>
+						<Picker class="picker_align_left" id="pickerAltura">
+							<PickerRow title="Seleccione"></PickerRow>
+						</Picker>
+					</View>
+					
+					<View class="viewGeneral">
+						<Label class="label_align_right" id="labelTituloAlturaEntrada">Altura de entrada:</Label>
+						<Picker class="picker_align_right" id="pickerAlturaEntrada">
+							<PickerRow title="Seleccione"></PickerRow>
+						</Picker>
+					</View>
+					
+				</View>
+				
+				<View class="viewSection">
+					
+					<View class="viewGeneral">
+						<Label class="label_align_left" id="labelTituloAnchoUtil">Ancho util:</Label>
+						<Picker class="picker_align_left" id="pickerAnchoUtil">
+							<PickerRow title="Seleccione"></PickerRow>
+						</Picker>
+					</View>
+					
+					<View class="viewGeneral">
+						<Label class="label_align_right" id="labelTituloMaterialBanda">Material de la banda:</Label>
+						<Picker class="picker_align_right" id="pickerMaterialBanda">
+							<PickerRow title="Seleccione"></PickerRow>
+						</Picker>
+					</View>
+					
+				</View>
+				
+				<View class="viewSection">
+					
+					<View class="viewGeneral">
+						<Label class="label_align_left" id="labelTituloUnidadMotriz">Unidad motriz:</Label>
+						<Picker class="picker_align_left" id="pickerUnidadMotriz">
+							<PickerRow title="Seleccione"></PickerRow>
+						</Picker>
+					</View>
+					
+					<View class="viewGeneral">
+						<Label class="label_align_right" id="labelTituloVelocidad">Velocidad(m/min):</Label>
+						<Picker class="picker_align_right" id="pickerVelocidad">
+							<PickerRow title="Seleccione"></PickerRow>
+						</Picker>
+					</View>
+					
+				</View>
+			
+			</ScrollView>
+			
+		</View>
+		
+		<View id="containerTwo">
+			<Button id="btnSiguientePaso">Siguiente</Button>
+		</View>
+		
+	</Window>
+</Alloy>

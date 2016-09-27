@@ -1,0 +1,31 @@
+<Alloy>
+	<Window class="container">
+
+		<ActionBar id="actionbarDetailQuot" title="Detalle de cotzación"/>
+		<!--<Label>Detalle de cotización</Label>-->
+		<Menu>
+			<MenuItem id="edit_quotation" title="Editar"/>
+		</Menu>
+		
+		<ListView id="listView" defaultItemTemplate="template">
+			
+			<Templates>
+				<ItemTemplate name="template">
+					<Label bindId="modelConveyor" id="modelConveyor" />
+					<Label bindId="quantityConveyor" id="quantityConveyor" />
+					<Label bindId="priceConveyor" id="priceConveyor" />
+					<Label bindId="totalConveyor" id="totalConveyor" />
+				</ItemTemplate>
+			</Templates>
+
+			<ListSection>
+				<ListItem modelConveyor:text="Modelo 1" quantityConveyor:text="Cantidad: 1" priceConveyor:text="Precio unit: $1,111.00" totalConveyor:text="Total: $1,111.00"/>
+				<ListItem modelConveyor:text="Modelo 2" quantityConveyor:text="Cantidad: 2" priceConveyor:text="Precio unit: $1,111.00" totalConveyor:text="Total: $1,111.00"/>
+			</ListSection>
+			
+        </ListView>
+        
+        <Label id="labelTotalQuotation">Total USD + IVA  $111,111.00</Label>
+
+	</Window>
+</Alloy>

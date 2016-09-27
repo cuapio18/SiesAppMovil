@@ -1,0 +1,28 @@
+
+".container": {
+	//backgroundColor: '#66000000',
+	//width: Ti.UI.FILL,
+	//height: Ti.UI.FILL,
+	//opacity: 0
+}
+
+".settings_container": {
+	layout: 'vertical',
+	//width: Alloy.Globals.layout.overlay.width,
+	width: Titanium.UI.FILL,
+	height: Ti.UI.SIZE
+}
+
+".setting_container": {
+	//height: 100
+	height: Ti.UI.SIZE
+}
+
+".setting_label": {
+	//color: '#ffffff',
+	left: 20,
+}
+
+".setting_switch": {
+	right: 20
+}
