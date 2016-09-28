@@ -11,7 +11,7 @@ var tableView_data = [];
 function getAllConveyors() {
 	
 	// URL del servicio de transportadores
-	var url = "http://192.168.1.72:8080/SiesRestApp_23-09-2016/API/conveyors";
+	var url = "http://192.168.100.30:8084/SiesRestApp/API/conveyors";
 	
 	// Cliente para consumir el servicio rest
 	var client = Ti.Network.createHTTPClient({
