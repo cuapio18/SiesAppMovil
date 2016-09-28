@@ -115,7 +115,7 @@ populateMovies(movies);
 // EJECUTAMOS FUNCION TRANSPORTADORES
 // **************************************************
 
-getAllConveyors();
+//getAllConveyors();
 
 // **************************************************
 // FUNCION AGREGAR COTIZACION
