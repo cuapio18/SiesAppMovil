@@ -83,7 +83,7 @@ function fillAccessoriePicker(objOptionsAccessoriePicker) {
 				
 			},
 			"#title_label" : {
-				text: optAcce.description
+				text: optAcce.nameAccessorie
 			},
 			"#price_accessory" : {
 				text : '$ ' + optAcce.price

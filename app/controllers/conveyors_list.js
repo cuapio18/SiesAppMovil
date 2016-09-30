@@ -11,7 +11,7 @@ var tableView_data = [];
 function getAllConveyors() {
 	
 	// URL del servicio de transportadores
-	var url = "http://192.168.100.30:8084/SiesRestApp/API/conveyors";
+	var url = "http://192.168.1.72:8080/SiesRestApp/API/conveyors";
 	
 	// Cliente para consumir el servicio rest
 	var client = Ti.Network.createHTTPClient({
@@ -49,6 +49,37 @@ function getAllConveyors() {
 function fillConveyorsView(objJsonConveyor) {
 	
 	console.log(objJsonConveyor);
+	
+	//tableView_data = [];
+	var tableView_rows = [];
+	
+	// Recorremos el objeto json que recibimos
+	objJsonConveyor.forEach(function (optConv){
+		
+		// Vista estatica
+		var cell = Alloy.createController("conveyors_list_cell");
+		
+		//Modificamos la vista
+		cell.updateViews({
+			"#title_label" : {
+				text : optConv.conveyor
+			}
+		});
+		
+		//tableView_data.push(cell);
+		tableView_rows.push(cell.getView());
+		
+	});
+		$.tableview.setData(tableView_rows);
+
+	//$.activity_indicator.hide();
+
+	var tableview_animation = Ti.UI.createAnimation({
+		opacity : 1,
+		duration : 500,
+		curve : Titanium.UI.ANIMATION_CURVE_EASE_OUT
+	});
+	//$.tableview.animate(tableview_animation);
 	
 }
 
@@ -109,13 +140,13 @@ function populateMovies(movies) {
 // EJECUTAMOS FUNCION TRANSPORTADORES
 // **************************************************
 
-populateMovies(movies);
+//populateMovies(movies);
 
 // **************************************************
 // EJECUTAMOS FUNCION TRANSPORTADORES
 // **************************************************
 
-//getAllConveyors();
+getAllConveyors();
 
 // **************************************************
 // FUNCION AGREGAR COTIZACION

@@ -44,7 +44,7 @@ $.btnSiguientePaso.addEventListener('click', function(){
 function getAllOptionsSupportPicker() {
 
 	//var url    = "http://api.randomuser.me/?nat=es&results=5";
-	var url    = "http://192.168.1.72:8080/SiesRestApp_23-09-2016/API/supports";
+	var url    = "http://192.168.1.72:8080/SiesRestApp/API/supports";
 	
 	var client = Ti.Network.createHTTPClient({
 		// función de llamada cuando los datos de respuesta está disponible
@@ -98,7 +98,7 @@ getAllOptionsSupportPicker();
 function getAllOptionsLongPicker() {
 
 	//var url    = "http://api.randomuser.me/?nat=es&results=8";
-	var url = "http://192.168.1.72:8080/SiesRestApp_23-09-2016/API/longs";
+	var url = "http://192.168.1.72:8080/SiesRestApp/API/longs";
 	
 	var client = Ti.Network.createHTTPClient({
 		// función de llamada cuando los datos de respuesta está disponible
@@ -153,7 +153,7 @@ getAllOptionsLongPicker();
 // Funcion para obtener las opciones para el combo de altura de salida
 function getAllOptionsHeightPicker() {
 
-	var url = "http://192.168.1.72:8080/SiesRestApp_23-09-2016/API/heights";
+	var url = "http://192.168.1.72:8080/SiesRestApp/API/heights";
 	var client = Ti.Network.createHTTPClient({
 		// función de llamada cuando los datos de respuesta está disponible
 		onload : function(e) {
@@ -204,7 +204,7 @@ getAllOptionsHeightPicker();
 // Funcion para obtener las opciones para el combo de altura de entrada
 function getAllOptionsHeightEntryPicker() {
 
-	var url = "http://192.168.1.72:8080/SiesRestApp_23-09-2016/API/heights";
+	var url = "http://192.168.1.72:8080/SiesRestApp/API/heights";
 	var client = Ti.Network.createHTTPClient({
 		// función de llamada cuando los datos de respuesta está disponible
 		onload : function(e) {
@@ -255,7 +255,7 @@ getAllOptionsHeightEntryPicker();
 // Funcion para obtener las opciones para el combo de ancho util
 function getAllOptionsUtilWidthPicker() {
 
-	var url = "http://192.168.1.72:8080/SiesRestApp_23-09-2016/API/widths";
+	var url = "http://192.168.1.72:8080/SiesRestApp/API/widths";
 	var client = Ti.Network.createHTTPClient({
 		// función de llamada cuando los datos de respuesta está disponible
 		onload : function(e) {
@@ -306,7 +306,7 @@ getAllOptionsUtilWidthPicker();
 // Funcion para obtener las opciones para el combo de material de la banda
 function getAllOptionsMaterialBandPicker() {
 
-	var url = "http://192.168.1.72:8080/SiesRestApp_23-09-2016/API/materials-bands";
+	var url = "http://192.168.1.72:8080/SiesRestApp/API/materials-bands";
 	var client = Ti.Network.createHTTPClient({
 		// función de llamada cuando los datos de respuesta está disponible
 		onload : function(e) {
@@ -357,7 +357,7 @@ getAllOptionsMaterialBandPicker();
 // Funcion para obtener las opciones para el combo de unidad motriz
 function getAllOptionsDriveUnitPicker() {
 
-	var url = "http://192.168.1.72:8080/SiesRestApp_23-09-2016/API/drives-units";
+	var url = "http://192.168.1.72:8080/SiesRestApp/API/drives-units";
 	var client = Ti.Network.createHTTPClient({
 		// función de llamada cuando los datos de respuesta está disponible
 		onload : function(e) {
@@ -408,7 +408,7 @@ getAllOptionsDriveUnitPicker();
 // Funcion para obtener las opciones para el combo de velocidad
 function getAllOptionsSpeedPicker() {
 
-	var url = "http://192.168.1.72:8080/SiesRestApp_23-09-2016/API/speeds";
+	var url = "http://192.168.1.72:8080/SiesRestApp/API/speeds";
 	var client = Ti.Network.createHTTPClient({
 		// función de llamada cuando los datos de respuesta está disponible
 		onload : function(e) {
