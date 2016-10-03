@@ -2,7 +2,7 @@
 	layout: "Absolute",
 	top: 0,
 	left: 0,
-	height: Alloy.Globals.layout.list.row.height,
+	//height: Alloy.Globals.layout.list.row.height,
 	backgroundColor: '#000000'
 }
 

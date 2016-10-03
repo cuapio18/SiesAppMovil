@@ -63,6 +63,9 @@ function fillConveyorsView(objJsonConveyor) {
 		cell.updateViews({
 			"#title_label" : {
 				text : optConv.conveyor
+			},
+			"#thumbnail_imageview" : {
+				image : 'http://www.esysautomation.com/data/uploads/Esys%20Pictures/Assembly/Conveyors_MainContent460px.jpg'
 			}
 		});
 		
@@ -74,11 +77,11 @@ function fillConveyorsView(objJsonConveyor) {
 
 	//$.activity_indicator.hide();
 
-	var tableview_animation = Ti.UI.createAnimation({
+	/*var tableview_animation = Ti.UI.createAnimation({
 		opacity : 1,
 		duration : 500,
 		curve : Titanium.UI.ANIMATION_CURVE_EASE_OUT
-	});
+	});*/
 	//$.tableview.animate(tableview_animation);
 	
 }

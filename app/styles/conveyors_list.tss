@@ -1,8 +1,8 @@
 
 "#window": {
 	navBarHidden: true,,
-	orientationModes: [Ti.UI.PORTRAIT],
-	backgroundColor: '#000000'
+	//orientationModes: [Ti.UI.PORTRAIT],
+	//backgroundColor: '#000000'
 }
 
 "#pull_view": {
@@ -14,10 +14,10 @@
 	left: 0,
 	width: Ti.UI.FILL,
 	height: Ti.UI.FILL,
-	backgroundColor: 'transparent',
-	pullBackgroundColor: '#b0332a',
-	showVerticalScrollIndicator: false,
-	opacity: 0
+	//backgroundColor: 'transparent',
+	//pullBackgroundColor: '#b0332a',
+	//showVerticalScrollIndicator: false,
+	//opacity: 0
 }
 "#tableview[platform=ios]": {
 	separatorInsets: {
