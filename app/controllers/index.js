@@ -85,7 +85,85 @@ $.labelforgetpassword.addEventListener('click', function() {
 
 }); 
 
+// CLICK EN EL BOTON RECORDAR USUARIO
+var basicSwitch = $.basicSwitch;
+
+basicSwitch.addEventListener("change", function(e) {
+	
+	// Valor del switch
+	var valueSwitch      = basicSwitch.value;
+	var valorUsuarioSies = $.tfuser.value;
+	
+	// Validamos el valor del switch
+	if( valueSwitch == true ) {
+		
+		Ti.API.info("Recordar usuario encendido.");
+		
+		// Creamos una propiedad en la app con un valor true
+		Ti.App.Properties.setBool("propRememberUser", true);
+		
+		// Creamos propiedad para guardar el valor del usuario
+		//inputUser.value.toString()
+		Ti.App.Properties.setString("propValUserSies", valorUsuarioSies.toString());
+		
+	} else if ( valueSwitch == false ) {
+		
+		Ti.API.info("Reordar usuario apagado.");
+		
+		// Eliminamos la propiedad de la app
+		Ti.App.Properties.removeProperty("propRememberUser");
+		
+		//Eliminamos la propiedad de la app
+		Ti.App.Properties.removeProperty("propValUserSies");
+		
+	}
+	
+	//Ti.API.info("Usuario: " + inputUser.value.toString());
+	//Ti.API.info(Ti.App.Properties.getBool("propRememberUser"));
+	//Ti.API.info(Ti.App.Properties.hasProperty('propRememberUser'));
+	//Ti.API.info(Ti.App.Properties.listProperties());
+	//Ti.API.info('Switch value: ' + basicSwitch.value);
+	
+});
+
+// FUNCION PARA VALIDAR SI EL USUARIO ESTA GUARDADO O NO
+function validateRememberUser()
+{
+	// Asignamos en una variable el valor de la propiedad
+	var propRememberUser = Ti.App.Properties.hasProperty("propRememberUser");
+	
+	Ti.API.info("PROPERTIES: " + Ti.App.Properties.listProperties());
+	
+	// Validamos si existe o no la propiedad en la app
+	if( propRememberUser ) {
+		
+		Ti.API.info("Te recuerdo");
+		Ti.API.info(Ti.App.Properties.getString("propValUserSies"));
+		
+		// Asignamos un valor al input user
+		inputUser.value = Ti.App.Properties.getString("propValUserSies");
+	
+		// Marcamos el switch como true
+		basicSwitch.value = true;
+		
+	} else {
+		
+		Ti.API.info("No te recuerdo");
+		
+		// Borramos el valor al input user
+		inputUser.value = "";
+		
+		// Marcamos el switch como false
+		basicSwitch.value = false;
+		
+	}
+	
+}
+
 // ABRIR VENTANA DE INICIO
 $.index.open();
+
+// EJECUTAMOS FUNCION QUE VALIDA SI EL USUARIO ESTA GUARDADO
+validateRememberUser();
 
 //$.activityIndicator.show();
