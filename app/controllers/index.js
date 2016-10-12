@@ -26,20 +26,36 @@ var inputUser = $.tfuser;
 var inputPass = $.tfpass;
 
 // CLICK EN EL BOTON INICIAR SESION
-$.btnlogin.addEventListener('click', function(){
+$.btnlogin.addEventListener('click', function() {
 	
 	// Validamos si el usuario y contrasena estan vacios
 	if( inputUser.value != '' && inputPass.value != '' ) {
 		
+		// Llamamos a la funcion iniciar sesion
+		logIn(inputUser.value.toString(), inputPass.value.toString());
+		
+		/*
+		// Abrimos la pantalla del activity indcator
 		winActivityIndicator.open();
+		
+		// Evento cuando se abre la ventana
 		winActivityIndicator.addEventListener('open', function(e){
+			
+			// Mostramos el indicador de espera
 			activityIndicator.show();
 			
+			// Esperamos 3 segundos
 			setTimeout(function(){
 				
+				// Llamamos a la funcion recordar usuario
+				//rememberUser();
+				
+				// Llamamos a la funcion iniciar sesion
+				//logIn(inputUser.value.toString(), inputPass.value.toString());
+				
 				// Abrimos la ventana de inicio
-				var winHome = Alloy.createController('home').getView();
-				winHome.open();
+				//var winHome = Alloy.createController('home').getView();
+				//winHome.open();
 				
 				// Cerramos la ventana del activity indicator
 				e.source.close();
@@ -53,7 +69,7 @@ $.btnlogin.addEventListener('click', function(){
 			}, 3000);
 			
 		});
-		
+		*/
 				
 	} else {
 		alert("Se requiere nombre de usuario / contraseña");
@@ -62,6 +78,53 @@ $.btnlogin.addEventListener('click', function(){
 	//activityIndicator.show();
 	
 });
+
+// **************************************************
+// INICIAR SESION
+// **************************************************
+function logIn(userName, password) {
+	
+	// Objeto con los datos a enviar
+	var dataLogin = {
+		"userName" : userName,
+		"password" : password
+	};
+	
+	Ti.API.info(JSON.stringify(dataLogin));
+
+	// URL del servicio de login
+	var url = "http://192.168.1.69:8080/sies-rest/login";
+	
+	// Cliente para consumir el servicio
+	var client = Ti.Network.createHTTPClient({
+		
+		// Función de llamada cuando los datos de respuesta está disponible
+		onload : function(e) {
+			
+			// Respuest del servicio web
+			var responseWS = JSON.parse(this.responseText);
+			
+			Ti.API.info("Response: " + JSON.stringify(responseWS));
+			
+		},
+		// Función llamada cuando se produce un error, incluyendo un tiempo de espera
+		onerror : function(e) {
+			Ti.API.debug(e.error);
+		},
+		timeout : 5000 // Milisegundos
+		
+	});
+	
+	// Preparar la conexion
+	client.open("POST", url);
+	
+	// Establecer la cabecera para el formato JSON correcta
+	client.setRequestHeader("Content-Type", "application/json; charset=utf-8");
+	
+	// Enviamos la solicitud
+	client.send(JSON.stringify(dataLogin));
+	
+}
 
 
 // CLICK EN EL BOTON RECORDAR CONTRASEÑA
@@ -85,13 +148,23 @@ $.labelforgetpassword.addEventListener('click', function() {
 
 }); 
 
-// CLICK EN EL BOTON RECORDAR USUARIO
+// BOTON RECORDAR USURIO
 var basicSwitch = $.basicSwitch;
 
+// CLICK EN EL BOTON RECORDAR USUARIO
 basicSwitch.addEventListener("change", function(e) {
+	
+	// Llamamos a la funcion recordar usuario
+	rememberUser();
+	
+});
+
+// FUNCION PARA RECORDAR EL USUARIO
+function rememberUser() {
 	
 	// Valor del switch
 	var valueSwitch      = basicSwitch.value;
+	// Vlor del campo usurio
 	var valorUsuarioSies = $.tfuser.value;
 	
 	// Validamos el valor del switch
@@ -103,7 +176,6 @@ basicSwitch.addEventListener("change", function(e) {
 		Ti.App.Properties.setBool("propRememberUser", true);
 		
 		// Creamos propiedad para guardar el valor del usuario
-		//inputUser.value.toString()
 		Ti.App.Properties.setString("propValUserSies", valorUsuarioSies.toString());
 		
 	} else if ( valueSwitch == false ) {
@@ -124,7 +196,7 @@ basicSwitch.addEventListener("change", function(e) {
 	//Ti.API.info(Ti.App.Properties.listProperties());
 	//Ti.API.info('Switch value: ' + basicSwitch.value);
 	
-});
+}
 
 // FUNCION PARA VALIDAR SI EL USUARIO ESTA GUARDADO O NO
 function validateRememberUser()

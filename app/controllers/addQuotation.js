@@ -11,7 +11,7 @@ var args = $.args;
 
 var conInp = 0;
 
-$.btnSiguientePaso.addEventListener('click', function(){
+$.btnSiguientePaso.addEventListener('click', function() {
 	
 	// Ventana del paso numero 2 de la cotizacion
 	var winAddQuotationTwo = Alloy.createController('addQuotationTwo').getView();
