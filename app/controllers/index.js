@@ -84,13 +84,19 @@ $.btnlogin.addEventListener('click', function() {
 // **************************************************
 function logIn(userName, password) {
 	
+	// Abrimos la pantalla del activity indcator
+	winActivityIndicator.open();
+	
+	// Mostramos el indicador de espera
+	activityIndicator.show();
+	
 	// Objeto con los datos a enviar
 	var dataLogin = {
 		"userName" : userName,
 		"password" : password
 	};
 	
-	Ti.API.info(JSON.stringify(dataLogin));
+	//Ti.API.info(JSON.stringify(dataLogin));
 
 	// URL del servicio de login
 	var url = "http://192.168.1.69:8080/sies-rest/login";
@@ -101,15 +107,36 @@ function logIn(userName, password) {
 		// Función de llamada cuando los datos de respuesta está disponible
 		onload : function(e) {
 			
-			// Respuest del servicio web
-			var responseWS = JSON.parse(this.responseText);
+			// Esperamos algunos segundos
+			setTimeout(function(){
+				
+				// Cerramos la ventana del activity indicator
+				winActivityIndicator.close();
+				
+				// Ocultamos activity indicator
+				//activityIndicator.hide();
+				
+				// Respuest del servicio web
+				var responseWS = JSON.parse(this.responseText);
 			
-			Ti.API.info("Response: " + JSON.stringify(responseWS));
+				Ti.API.info("Response: " + JSON.stringify(responseWS));
+				
+			}, 9000);
 			
 		},
 		// Función llamada cuando se produce un error, incluyendo un tiempo de espera
 		onerror : function(e) {
-			Ti.API.debug(e.error);
+			
+			// Cerramos la ventana del activity indicator
+			winActivityIndicator.close();
+			
+			// Ocultamos activity indicator
+			//activityIndicator.hide();
+			
+			alert(e.error);
+			
+			Ti.API.debug(e);
+			//Ti.API.info(e.error);
 		},
 		timeout : 5000 // Milisegundos
 		
