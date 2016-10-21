@@ -22,6 +22,9 @@
 Alloy.Globals.PROPERTY_ENABLE_MOTION_ANIMATION = 'PROPERTY_ENABLE_MOTION_ANIMATION'; // Propiedad para habilitar animación de movimiento
 Alloy.Globals.PROPERTY_ENABLE_LIST_ANIMATION   = 'PROPERTY_ENABLE_LIST_ANIMATION'; // Propiedad para habilitar animación de lista
 
+
+Alloy.Globals.PROPERTY_INFO_USER = 'PROPERTY_INFO_USER';
+
 // Conjunto de propiedades predeterminadas
 // Validamos si existen las propiedades almacenadas en la aplicacion
 if (!Ti.App.Properties.hasProperty(Alloy.Globals.PROPERTY_ENABLE_MOTION_ANIMATION)) {

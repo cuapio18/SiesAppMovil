@@ -99,7 +99,7 @@ function logIn(userName, password) {
 	//Ti.API.info(JSON.stringify(dataLogin));
 
 	// URL del servicio de login
-	var url = "http://192.168.1.69:8080/sies-rest/login";
+	var url = "http://192.168.1.88:8080/sies-rest/login";
 	
 	// Cliente para consumir el servicio
 	var client = Ti.Network.createHTTPClient({
@@ -107,21 +107,51 @@ function logIn(userName, password) {
 		// Función de llamada cuando los datos de respuesta está disponible
 		onload : function(e) {
 			
+			// Respuest del servicio web
+			var response = JSON.parse(this.responseText);
+			
+			// Llamamos a la funcion recordar usuario
+			rememberUser();
+			
+			// Guardamos en una variable global la respuesta
+			Alloy.Globals.PROPERTY_INFO_USER = response;
+			
 			// Esperamos algunos segundos
 			setTimeout(function(){
-				
-				// Cerramos la ventana del activity indicator
-				winActivityIndicator.close();
 				
 				// Ocultamos activity indicator
 				//activityIndicator.hide();
 				
 				// Respuest del servicio web
-				var responseWS = JSON.parse(this.responseText);
+				//var responseWS = JSON.parse(this.responseText);
 			
-				Ti.API.info("Response: " + JSON.stringify(responseWS));
+				//Ti.API.info("Response: " + JSON.stringify(response));
+				//Ti.API.info(JSON.stringify(response));
 				
-			}, 9000);
+				Ti.API.info("Propiedad global de usuarios: " + Alloy.Globals.PROPERTY_INFO_USER);
+				Ti.API.info("ID Usuario: " + response.userLogin.id);
+				Ti.API.info("Nombre Usuario: " + response.userLogin.name);
+				Ti.API.info("Estatus: " + response.logeado);
+				
+				// Cerramos la ventana del activity indicator
+				winActivityIndicator.close();
+				
+				// Abrimos la ventana de inicio
+				//var winHome = Alloy.createController('home').getView();
+				//winHome.open();
+				
+				//Quitamos la ventana de login
+				//$.index.remove();
+				
+				// VALIDAMOS LA RESPUESTA DEL SERVICIO
+				if(response.logeado == true) {
+					
+				} else {
+					
+				}
+				
+				
+			}, 3000);
 			
 		},
 		// Función llamada cuando se produce un error, incluyendo un tiempo de espera
