@@ -99,7 +99,7 @@ function logIn(userName, password) {
 	//Ti.API.info(JSON.stringify(dataLogin));
 
 	// URL del servicio de login
-	var url = "http://192.168.1.88:8080/sies-rest/login";
+	var url = "http://192.168.1.69:8080/sies-rest/login";
 	
 	// Cliente para consumir el servicio
 	var client = Ti.Network.createHTTPClient({
@@ -128,7 +128,7 @@ function logIn(userName, password) {
 				//Ti.API.info("Response: " + JSON.stringify(response));
 				//Ti.API.info(JSON.stringify(response));
 				
-				Ti.API.info("Propiedad global de usuarios: " + Alloy.Globals.PROPERTY_INFO_USER);
+				Ti.API.info("Propiedad global de usuarios: " + JSON.stringify(Alloy.Globals.PROPERTY_INFO_USER));
 				Ti.API.info("ID Usuario: " + response.userLogin.id);
 				Ti.API.info("Nombre Usuario: " + response.userLogin.name);
 				Ti.API.info("Estatus: " + response.logeado);
@@ -136,18 +136,17 @@ function logIn(userName, password) {
 				// Cerramos la ventana del activity indicator
 				winActivityIndicator.close();
 				
-				// Abrimos la ventana de inicio
-				//var winHome = Alloy.createController('home').getView();
-				//winHome.open();
-				
-				//Quitamos la ventana de login
-				//$.index.remove();
-				
 				// VALIDAMOS LA RESPUESTA DEL SERVICIO
 				if(response.logeado == true) {
+					Ti.API.info("Usuario logedo correctamente!.");
+					// Abrimos la ventana de inicio
+					var winHome = Alloy.createController('home').getView();
+					winHome.open();
 					
+					//Quitamos la ventana de login
+					//$.index.remove();
 				} else {
-					
+					alert("Usuario o Contraseña incorrectos.");
 				}
 				
 				

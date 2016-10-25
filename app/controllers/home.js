@@ -6,8 +6,9 @@ var args = $.args;
 // *****************************
 function logutApp(e)
 {
+	Ti.API.info("Info del evento: " + e);
 	//alert(e);
-	
+	// Creamos una ventana tipo dialog
 	var dialog = Ti.UI.createAlertDialog({
 		cancel : 1,
 		buttonNames : ['Confirmar', 'Cancelar'],
@@ -17,6 +18,7 @@ function logutApp(e)
 		//canceledOnTouchOutside: true
 	});
 	//dialog.
+	//Al presionar sobre un boton del dialogo
 	dialog.addEventListener('click', function(e){
 		//if (e.index === e.source.cancel)
 		if(e.index === 0) {
@@ -27,6 +29,7 @@ function logutApp(e)
 		};
 	});
 	
+	//Mostramos el dialogo
 	dialog.show();
 	
 	// Cerramos ventana principal
@@ -37,8 +40,10 @@ function logutApp(e)
 // MOSTRAR AJUSTES
 // *****************************
 function showSettings(e) {
+	
 	var winSettings = Alloy.createController('settings').getView();
 	winSettings.open();
+	
 	winSettings.addEventListener('open', function(e){
 		var aBS = winSettings.activity.actionBar;
 		aBS.displayHomeAsUp = true;
@@ -47,6 +52,7 @@ function showSettings(e) {
 			winSettings.close();
 		};
 	});
+	
 }
 
 // *****************************
