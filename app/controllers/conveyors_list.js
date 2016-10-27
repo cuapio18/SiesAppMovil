@@ -11,7 +11,7 @@ var tableView_data = [];
 function getAllConveyors() {
 	
 	// URL del servicio de transportadores
-	var url = "http://192.168.1.89:8080/sies-rest/quotation/typeConveyor";
+	var url = "http://192.168.1.69:8080/sies-rest/quotation/typeConveyor";
 	
 	// Cliente para consumir el servicio rest
 	var client = Ti.Network.createHTTPClient({
@@ -69,11 +69,18 @@ function fillConveyorsView(objJsonConveyor) {
 			}
 		});
 		
+		// Click en algun elemnto de la lista
+		cell.getView().addEventListener("click", function(e) {
+			// Llamamos a la funcion agregar cotizacion
+			addQuotation();				
+		}); 
+		
 		//tableView_data.push(cell);
 		tableView_rows.push(cell.getView());
 		
 	});
-		$.tableview.setData(tableView_rows);
+	
+	$.tableview.setData(tableView_rows);
 
 	//$.activity_indicator.hide();
 
@@ -158,7 +165,7 @@ getAllConveyors();
 function addQuotation() {
 	
 	// VENTANA AGREGAR COTIZACION
-	var winAddQuotation = Alloy.createController('addQuotation').getView();
+	var winAddQuotation = Alloy.createController('addQuotation',{"conveyorID" : 1 ,"conveyorName" : "Sanitario Recto"}).getView();
 	
 	// ABRIMOS VENTANA DE COTIZACIONES
 	winAddQuotation.open();

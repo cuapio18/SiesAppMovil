@@ -125,29 +125,29 @@ function logIn(userName, password) {
 				// Respuest del servicio web
 				//var responseWS = JSON.parse(this.responseText);
 			
-				//Ti.API.info("Response: " + JSON.stringify(response));
+				//Ti.API.info("Respuesta del servicio: " + JSON.stringify(response));
 				//Ti.API.info(JSON.stringify(response));
 				
-				Ti.API.info("Propiedad global de usuarios: " + JSON.stringify(Alloy.Globals.PROPERTY_INFO_USER));
-				Ti.API.info("ID Usuario: " + response.userLogin.id);
-				Ti.API.info("Nombre Usuario: " + response.userLogin.name);
-				Ti.API.info("Estatus: " + response.logeado);
+				//Ti.API.info("Propiedad global de usuarios: " + JSON.stringify(Alloy.Globals.PROPERTY_INFO_USER));
+				//Ti.API.info("ID Usuario: " + response.userLogin.id);
+				//Ti.API.info("Nombre Usuario: " + response.userLogin.name);
+				//Ti.API.info("Estatus: " + response.logeado);
 				
 				// Cerramos la ventana del activity indicator
 				winActivityIndicator.close();
 				
 				// VALIDAMOS LA RESPUESTA DEL SERVICIO
-				if(response.logeado == true) {
-					Ti.API.info("Usuario logedo correctamente!.");
+				//if(response.logeado == true) {
+					//Ti.API.info("Usuario logedo correctamente!.");
 					// Abrimos la ventana de inicio
 					var winHome = Alloy.createController('home').getView();
 					winHome.open();
 					
 					//Quitamos la ventana de login
 					//$.index.remove();
-				} else {
-					alert("Usuario o Contraseña incorrectos.");
-				}
+				//} else {
+				//	alert("Usuario o Contraseña incorrectos.");
+				//}
 				
 				
 			}, 3000);

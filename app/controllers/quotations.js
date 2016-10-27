@@ -25,15 +25,18 @@ listViewQuot.addEventListener('itemclick', function(e) {
 
 // FUNCION QUE OBTIENE LAS COTIZACIONES
 function getAllQuotations(numQuo) {
+	Ti.API.info("Cantidad de elementos: " + numQuo);
+	var url = "https://api.randomuser.me/?nat=es&results=" + parseInt(numQuo);
 	
-	var url = "http://api.randomuser.me/?nat=es&results=" + numQuo;
 	var client = Ti.Network.createHTTPClient({
 		// function called when the response data is available
 		onload : function(e) {
 			//Ti.API.info("Received text: " + this.responseText);
 			//alert('success');
+			var responseWS = JSON.parse(this.responseText);
+			Ti.API.info("ResponseWSQuotations: " + this.responseText);
 			// FUNCION QUE GENERA LA LISTA DE COTIZACIONES
-			createListAllQuotations(JSON.parse(this.responseText).results);
+			createListAllQuotations(responseWS.results);
 		},
 		// function called when an error occurs, including a timeout
 		onerror : function(e) {
@@ -44,6 +47,10 @@ function getAllQuotations(numQuo) {
 	});
 	// Prepare the connection.
 	client.open("GET", url);
+	
+	// Establecer la cabecera para el formato JSON correcta
+	client.setRequestHeader("Content-Type", "application/json; charset=utf-8");
+	
 	// Send the request.
 	client.send();
 	
@@ -52,7 +59,8 @@ function getAllQuotations(numQuo) {
 // FUNCION QUE GENERA LA LISTA DE COTIZACIONES
 function createListAllQuotations(quotations) {
 	
-	//Ti.API.info(contactos);
+	Ti.API.info("Informacion recibida: " + quotations);
+	
 	var items = [];
 	//var dateQuo = '';
 	//var cont = 1;
@@ -79,9 +87,7 @@ function createListAllQuotations(quotations) {
 }
 
 // FUNCION PARA OBTENER LAS COTIZACIONES
-getAllQuotations(50);
-
-
+getAllQuotations(30);
 
 var dialog;
 var myArray = ['Editar', 'Eliminar', 'Comentarios'];

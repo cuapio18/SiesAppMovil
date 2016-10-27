@@ -33,8 +33,14 @@ $.btnSearchConveyor.addEventListener('click', function() {
 
 function populateListAccessories(cellOffset, yOffset) {
 	
+	// Objeto con los datos a enviar
+	var dataWS = {
+		"model":"TMR900FTP9018SM2-5SP1212"
+		};
+	
 	// URL del servicio de accesorios
-	var url = "http://192.168.1.72:8080/SiesRestApp_23-09-2016/API/accessories";
+	//var url = "http://192.168.1.72:8080/SiesRestApp_23-09-2016/API/accessories";
+	var url = "http://192.168.1.75:8080/sies-rest/quotation/searchModel";
 	
 	// Cliente para consumir el servicio
 	var client = Ti.Network.createHTTPClient({
@@ -46,7 +52,7 @@ function populateListAccessories(cellOffset, yOffset) {
 			var objOptionsAccessoriePicker = JSON.parse(this.responseText);
 			
 			// funcion que genera la vista de accesorios
-			fillAccessoriePicker(objOptionsAccessoriePicker);
+			fillAccessoriePicker(objOptionsAccessoriePicker.acccesorie);
 			
 		},
 		// función de llamada cuando se produce un error, incluyendo un tiempo de espera
@@ -58,9 +64,13 @@ function populateListAccessories(cellOffset, yOffset) {
 	});
 	
 	// Preparar la conexion
-	client.open("GET", url);
+	client.open("POST", url);
+	
+	// Establecer la cabecera para el formato JSON correcta
+	client.setRequestHeader("Content-Type", "application/json; charset=utf-8");
+	
 	// Enviamos la solicitud
-	client.send();
+	client.send(JSON.stringify(dataWS));
 	
 }
 
