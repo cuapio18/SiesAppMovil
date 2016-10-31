@@ -50,7 +50,7 @@
 	right: 10
 	//width: Titanium.UI.FILL
 },
-"#labelTituloLargo": {
+"#labelPickerLong": {
 	top: 20,
 	left: 20
 },

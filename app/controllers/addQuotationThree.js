@@ -40,7 +40,7 @@ function populateListAccessories(cellOffset, yOffset) {
 	
 	// URL del servicio de accesorios
 	//var url = "http://192.168.1.72:8080/SiesRestApp_23-09-2016/API/accessories";
-	var url = "http://192.168.100.4:8080/sies-rest/quotation/searchModel";
+	var url = "http://" + Alloy.Globals.URL_GLOBAL_SIES + "/sies-rest/quotation/searchModel";
 	
 	// Cliente para consumir el servicio
 	var client = Ti.Network.createHTTPClient({

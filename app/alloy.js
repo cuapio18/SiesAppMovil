@@ -22,8 +22,11 @@
 Alloy.Globals.PROPERTY_ENABLE_MOTION_ANIMATION = 'PROPERTY_ENABLE_MOTION_ANIMATION'; // Propiedad para habilitar animación de movimiento
 Alloy.Globals.PROPERTY_ENABLE_LIST_ANIMATION   = 'PROPERTY_ENABLE_LIST_ANIMATION'; // Propiedad para habilitar animación de lista
 
-
+// Variable global para almacenar la informacion del usuario logueado
 Alloy.Globals.PROPERTY_INFO_USER = 'PROPERTY_INFO_USER';
+
+// Variable global para guardar la url
+Alloy.Globals.URL_GLOBAL_SIES = '192.168.1.69:8080';
 
 // Conjunto de propiedades predeterminadas
 // Validamos si existen las propiedades almacenadas en la aplicacion

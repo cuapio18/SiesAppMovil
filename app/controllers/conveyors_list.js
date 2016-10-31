@@ -11,7 +11,7 @@ var tableView_data = [];
 function getAllConveyors() {
 	
 	// URL del servicio de transportadores
-	var url = "http://192.168.100.4:8080/sies-rest/quotation/typeConveyor";
+	var url = "http://" + Alloy.Globals.URL_GLOBAL_SIES + "/sies-rest/quotation/typeConveyor";
 	
 	// Cliente para consumir el servicio rest
 	var client = Ti.Network.createHTTPClient({
