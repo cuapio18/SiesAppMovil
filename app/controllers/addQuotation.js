@@ -5,7 +5,10 @@
 // Arguments passed into this controller can be accessed via the `$.args` object directly or:
 var args = $.args;
 
-Ti.API.info("Argumentos pasads:" + JSON.stringify(args));
+//Ti.API.info("Argumentos pasados:" + JSON.stringify(args.idConveyor));
+
+// ID del transportador
+var idConveyorArg = parseInt(args.idConveyor);
 
 // **************************************************
 // Click en el boton siguiente paso de la cotizacion
@@ -13,7 +16,7 @@ Ti.API.info("Argumentos pasads:" + JSON.stringify(args));
 
 var conInp = 0;
 
-$.btnSiguientePaso.addEventListener('click', function() {
+$.btnSearchConveyor.addEventListener('click', function() {
 	
 	// Ventana del paso numero 2 de la cotizacion
 	var winAddQuotationTwo = Alloy.createController('addQuotationTwo').getView();
@@ -80,7 +83,7 @@ function getAllOptionsPickerGlobal(idConveyor)
 		"id" : parseInt(idConveyor)
 	};
 	
-	var url    = "http://192.168.1.69:8080/sies-rest/quotation/lognGradeAndSerie";
+	var url    = "http://192.168.100.4:8080/sies-rest/quotation/lognGradeAndSerie";
 	
 	var client = Ti.Network.createHTTPClient({
 		// función de llamada cuando los datos de respuesta está disponible
@@ -91,7 +94,6 @@ function getAllOptionsPickerGlobal(idConveyor)
 			var responseWS = JSON.parse(this.responseText);
 			
 			// funcion que llena el combo de soporte
-			//fillSupportPicker(objOptionsSupportPicker);
 			fillSupportPicker(responseWS.support);
 			
 			// funcion que llena el combo de largo
@@ -99,6 +101,9 @@ function getAllOptionsPickerGlobal(idConveyor)
 			
 			// funcion que llena el combo de velocidad
 			fillSpeedPicker(responseWS.speed);
+			
+			// funcion que llena el combo de unidad motriz
+			fillDriveUnitPicker(responseWS.driveUnit);
 			
 		},
 		// función de llamada cuando se produce un error, incluyendo un tiempo de espera
@@ -128,7 +133,8 @@ function fillSupportPicker(objOptionsSupportPicker) {
 		var row = Ti.UI.createPickerRow({
 			//title: optSupport.name.first
 			//title: optSupport.descriptionSupport
-			title : optSupport.support
+			title : optSupport.support,
+			id : optSupport.id,
 		});
 		
 		pickerSoporte.add(row);
@@ -140,7 +146,6 @@ function fillSupportPicker(objOptionsSupportPicker) {
 
 // EJECUTAMOS FUNCION PARA LLENAR COMBO DE SOPORTE
 //getAllOptionsSupportPicker();
-getAllOptionsPickerGlobal(1);
 
 // **************************************************
 // PICKER LARGO
@@ -203,7 +208,7 @@ function fillLongPicker(objOptionsLongPicker) {
 // **************************************************
 
 // Funcion para obtener las opciones para el combo de altura de salida
-function getAllOptionsHeightPicker() {
+/*function getAllOptionsHeightPicker() {
 
 	var url = "http://192.168.1.72:8080/SiesRestApp/API/heights";
 	var client = Ti.Network.createHTTPClient({
@@ -226,7 +231,7 @@ function getAllOptionsHeightPicker() {
 	// Enviar la solicitud.
 	client.send(); 
 
-}
+}*/
 
 // GENERAMOS LAS OPCIONES DEL PICKER ALTURA DE SALIDA
 function fillHeightPicker(objOptionsHeightPicker) {
@@ -254,7 +259,7 @@ function fillHeightPicker(objOptionsHeightPicker) {
 // **************************************************
 
 // Funcion para obtener las opciones para el combo de altura de entrada
-function getAllOptionsHeightEntryPicker() {
+/*function getAllOptionsHeightEntryPicker() {
 
 	var url = "http://192.168.1.72:8080/SiesRestApp/API/heights";
 	var client = Ti.Network.createHTTPClient({
@@ -277,7 +282,7 @@ function getAllOptionsHeightEntryPicker() {
 	// Enviar la solicitud.
 	client.send(); 
 
-}
+}*/
 
 // GENERAMOS LAS OPCIONES DEL PICKER ALTURA DE ENTRADA
 function fillHeightEntryPicker(objOptionsHeightEntryPicker) {
@@ -305,7 +310,7 @@ function fillHeightEntryPicker(objOptionsHeightEntryPicker) {
 // **************************************************
 
 // Funcion para obtener las opciones para el combo de ancho util
-function getAllOptionsUtilWidthPicker() {
+/*function getAllOptionsUtilWidthPicker() {
 
 	var url = "http://192.168.1.72:8080/SiesRestApp/API/widths";
 	var client = Ti.Network.createHTTPClient({
@@ -328,7 +333,7 @@ function getAllOptionsUtilWidthPicker() {
 	// Enviar la solicitud.
 	client.send(); 
 
-}
+}*/
 
 // GENERAMOS LAS OPCIONES DEL PICKER ANCHO UTIL
 function fillUtilWidthPicker(objOptionsUtilWidthPicker) {
@@ -356,7 +361,7 @@ function fillUtilWidthPicker(objOptionsUtilWidthPicker) {
 // **************************************************
 
 // Funcion para obtener las opciones para el combo de material de la banda
-function getAllOptionsMaterialBandPicker() {
+/*function getAllOptionsMaterialBandPicker() {
 
 	var url = "http://192.168.1.72:8080/SiesRestApp/API/materials-bands";
 	var client = Ti.Network.createHTTPClient({
@@ -379,7 +384,7 @@ function getAllOptionsMaterialBandPicker() {
 	// Enviar la solicitud.
 	client.send(); 
 
-}
+}*/
 
 // GENERAMOS LAS OPCIONES DEL PICKER MATERIAL DE LA BANDA
 function fillMaterialBandPicker(objOptionsMaterialBandPicker) {
@@ -407,7 +412,7 @@ function fillMaterialBandPicker(objOptionsMaterialBandPicker) {
 // **************************************************
 
 // Funcion para obtener las opciones para el combo de unidad motriz
-function getAllOptionsDriveUnitPicker() {
+/*function getAllOptionsDriveUnitPicker() {
 
 	var url = "http://192.168.1.72:8080/SiesRestApp/API/drives-units";
 	var client = Ti.Network.createHTTPClient({
@@ -430,7 +435,7 @@ function getAllOptionsDriveUnitPicker() {
 	// Enviar la solicitud.
 	client.send(); 
 
-}
+}*/
 
 // GENERAMOS LAS OPCIONES DEL PICKER UNIDAD MOTRIZ
 function fillDriveUnitPicker(objOptionsDriveUnitPicker) {
@@ -504,6 +509,18 @@ function fillSpeedPicker(objOptionsSpeedPicker) {
 
 // EJECUTAMOS FUNCION PARA LLENAR COMBO DE VELOCIDAD
 //getAllOptionsSpeedPicker();
+
+// Ejecutamos la funcion global para llenar los combos
+getAllOptionsPickerGlobal(idConveyorArg);
+
+
+// FUNCION AL APLICAR UN CAMBIO EN EL PICKER SOPORTE
+
+$.pickerSoporte.addEventListener("change", function(e){
+	var indexItem;
+	//JSON.stringify(e.source.children[0].rows[1])
+	Ti.API.info(JSON.stringify(e));
+});
 
 
 

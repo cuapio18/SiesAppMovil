@@ -99,7 +99,7 @@ function logIn(userName, password) {
 	//Ti.API.info(JSON.stringify(dataLogin));
 
 	// URL del servicio de login
-	var url = "http://192.168.1.69:8080/sies-rest/login";
+	var url = "http://192.168.100.4:8080/sies-rest/login";
 	
 	// Cliente para consumir el servicio
 	var client = Ti.Network.createHTTPClient({

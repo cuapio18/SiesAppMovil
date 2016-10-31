@@ -193,7 +193,7 @@
 	color: '#c0c0c0'
 },*/
 
-"#btnSiguientePaso": {
+"#btnSearchConveyor": {
 	width: Ti.UI.FILL,
 	height: Ti.UI.SIZE,
 	left: 18,

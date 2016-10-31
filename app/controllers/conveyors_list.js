@@ -11,7 +11,7 @@ var tableView_data = [];
 function getAllConveyors() {
 	
 	// URL del servicio de transportadores
-	var url = "http://192.168.1.69:8080/sies-rest/quotation/typeConveyor";
+	var url = "http://192.168.100.4:8080/sies-rest/quotation/typeConveyor";
 	
 	// Cliente para consumir el servicio rest
 	var client = Ti.Network.createHTTPClient({
@@ -66,13 +66,35 @@ function fillConveyorsView(objJsonConveyor) {
 			},
 			"#thumbnail_imageview" : {
 				image : 'http://www.esysautomation.com/data/uploads/Esys%20Pictures/Assembly/Conveyors_MainContent460px.jpg'
+			},
+			"#id_conveyor": {
+				text : optConv.id,
+				attributedString : optConv.id
 			}
 		});
 		
 		// Click en algun elemnto de la lista
 		cell.getView().addEventListener("click", function(e) {
+			
+			// ID del conveyor
+			var idConveyor = JSON.stringify(e.row.children[3].text);
+			
+			//Nombre del transportador
+			var nameConveyor = JSON.stringify(e.row.children[2].text);
+			
+			// Imagen del transportador
+			var imgConveyor = JSON.stringify(e.row.children[0].children[0].image);
+			
+			// Obj con los datos del transportador
+			var objDataConveyor = {
+				"idConveyor" : idConveyor ,
+				"nameConveyor" : nameConveyor,
+				"imgConveyor" : imgConveyor
+			};
+			//JSON.stringify(e.row.children[3].attributedString)
+			//alert(JSON.stringify(e.row.children[3].attributedString));
 			// Llamamos a la funcion agregar cotizacion
-			addQuotation();				
+			addQuotation(objDataConveyor);				
 		}); 
 		
 		//tableView_data.push(cell);
@@ -162,10 +184,12 @@ getAllConveyors();
 // FUNCION AGREGAR COTIZACION
 // **************************************************
 
-function addQuotation() {
+function addQuotation(objDataConveyor) {
+	
+	//alert("Datos del transportador: " + JSON.stringify(objDataConveyor));
 	
 	// VENTANA AGREGAR COTIZACION
-	var winAddQuotation = Alloy.createController('addQuotation',{"conveyorID" : 1 ,"conveyorName" : "Sanitario Recto"}).getView();
+	var winAddQuotation = Alloy.createController('addQuotation', objDataConveyor).getView();
 	
 	// ABRIMOS VENTANA DE COTIZACIONES
 	winAddQuotation.open();

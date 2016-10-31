@@ -1,20 +1,71 @@
 <Alloy>
 	<Window class="container">
-
-		<ActionBar id="actionbarAddQuotTwo" title="Accesorios"></ActionBar>
+		
+		<ActionBar id="actionbarAddQuotTwo" title="Transportador"></ActionBar>
 		
 		<View id="containerOne">
-			<ScrollView id="lists_container">
-				<!--<View id="containerTitleAddQuo">
-					<Label id="labelTitleAddQuoTwo">Accesorios</Label>
-				</View>-->
-				<View id="containerAccesorios"></View>
+			
+			<ScrollView id="scrollviewConveyorDesc">
+			
+			<!--<Label id="labelTitleAddQuoThree">Transportador</Label>-->
+			<Label id="labelSubtitleAddQuo">Modular Recto</Label>
+			
+			<View id="viewContainerImg">
+				<ImageView id="imgConveyor" image="http://img.mecalux.com.mx/external/products/es-MX/transportadores-para-cajas-183047.jpg"></ImageView>
+			</View>
+			
+			<View class="viewContainer">
+				<View class="viewItem">
+					<Label class="align_text_left" id="labelAnchura">Anchura:</Label>
+				</View>
+				<View class="viewItem">
+					<Label class="align_text_right" id="labelAnchuraValor">20 pulgadas</Label>
+				</View>
+			</View>
+			
+			<View class="viewContainer">
+				<View class="viewItem">
+					<Label class="align_text_left" id="labelLongitud">Longitud:</Label>
+				</View>
+				<View class="viewItem">
+					<Label class="align_text_right" id="labelLongitudValor">180 pulgadas</Label>
+				</View>
+			</View>
+			
+			<View class="viewContainer">
+				<View class="viewItem">
+					<Label class="align_text_left" id="labelVelocidad">Velocidad:</Label>
+				</View>
+				<View class="viewItem">
+					<Label class="align_text_right" id="labelVelocidadValor">12</Label>
+				</View>
+			</View>
+			
+			<View class="viewContainer">
+				<View class="viewItem">
+					<Label class="align_text_left" id="labelUnidadMotriz">Unidad motriz:</Label>
+				</View>
+				<View class="viewItem">
+					<Label class="align_text_right" id="labelUnidadMotrizValor">Sumitorno-Baldor</Label>
+				</View>
+			</View>
+			
+			<View class="viewContainer">
+				<View class="viewItem">
+					<Label class="align_text_left" id="labelDenominacionBanda">Denominación de la banda:</Label>
+				</View>
+				<View class="viewItem">
+					<Label class="align_text_right" id="labelDenominacionBandaValor">900 FLAT TOP ACETAL AZUL</Label>
+				</View>
+			</View>
+			
 			</ScrollView>
+			
 		</View>
 		
 		<View id="containerTwo">
-			<Button id="btnSearchConveyor">Buscar</Button>
+			<Button id="btnAcceptConveyor">Aceptar</Button>
 		</View>
-
+		
 	</Window>
 </Alloy>

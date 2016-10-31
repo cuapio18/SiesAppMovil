@@ -53,6 +53,19 @@
 	},
 	color: '#ffffff'
 }
+"#id_conveyor": {
+	bottom: 30,
+	left: 6,
+	right: 6,
+	width: Titanium.UI.SIZE,
+	// height: Titanium.UI.FILL,
+	font: {
+		fontSize: 12,
+    	fontFamily: 'HelveticaNeue-Bold'
+	},
+	color: '#ffffff',
+	//visible: false
+}
 "#title_label[platform=android]": {
 	font: {
 		fontFamily: 'sans-serif',

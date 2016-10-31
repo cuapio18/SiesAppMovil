@@ -14,7 +14,7 @@
 					<View class="viewGeneral">
 						<Label class="label_align_left" id="labelTituloSoporte">Soporte:</Label>
 						<Picker class="picker_align_left" id="pickerSoporte">
-							<PickerRow title="Seleccione"></PickerRow>
+							<PickerRow title="Seleccione" id=""></PickerRow>
 						</Picker>
 						<Label class="label_align_left" id="labelTituloLargo">Largo:</Label>
 						<Picker class="picker_align_left" id="pickerLargo">
@@ -87,7 +87,7 @@
 		</View>
 		
 		<View id="containerTwo">
-			<Button id="btnSiguientePaso">Siguiente</Button>
+			<Button id="btnSearchConveyor">Buscar</Button>
 		</View>
 		
 	</Window>

@@ -5,6 +5,7 @@
 		</ScrollView>
 		<View id="gradient_view" />
 		<Label id="title_label" text="A Title" />
+		<Label id="id_conveyor" text="A Title" attributedString="atributostringSIES"></Label>
 		<View id="overlay_view" />
 		<View id="separator" />
 	</TableViewRow>
