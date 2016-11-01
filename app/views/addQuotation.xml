@@ -1,117 +1,117 @@
 <Alloy>
 	<Window class="container">
-		
+
 		<ActionBar id="actionbarAddQuot" title="Detalles" displayHomeAsUp="true"></ActionBar>
 		
 		<View id="containerOne">
 			
 			<ScrollView id="scrollviewConveyorDetails">
-			
+
 				<!--<Label id="labelTitleAddQuo">Detalles</Label>-->
-				
+
 				<View class="viewSection">
-					
+
 					<View class="viewGeneral">
-						
+
 						<Label class="label_align_left" id="labelPickerLong">Largo (Pulg):</Label>
 						
 						<Picker class="picker_align_left" id="pickerLong">
-							<PickerRow title="Seleccione" id="0"></PickerRow>
+							<PickerRow title="Seleccione" id=""></PickerRow>
 						</Picker>
 						
 						<Label class="label_align_left" id="labelBandSerie">Serie de la banda:</Label>
 						
 						<Picker class="picker_align_left" id="pickerBandSerie">
-							<PickerRow title="Seleccione" id="0"></PickerRow>
+							<PickerRow title="Seleccione" id=""></PickerRow>
 						</Picker>
-						
-					</View>
+
+					</View> <!--/.viewGeneral-->
 					
 					<View class="viewGeneral">
 						<ImageView id="imgTransportador" image="http://cdn2.hubspot.net/hub/190295/file-469091524-jpg/Improve_Manufacturing_Maintenance_Management.jpg?t=1464211488457"></ImageView>
-					</View>		
-					
-				</View>
+					</View> <!--/.viewGeneral-->
+
+				</View> <!--/.viewSection-->
 				
 				<View class="viewSection">
-					
+
 					<View class="viewGeneral">
-						
+
 						<Label class="label_align_left" id="labelBandMaterial">Material de la banda:</Label>
 						
 						<Picker class="picker_align_left" id="pickerBandMaterial">
-							<PickerRow title="Seleccione" id="0"></PickerRow>
+							<PickerRow title="Seleccione" id=""></PickerRow>
 						</Picker>
-						
+
 					</View>
 					
 					<View class="viewGeneral">
-						
+
 						<Label class="label_align_right" id="labelUsefulWidth">Ancho util (Pulg):</Label>
 						
 						<Picker class="picker_align_right" id="pickerUsefulWidth">
-							<PickerRow title="Seleccione" id="0"></PickerRow>
+							<PickerRow title="Seleccione" id=""></PickerRow>
 						</Picker>
-						
+
 					</View>
-					
-				</View>
+
+				</View> <!--/.viewSection-->
 				
 				<View class="viewSection">
-					
+
 					<View class="viewGeneral">
-						
+
 						<Label class="label_align_left" id="labelTypeSupport">Tipo de soporte:</Label>
 						
 						<Picker class="picker_align_left" id="pickerTypeSupport">
-							<PickerRow title="Seleccione" id="0"></PickerRow>
+							<PickerRow title="Seleccione" id=""></PickerRow>
 						</Picker>
-						
+
 					</View>
 					
 					<View class="viewGeneral">
-						
+
 						<Label class="label_align_right" id="labelInputOutputHeight">Altura de entrada y salida (Pulg):</Label>
 						
 						<Picker class="picker_align_right" id="pickerInputOutputHeight">
-							<PickerRow title="Seleccione" id="0"></PickerRow>
+							<PickerRow title="Seleccione" id=""></PickerRow>
 						</Picker>
-						
+
 					</View>
-					
-				</View>
+
+				</View> <!--/.viewSection-->
 				
 				<View class="viewSection">
-					
+
 					<View class="viewGeneral">
-						
+
 						<Label class="label_align_left" id="labelDriveUnit">Unidad motriz:</Label>
 						
 						<Picker class="picker_align_left" id="pickerDriveUnit">
-							<PickerRow title="Seleccione" id="0"></PickerRow>
+							<PickerRow title="Seleccione" id=""></PickerRow>
 						</Picker>
-						
-					</View>
+
+					</View> <!--/.viewGeneral-->
 					
 					<View class="viewGeneral">
-						
+
 						<Label class="label_align_right" id="labelSpeed">Velocidad(m/min):</Label>
 						
 						<Picker class="picker_align_right" id="pickerSpeed">
-							<PickerRow title="Seleccione" id="0"></PickerRow>
+							<PickerRow title="Seleccione" id=""></PickerRow>
 						</Picker>
-						
-					</View>
-					
-				</View>
+
+					</View> <!--/.viewGeneral-->
+
+				</View> <!--/.viewSection-->
+
+			</ScrollView> <!--/#scrollviewConveyorDetails-->
 			
-			</ScrollView>
-			
-		</View>
+		</View> <!--/#containerOne-->
 		
 		<View id="containerTwo">
 			<Button id="btnSearchConveyor">Buscar</Button>
-		</View>
-		
+		</View> <!--/#containerTwo-->
+
 	</Window>
 </Alloy>

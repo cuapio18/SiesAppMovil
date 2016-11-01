@@ -40,39 +40,41 @@ $.btnSearchConveyor.addEventListener('click', function() {
 });
 
 // **************************************************
-// PICKER SOPORTE
+// FUNCIONES AL HACER UN CAMBIO EN LOS PICKERS
 // **************************************************
 
-// Funcion para obtener las opciones para el combo de soporte
-/*function getAllOptionsSupportPicker() {
+// FUNCION AL APLICAR UN CAMBIO EN EL PICKER SOPORTE
 
-	//var url    = "http://api.randomuser.me/?nat=es&results=5";
-	var url    = "http://192.168.1.72:8080/SiesRestApp/API/supports";
+$.pickerTypeSupport.addEventListener("change", function(e) {
 	
-	var client = Ti.Network.createHTTPClient({
-		// función de llamada cuando los datos de respuesta está disponible
-		onload : function(e) {
-			//Ti.API.info("Received text: " + this.responseText);
-			//var objOptionsSupportPicker = JSON.parse(this.responseText).results;
-			var objOptionsSupportPicker = JSON.parse(this.responseText);
-			// funcion que llena el combo de soporte
-			fillSupportPicker(objOptionsSupportPicker);
-		},
-		// función de llamada cuando se produce un error, incluyendo un tiempo de espera
-		onerror : function(e) {
-			//Ti.API.debug(e.error);
-		},
-		timeout : 5000 // en milisegundos
-	});
-	// Preparar la conexión.
-	client.open("GET", url);
-	// Enviar la solicitud.
-	client.send(); 
+	var indexItem;
+	//JSON.stringify(e.source.children[0].rows[1])
+	//Ti.API.info(JSON.stringify(e));
+	alert(JSON.stringify(e.rowIndex));
+	
+});
 
-}*/
+// FUNCION AL APLICAR UN CAMBIO EN EL PICKER SERIE DE LA BANDA
 
-// EJECUTAMOS FUNCION PARA LLENAR COMBO DE SOPORTE
-//getAllOptionsSupportPicker();
+$.pickerBandSerie.addEventListener("change", function(e) {
+	
+	// Indeex del elemento seleccionado
+	var indexItem = parseInt(JSON.stringify(e.rowIndex));
+	
+	// Datos del elemento seleccionado
+	var pickerDataSelected = e.source.children[0].rows[indexItem];
+	// Titulo - pickerDataSelected.title
+	// ID -pickerDataSelected.id
+	
+	getAllOptPickerBandMaterialUtilWidth(parseInt(pickerDataSelected.id));
+	
+	//JSON.stringify(e.source.children[0].rows[1])
+	//Ti.API.info(JSON.stringify(e));
+	//alert(pickerDataSelected.id);
+	//var column = $.pickerSpeed.getColumns()[0];
+	//column.removeRow(column.rowAt(0));
+	
+});
 
 // ***********************************************************
 // PETICION GLOBAL PARA LLENAR TODOS LOS PICKER DINAMICAMENTE
@@ -139,7 +141,7 @@ function getAllOptionsPickerGlobal(idConveyor)
 
 // FUNCION PARA LLENAR DINMICAMENTE EL COMBO DE MATERIAL DE LA BANDA Y ANCHO
 
-/*function getAllOptPickerBandMaterialUtilWidth(idBandSerie)
+function getAllOptPickerBandMaterialUtilWidth(idBandSerie)
 {
 	
 	// Objeto con los datos a enviar
@@ -160,10 +162,10 @@ function getAllOptionsPickerGlobal(idConveyor)
 			var responseWS = JSON.parse(this.responseText);
 			
 			// 1.- funcion que llena el combo de materila de la banda
-			//fillBandMaterialPicker(objOptionsBandMaterialPicker);
+			fillBandMaterialPicker(responseWS.materialBand);
 			
 			// 2.- funcion que llena el combo de ancho util
-			//fillUtilWidthPicker(objOptionsUsefulWidthPicker);
+			fillUtilWidthPicker(responseWS.width);
 			
 		},
 		// función de llamada cuando se produce un error, incluyendo un tiempo de espera
@@ -182,7 +184,7 @@ function getAllOptionsPickerGlobal(idConveyor)
 	// Enviar la solicitud.
 	client.send(JSON.stringify(dataWsFull)); 
 
-}*/
+}
 
 // **************************************************
 // PICKER LARGO
@@ -190,7 +192,8 @@ function getAllOptionsPickerGlobal(idConveyor)
 
 // GENERAMOS LAS OPCIONES DEL PICKER LARGO
 
-function fillLongPicker(objOptionsLongPicker) {
+function fillLongPicker(objOptionsLongPicker)
+{
 	
 	var pickerLong = $.pickerLong;
 	
@@ -216,7 +219,8 @@ function fillLongPicker(objOptionsLongPicker) {
 
 // GENERAMOS LAS OPCIONES DEL PICKER SERIE DE LA BANDA
 
-function fillBandSeriePicker(objOptionsBandSeriePicker) {
+function fillBandSeriePicker(objOptionsBandSeriePicker)
+{
 	
 	var pickerBandSerie = $.pickerBandSerie;
 	
@@ -242,17 +246,68 @@ function fillBandSeriePicker(objOptionsBandSeriePicker) {
 
 // GENERAMOS LAS OPCIONES DEL PICKER MATERIAL DE LA BANDA
 
-function fillBandMaterialPicker(objOptionsBandMaterialPicker) {
-	
+function fillBandMaterialPicker(objOptionsBandMaterialPicker)
+{
+
 	var pickerBandMaterial = $.pickerBandMaterial;
+	
+	//Ti.API.info(JSON.stringify(pickerBandMaterial.getColumns()[0]));
+	
+	/*var columns = pickerBandMaterial.getColumns();
+	
+	//Iterate over picker columns
+	for (var i = 0, length = columns.length; i < length; i++) {
+		//iterate over column rows
+		if (columns[i]) {
+			var len = col.rowCount;
+			for (var index = 0, collength = columns[i].length; index < collength; index++) {
+				//remove rows[index] of columns[it]
+				columns[i].removeRow(columns[it].rows[index]);
+			}
+		}
+	}*/
+	
+	// Preguntamos si existen columnas en el combo
+	if (pickerBandMaterial.columns[0]) {
+		// Columnas que hay en el combo
+		var _col = pickerBandMaterial.columns[0];
+		
+		// Cantidas de elementos que hay en el combo
+		var len = _col.rowCount;
+		
+		// Recorremos los elementos del combo
+		for (var x = len - 1; x >= 0; x--) {
+			
+			// Guardamos cada elemento del combo
+			var _row = _col.rows[x];
+			
+			// Eliminamos el elemento
+			_col.removeRow(_row);
+			
+		}
+		
+		//pickerBandMaterial.reloadColumn(_col);
+	}
+	
+	// Creamos una fila por defecto
+	var rowDef = Ti.UI.createPickerRow({
+			id : "",
+			title : "Seleccione"
+	});
+	
+	// Agregamos la fila al combo
+	pickerBandMaterial.add(rowDef);
 	
 	// RECORREMOS EL OBJETO QUE LLEGA
 	objOptionsBandMaterialPicker.forEach(function(optBandMaterial){
 		
+		// Creamos las filas dinamicamente
 		var row = Ti.UI.createPickerRow({
+			id : optBandMaterial.id,
 			title : optBandMaterial.materialBand
 		});
 		
+		// Agregamos las filas al combo
 		pickerBandMaterial.add(row);
 		pickerBandMaterial.selectionIndicator = true;
 		pickerBandMaterial.setSelectedRow(0, 0, false);
@@ -267,7 +322,8 @@ function fillBandMaterialPicker(objOptionsBandMaterialPicker) {
 
 // GENERAMOS LAS OPCIONES DEL PICKER ANCHO UTIL
 
-function fillUtilWidthPicker(objOptionsUsefulWidthPicker) {
+function fillUtilWidthPicker(objOptionsUsefulWidthPicker)
+{
 	
 	var pickerUsefulWidth = $.pickerUsefulWidth;
 	
@@ -275,6 +331,7 @@ function fillUtilWidthPicker(objOptionsUsefulWidthPicker) {
 	objOptionsUsefulWidthPicker.forEach(function(optUsefulWidth){
 		
 		var row = Ti.UI.createPickerRow({
+			id : optUsefulWidth.id,
 			title : optUsefulWidth.measure
 		});
 		
@@ -286,9 +343,14 @@ function fillUtilWidthPicker(objOptionsUsefulWidthPicker) {
 	
 }
 
+// **************************************************
+// PICKER SOPORTE
+// **************************************************
+
 // GENERAMOS LAS OPCIONES DEL PICKER TIPO DE SOPORTE
 
-function fillTypeSupportPicker(objOptionsTypeSupportPicker) {
+function fillTypeSupportPicker(objOptionsTypeSupportPicker)
+{
 	
 	var pickerTypeSupport = $.pickerTypeSupport;
 	
@@ -296,8 +358,6 @@ function fillTypeSupportPicker(objOptionsTypeSupportPicker) {
 	objOptionsTypeSupportPicker.forEach(function(optTypeSupport){
 		
 		var row = Ti.UI.createPickerRow({
-			//title: optSupport.name.first
-			//title: optSupport.descriptionSupport
 			id : optTypeSupport.id,
 			title : optTypeSupport.support
 		});
@@ -316,7 +376,8 @@ function fillTypeSupportPicker(objOptionsTypeSupportPicker) {
 
 // GENERAMOS LAS OPCIONES DEL PICKER ALTURA DE  ENTRADA Y SALIDA
 
-function fillInputOutputHeightPicker(objOptionsInputOutputHeightPicker) {
+function fillInputOutputHeightPicker(objOptionsInputOutputHeightPicker)
+{
 	
 	var pickerInputOutputHeight = $.pickerInputOutputHeight;
 	
@@ -342,9 +403,10 @@ function fillInputOutputHeightPicker(objOptionsInputOutputHeightPicker) {
 
 // GENERAMOS LAS OPCIONES DEL PICKER UNIDAD MOTRIZ
 
-function fillDriveUnitPicker(objOptionsDriveUnitPicker) {
+function fillDriveUnitPicker(objOptionsDriveUnitPicker)
+{
 	
-	var pickerDriveUnit = $.pickerUnidadMotriz;
+	var pickerDriveUnit = $.pickerDriveUnit;
 	
 	// RECORREMOS EL OBJETO QUE LLEGA
 	objOptionsDriveUnitPicker.forEach(function(optDriveUnit){
@@ -368,9 +430,10 @@ function fillDriveUnitPicker(objOptionsDriveUnitPicker) {
 
 // GENERAMOS LAS OPCIONES DEL PICKER VELOCIDAD
 
-function fillSpeedPicker(objOptionsSpeedPicker) {
+function fillSpeedPicker(objOptionsSpeedPicker)
+{
 	
-	var pickerSpeed = $.pickerVelocidad;
+	var pickerSpeed = $.pickerSpeed;
 	
 	// RECORREMOS EL OBJETO QUE LLEGA
 	objOptionsSpeedPicker.forEach(function(optSpeed){
@@ -392,31 +455,3 @@ function fillSpeedPicker(objOptionsSpeedPicker) {
 // EJECUTAMOS LA FUNCION GLOBAL PARA LLENAR LOS COMBOS
 
 getAllOptionsPickerGlobal(idConveyorArg);
-
-// **************************************************
-// FUNCIONES AL HACER UN CAMBIO EN LOS PICKERS
-// **************************************************
-
-// FUNCION AL APLICAR UN CAMBIO EN EL PICKER SOPORTE
-
-$.pickerSoporte.addEventListener("change", function(e) {
-	
-	var indexItem;
-	//JSON.stringify(e.source.children[0].rows[1])
-	Ti.API.info(JSON.stringify(e));
-	
-});
-
-// FUNCION AL APLICAR UN CAMBIO EN EL PICKER SOPORTE
-
-/*$.pickerBandSerie.addEventListener("change", function(e) {
-	
-	var indexItem;
-	//JSON.stringify(e.source.children[0].rows[1])
-	Ti.API.info(JSON.stringify(e));
-	
-});*/
-
-
-
-
