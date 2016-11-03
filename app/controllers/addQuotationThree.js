@@ -1,6 +1,8 @@
 // Arguments passed into this controller can be accessed via the `$.args` object directly or:
 var args = $.args;
 
+Ti.API.info("ACCESORIOS DEL TRANSPORTADOR:" + JSON.stringify(args));
+
 // Click en el boton siguiente paso de la cotizacion
 $.btnAddConveyor.addEventListener('click', function() {
 	
@@ -35,7 +37,7 @@ function populateListAccessories(cellOffset, yOffset) {
 	
 	// Objeto con los datos a enviar
 	var dataWS = {
-		"model":"TMR900FTP9018SM2-5SP1212"
+		"model":"TMR900FTACA4018SW2-5SP1212"
 		};
 	
 	// URL del servicio de accesorios

@@ -8,7 +8,7 @@
 			<ScrollView id="scrollviewConveyorDesc">
 			
 			<!--<Label id="labelTitleAddQuoThree">Transportador</Label>-->
-			<Label id="labelSubtitleAddQuo">Modular Recto</Label>
+			<Label id="labelSubtitleAddQuo"></Label>
 			
 			<View id="viewContainerImg">
 				<ImageView id="imgConveyor" image="http://img.mecalux.com.mx/external/products/es-MX/transportadores-para-cajas-183047.jpg"></ImageView>
@@ -19,7 +19,7 @@
 					<Label class="align_text_left" id="labelAnchura">Anchura:</Label>
 				</View>
 				<View class="viewItem">
-					<Label class="align_text_right" id="labelAnchuraValor">20 pulgadas</Label>
+					<Label class="align_text_right" id="labelAnchuraValor"></Label>
 				</View>
 			</View>
 			
@@ -28,7 +28,7 @@
 					<Label class="align_text_left" id="labelLongitud">Longitud:</Label>
 				</View>
 				<View class="viewItem">
-					<Label class="align_text_right" id="labelLongitudValor">180 pulgadas</Label>
+					<Label class="align_text_right" id="labelLongitudValor"></Label>
 				</View>
 			</View>
 			
@@ -37,7 +37,7 @@
 					<Label class="align_text_left" id="labelVelocidad">Velocidad:</Label>
 				</View>
 				<View class="viewItem">
-					<Label class="align_text_right" id="labelVelocidadValor">12</Label>
+					<Label class="align_text_right" id="labelVelocidadValor"></Label>
 				</View>
 			</View>
 			
@@ -46,7 +46,7 @@
 					<Label class="align_text_left" id="labelUnidadMotriz">Unidad motriz:</Label>
 				</View>
 				<View class="viewItem">
-					<Label class="align_text_right" id="labelUnidadMotrizValor">Sumitorno-Baldor</Label>
+					<Label class="align_text_right" id="labelUnidadMotrizValor"></Label>
 				</View>
 			</View>
 			
@@ -55,7 +55,7 @@
 					<Label class="align_text_left" id="labelDenominacionBanda">Denominación de la banda:</Label>
 				</View>
 				<View class="viewItem">
-					<Label class="align_text_right" id="labelDenominacionBandaValor">900 FLAT TOP ACETAL AZUL</Label>
+					<Label class="align_text_right" id="labelDenominacionBandaValor"></Label>
 				</View>
 			</View>
 			

@@ -16,8 +16,16 @@ var idConveyorArg = parseInt(args.idConveyor);
 
 $.btnSearchConveyor.addEventListener('click', function() {
 	
+	// MODELO DEL TRANSPORTADOR
+	var modelConvey = "TMR900FTACA4018SW2-5SP1212";
+	
+	// OBJ DEL MODELO DEL TRANSPORTADOR 
+	var objModelConveyor = {
+		"model" : modelConvey
+	};
+	
 	// Ventana del paso numero 2 de la cotizacion
-	var winAddQuotationTwo = Alloy.createController('addQuotationTwo').getView();
+	var winAddQuotationTwo = Alloy.createController('addQuotationTwo', objModelConveyor).getView();
 	
 	// Contenedor de campos
 	var containerInput = $.scrollviewConveyorDetails;
@@ -292,7 +300,7 @@ function fillBandMaterialPicker(objOptionsBandMaterialPicker)
 	// Creamos una fila por defecto
 	var rowDef = Ti.UI.createPickerRow({
 			id : "",
-			title : "Seleccione"
+			title : "Seleccione Woow 1"
 	});
 	
 	// Agregamos la fila al combo
@@ -326,6 +334,37 @@ function fillUtilWidthPicker(objOptionsUsefulWidthPicker)
 {
 	
 	var pickerUsefulWidth = $.pickerUsefulWidth;
+	
+	// Preguntamos si existen columnas en el combo
+	if (pickerUsefulWidth.columns[0]) {
+		// Columnas que hay en el combo
+		var _col = pickerUsefulWidth.columns[0];
+		
+		// Cantidas de elementos que hay en el combo
+		var len = _col.rowCount;
+		
+		// Recorremos los elementos del combo
+		for (var x = len - 1; x >= 0; x--) {
+			
+			// Guardamos cada elemento del combo
+			var _row = _col.rows[x];
+			
+			// Eliminamos el elemento
+			_col.removeRow(_row);
+			
+		}
+		
+		//pickerBandMaterial.reloadColumn(_col);
+	}
+	
+	// Creamos una fila por defecto
+	var rowDef = Ti.UI.createPickerRow({
+			id : "",
+			title : "Seleccione Woow 2"
+	});
+	
+	// Agregamos la fila al combo
+	pickerUsefulWidth.add(rowDef);
 	
 	// RECORREMOS EL OBJETO QUE LLEGA
 	objOptionsUsefulWidthPicker.forEach(function(optUsefulWidth){

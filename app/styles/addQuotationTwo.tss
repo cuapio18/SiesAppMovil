@@ -52,7 +52,7 @@
 
 "#viewContainerImg": {
 	width: Ti.UI.FILL,
-	height: 150,//Ti.UI.SIZE,
+	height: 200,//Ti.UI.SIZE,
 	top: 10,
 	bottom: 10,
 	//backgroundColor: "red"
@@ -60,7 +60,9 @@
 
 "#imgConveyor": {
 	height: Titanium.UI.FILL,
-	width: 150
+	width: Ti.UI.FILL,//150
+	left: 20,
+	right: 20
 },
 
 ".align_text_left": {
@@ -70,7 +72,8 @@
 
 ".align_text_right": {
 	top: 0,
-	left: 0
+	left: 0,
+	right: 20
 },
 
 "#btnAcceptConveyor": {
