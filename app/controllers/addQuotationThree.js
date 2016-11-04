@@ -3,6 +3,14 @@ var args = $.args;
 
 Ti.API.info("ACCESORIOS DEL TRANSPORTADOR:" + JSON.stringify(args));
 
+// ACCESORIOS
+
+var objAccesoriesConveyor = args;
+
+// EJECUTAMOS FUNCION PARA CREAR LA VISTA DE ACCESORIOS
+
+fillAccessoriePicker(objAccesoriesConveyor);
+
 // Click en el boton siguiente paso de la cotizacion
 $.btnAddConveyor.addEventListener('click', function() {
 	
@@ -33,7 +41,7 @@ $.btnAddConveyor.addEventListener('click', function() {
 // FUNCION PARA GENERAR LOS ACCESORIOS DE LOS TRASNPORTADORES
 // **************************************************
 
-function populateListAccessories(cellOffset, yOffset) {
+/*function populateListAccessories(cellOffset, yOffset) {
 	
 	// Objeto con los datos a enviar
 	var dataWS = {
@@ -74,7 +82,7 @@ function populateListAccessories(cellOffset, yOffset) {
 	// Enviamos la solicitud
 	client.send(JSON.stringify(dataWS));
 	
-}
+}*/
 
 // FUNCION PARA GENERAR LA VISTA DE ACCESORIOS
 function fillAccessoriePicker(objOptionsAccessoriePicker) {
@@ -158,7 +166,7 @@ function fillAccessoriePicker(objOptionsAccessoriePicker) {
 	
 }
 
-function populateLists(lists, type, cellOffset, yOffset) {
+/*function populateLists(lists, type, cellOffset, yOffset) {
 	//lists.length
 	for (var i=0, num_lists=15; i<num_lists; i++) {
 
@@ -271,10 +279,10 @@ function populateLists(lists, type, cellOffset, yOffset) {
 		//}
 		//$.lists_container.contentHeight = contentHeight;
 	}
-}
+}*/
 
-var cellOffset = (OS_IOS) ? 20 : 0;
+//var cellOffset = (OS_IOS) ? 20 : 0;
 //var list = [];
 
 //populateLists(list, 'list', 0, cellOffset + Alloy.Globals.layout.lists.cell.height + 20);
-populateListAccessories(0, cellOffset + Alloy.Globals.layout.lists.cell.height + 20);
+//populateListAccessories(0, cellOffset + Alloy.Globals.layout.lists.cell.height + 20);

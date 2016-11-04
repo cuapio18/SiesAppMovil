@@ -5,10 +5,27 @@
 // Arguments passed into this controller can be accessed via the `$.args` object directly or:
 var args = $.args;
 
-//Ti.API.info("Argumentos pasados:" + JSON.stringify(args.idConveyor));
+Ti.API.info("Argumentos pasados:" + JSON.stringify(args));
 
 // ID del transportador
-var idConveyorArg = parseInt(args.idConveyor);
+var idConveyorArg    = parseInt(args.idConveyor);
+
+// Clave corta del transportador
+var keyShortConveyor = args.keyShort;
+
+Ti.API.info("KEY SHORT: " + keyShortConveyor);
+
+// VARIABLES CON LOS VALORES DE LOS PICKER
+
+// Largo
+/*var valuePickerLong      = "";
+var valuePickerBandSerie = "";
+var valueBandMaterial    = "";
+var valueUtilWidth      = "";
+var valueTypeSupport = "";
+var valueInputOutputHeight = "";
+var valueDriveUnit = "";
+var valueSpeed = "";*/
 
 // **************************************************
 // Click en el boton siguiente paso de la cotizacion
@@ -16,8 +33,44 @@ var idConveyorArg = parseInt(args.idConveyor);
 
 $.btnSearchConveyor.addEventListener('click', function() {
 	
+	// Asignamos un valor a largo
+	var valPickerLong        = $.pickerLong.getSelectedRow(0).keyshort;
+	
+	// Asignamos valor a serie de la banda
+	var valPickerBandSerie   = $.pickerBandSerie.getSelectedRow(0).keyshort;
+	
+	// Asignamos valor a material de la banda
+	var valBandMaterial      = String($.pickerBandMaterial.getSelectedRow(0).keyshort);
+	
+	// Asignamos valor al ancho util
+	var valUtilWidth         = $.pickerUsefulWidth.getSelectedRow(0).keyshort;
+	
+	// Asignmos valor a tipo de soporte
+	var valTypeSupport       = $.pickerTypeSupport.getSelectedRow(0).keyshort;
+	
+	// Asignnamos valor a altura de entrada y salida
+	var valInputOutputHeight = $.pickerInputOutputHeight.getSelectedRow(0).keyshort;
+	
+	// Asignamos valor a unidad motriz
+	var valDriveUnit         = $.pickerDriveUnit.getSelectedRow(0).keyshort;
+	
+	// Asignamos valor a la velocidad
+	var valSpeed             = $.pickerSpeed.getSelectedRow(0).keyshort;
+	
 	// MODELO DEL TRANSPORTADOR
-	var modelConvey = "TMR900FTACA4018SW2-5SP1212";
+	//var modelConvey    = keyShortConveyor + valPickerLong + valPickerBandSerie + valBandMaterial + valUtilWidth + valTypeSupport + valInputOutputHeight + valDriveUnit + valSpeed;
+	var modelConveyor = "TMR900FTACA4018SW2-5SP1212";
+	
+	Ti.API.info("LARGO: " + valPickerLong);
+	Ti.API.info("SERIE DE LA BANDA: " + valPickerBandSerie);
+	Ti.API.info("MATERIAL DE LA BANDA: " + valBandMaterial);
+	Ti.API.info("ANCHO UTIL: " + valUtilWidth);
+	Ti.API.info("TIPO DE SOPORTE: " + valTypeSupport);
+	Ti.API.info("ALTURA DE ENTRADA Y SALIDA: " + valInputOutputHeight);
+	Ti.API.info("UNIDAD MOTRIZ: " + valDriveUnit);
+	Ti.API.info("VELOCIDAD: " + valSpeed);
+	
+	Ti.API.info("MODELO: " + modelConvey);
 	
 	// OBJ DEL MODELO DEL TRANSPORTADOR 
 	var objModelConveyor = {
@@ -33,7 +86,7 @@ $.btnSearchConveyor.addEventListener('click', function() {
 	//alert(containerInput.getChildren());
 	
 	// Abrir ventana
-	winAddQuotationTwo.open();
+	//winAddQuotationTwo.open();
 	
 	// CLICK EN EL BOTON REGRESAR
 	winAddQuotationTwo.addEventListener("open", function(evt) {
@@ -51,14 +104,64 @@ $.btnSearchConveyor.addEventListener('click', function() {
 // FUNCIONES AL HACER UN CAMBIO EN LOS PICKERS
 // **************************************************
 
+// FUNCION AL APLICAR UN CAMBIO EN EL PICKER LARGO
+
+/*$.pickerLong.addEventListener("change", function(e) {
+	
+	// index del elemento seleccionado
+	var indexItem               = parseInt(e.rowIndex);
+	
+	// Datos del elemento seleccionado
+	var pickerDataSelected = e.source.children[0].rows[indexItem];
+	
+	Ti.API.info("Datos del picker largo: " + JSON.stringify(e));
+	
+	Ti.API.info("Datos del picker largo 2: " + JSON.stringify(pickerDataSelected));
+	
+});*/
+
 // FUNCION AL APLICAR UN CAMBIO EN EL PICKER SOPORTE
 
 $.pickerTypeSupport.addEventListener("change", function(e) {
 	
-	var indexItem;
+	// index del elemento seleccionado
+	var indexItem               = parseInt(e.rowIndex);
+	
+	// Label
+	var labelInputOutputHeightSH  = $.labelInputOutputHeight;
+	
+	// Picker Altura de entrada y salida
+	var pickerInputOutputHeightSH = $.pickerInputOutputHeight;
+	
 	//JSON.stringify(e.source.children[0].rows[1])
 	//Ti.API.info(JSON.stringify(e));
-	alert(JSON.stringify(e.rowIndex));
+	Ti.API.info("Index Picker Support: " + JSON.stringify(e.rowIndex));
+	
+	// Preguntamos cual elemento se selecciono
+	if (indexItem == 1 || indexItem == 0) {
+		
+		// Mostramos Label
+		labelInputOutputHeightSH.show();
+		
+		// Mostramos picker
+		pickerInputOutputHeightSH.show();
+		
+	} else if (indexItem == 2) {
+		
+		// Ocultamos Label
+		labelInputOutputHeightSH.hide();
+		
+		// Oculatamos picker
+		pickerInputOutputHeightSH.hide();
+		
+		// Determina si se muestra el indicador de selección visual.
+		// Si es true, el indicador de selección está habilitado.
+		pickerInputOutputHeightSH.selectionIndicator = true;
+		
+		// Selecciona la fila de una columna.
+		pickerInputOutputHeightSH.setSelectedRow(0, 0, false);
+		
+	};
 	
 });
 
@@ -209,8 +312,10 @@ function fillLongPicker(objOptionsLongPicker)
 	objOptionsLongPicker.forEach(function(optLong){
 		
 		var row = Ti.UI.createPickerRow({
-			id : optLong.id,
-			title : optLong.description
+			id       : optLong.id,
+			title    : optLong.measure,
+			keyshort : optLong.measure
+			//title : optLong.description
 		});
 		
 		pickerLong.add(row);
@@ -236,8 +341,9 @@ function fillBandSeriePicker(objOptionsBandSeriePicker)
 	objOptionsBandSeriePicker.forEach(function(optBandSerie){
 		
 		var row = Ti.UI.createPickerRow({
-			id: optBandSerie.id,
-			title : optBandSerie.serieBand
+			id       : optBandSerie.id,
+			title    : optBandSerie.serieBand,
+			keyshort : optBandSerie.serieBand
 		});
 		
 		pickerBandSerie.add(row);
@@ -299,8 +405,9 @@ function fillBandMaterialPicker(objOptionsBandMaterialPicker)
 	
 	// Creamos una fila por defecto
 	var rowDef = Ti.UI.createPickerRow({
-			id : "",
-			title : "Seleccione Woow 1"
+			id       : "",
+			title    : "Seleccione Woow 1",
+			keyshort : ""
 	});
 	
 	// Agregamos la fila al combo
@@ -311,8 +418,9 @@ function fillBandMaterialPicker(objOptionsBandMaterialPicker)
 		
 		// Creamos las filas dinamicamente
 		var row = Ti.UI.createPickerRow({
-			id : optBandMaterial.id,
-			title : optBandMaterial.materialBand
+			id       : optBandMaterial.id,
+			title    : optBandMaterial.materialBand,
+			keyshort : optBandMaterial.keyShort
 		});
 		
 		// Agregamos las filas al combo
@@ -359,8 +467,9 @@ function fillUtilWidthPicker(objOptionsUsefulWidthPicker)
 	
 	// Creamos una fila por defecto
 	var rowDef = Ti.UI.createPickerRow({
-			id : "",
-			title : "Seleccione Woow 2"
+			id       : "",
+			title    : "Seleccione Woow 2",
+			keyshort : ""
 	});
 	
 	// Agregamos la fila al combo
@@ -370,8 +479,9 @@ function fillUtilWidthPicker(objOptionsUsefulWidthPicker)
 	objOptionsUsefulWidthPicker.forEach(function(optUsefulWidth){
 		
 		var row = Ti.UI.createPickerRow({
-			id : optUsefulWidth.id,
-			title : optUsefulWidth.measure
+			id       : optUsefulWidth.id,
+			title    : optUsefulWidth.measure,
+			keyshort : optUsefulWidth.measure
 		});
 		
 		pickerUsefulWidth.add(row);
@@ -397,8 +507,9 @@ function fillTypeSupportPicker(objOptionsTypeSupportPicker)
 	objOptionsTypeSupportPicker.forEach(function(optTypeSupport){
 		
 		var row = Ti.UI.createPickerRow({
-			id : optTypeSupport.id,
-			title : optTypeSupport.support
+			id       : optTypeSupport.id,
+			title    : optTypeSupport.support,
+			keyshort : optTypeSupport.keyShort
 		});
 		
 		pickerTypeSupport.add(row);
@@ -424,8 +535,9 @@ function fillInputOutputHeightPicker(objOptionsInputOutputHeightPicker)
 	objOptionsInputOutputHeightPicker.forEach(function(optInputOutputHeight){
 		
 		var row = Ti.UI.createPickerRow({
-			id : optInputOutputHeight.id,
-			title : optInputOutputHeight.height
+			id       : optInputOutputHeight.id,
+			title    : optInputOutputHeight.height,
+			keyshort : optInputOutputHeight.height
 		});
 		
 		pickerInputOutputHeight.add(row);
@@ -451,8 +563,9 @@ function fillDriveUnitPicker(objOptionsDriveUnitPicker)
 	objOptionsDriveUnitPicker.forEach(function(optDriveUnit){
 		
 		var row = Ti.UI.createPickerRow({
-			id : optDriveUnit.id,
-			title : optDriveUnit.name
+			id       : optDriveUnit.id,
+			title    : optDriveUnit.name,
+			keyshort : optDriveUnit.keyShort
 		});
 		
 		pickerDriveUnit.add(row);
@@ -478,9 +591,10 @@ function fillSpeedPicker(objOptionsSpeedPicker)
 	objOptionsSpeedPicker.forEach(function(optSpeed){
 		
 		var row = Ti.UI.createPickerRow({
-			//title : optSpeed.speed
-			id : optSpeed.id,
-			title : optSpeed.description
+			id       : optSpeed.id,
+			title    : optSpeed.speed,
+			//title  : optSpeed.description
+			keyshort : optSpeed.speed
 		});
 		
 		pickerSpeed.add(row);

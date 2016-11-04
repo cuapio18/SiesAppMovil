@@ -4,7 +4,7 @@
 			<ImageView id="thumbnail_imageview" />
 		</ScrollView>
 		<View id="gradient_view" />
-		<Label id="title_label" text="A Title" />
+		<Label id="title_label" text="A Title" keyShort="keyshortSIES" attributedString="datostranssportador" />
 		<Label id="id_conveyor" text="A Title" attributedString="atributostringSIES"></Label>
 		<View id="overlay_view" />
 		<View id="separator" />

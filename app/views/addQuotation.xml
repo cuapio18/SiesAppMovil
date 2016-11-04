@@ -16,13 +16,13 @@
 						<Label class="label_align_left" id="labelPickerLong">Largo (Pulg):</Label>
 						
 						<Picker class="picker_align_left" id="pickerLong">
-							<PickerRow title="Seleccione" id=""></PickerRow>
+							<PickerRow title="Seleccione" id="" keyshort=""></PickerRow>
 						</Picker>
 						
 						<Label class="label_align_left" id="labelBandSerie">Serie de la banda:</Label>
 						
 						<Picker class="picker_align_left" id="pickerBandSerie">
-							<PickerRow title="Seleccione" id=""></PickerRow>
+							<PickerRow title="Seleccione" id="" keyshort=""></PickerRow>
 						</Picker>
 
 					</View> <!--/.viewGeneral-->
@@ -40,7 +40,7 @@
 						<Label class="label_align_left" id="labelBandMaterial">Material de la banda:</Label>
 						
 						<Picker class="picker_align_left" id="pickerBandMaterial">
-							<PickerRow title="Seleccione" id=""></PickerRow>
+							<PickerRow title="Seleccione" id="" keyshort=""></PickerRow>
 						</Picker>
 
 					</View>
@@ -50,7 +50,7 @@
 						<Label class="label_align_right" id="labelUsefulWidth">Ancho util (Pulg):</Label>
 						
 						<Picker class="picker_align_right" id="pickerUsefulWidth">
-							<PickerRow title="Seleccione" id=""></PickerRow>
+							<PickerRow title="Seleccione" id="" keyshort=""></PickerRow>
 						</Picker>
 
 					</View>
@@ -64,7 +64,7 @@
 						<Label class="label_align_left" id="labelTypeSupport">Tipo de soporte:</Label>
 						
 						<Picker class="picker_align_left" id="pickerTypeSupport">
-							<PickerRow title="Seleccione" id=""></PickerRow>
+							<PickerRow title="Seleccione" id="" keyshort=""></PickerRow>
 						</Picker>
 
 					</View>
@@ -74,7 +74,7 @@
 						<Label class="label_align_right" id="labelInputOutputHeight">Altura de entrada y salida (Pulg):</Label>
 						
 						<Picker class="picker_align_right" id="pickerInputOutputHeight">
-							<PickerRow title="Seleccione" id=""></PickerRow>
+							<PickerRow title="Seleccione" id="" keyshort=""></PickerRow>
 						</Picker>
 
 					</View>
@@ -88,7 +88,7 @@
 						<Label class="label_align_left" id="labelDriveUnit">Unidad motriz:</Label>
 						
 						<Picker class="picker_align_left" id="pickerDriveUnit">
-							<PickerRow title="Seleccione" id=""></PickerRow>
+							<PickerRow title="Seleccione" id="" keyshort=""></PickerRow>
 						</Picker>
 
 					</View> <!--/.viewGeneral-->
@@ -98,7 +98,7 @@
 						<Label class="label_align_right" id="labelSpeed">Velocidad(m/min):</Label>
 						
 						<Picker class="picker_align_right" id="pickerSpeed">
-							<PickerRow title="Seleccione" id=""></PickerRow>
+							<PickerRow title="Seleccione" id="" keyshort=""></PickerRow>
 						</Picker>
 
 					</View> <!--/.viewGeneral-->

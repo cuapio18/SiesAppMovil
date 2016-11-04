@@ -62,13 +62,15 @@ function fillConveyorsView(objJsonConveyor) {
 		//Modificamos la vista
 		cell.updateViews({
 			"#title_label" : {
-				text : optConv.conveyor
+				text     : optConv.conveyor + " - " + optConv.keyShort,
+				//keyShort : optConv.keyShort,
+				attributedString : optConv.keyShort
 			},
 			"#thumbnail_imageview" : {
 				image : 'http://www.esysautomation.com/data/uploads/Esys%20Pictures/Assembly/Conveyors_MainContent460px.jpg'
 			},
 			"#id_conveyor": {
-				text : optConv.id,
+				text             : optConv.id,
 				attributedString : optConv.id
 			}
 		});
@@ -77,20 +79,26 @@ function fillConveyorsView(objJsonConveyor) {
 		cell.getView().addEventListener("click", function(e) {
 			
 			// ID del conveyor
-			var idConveyor = JSON.stringify(e.row.children[3].text);
+			var idConveyor       = e.row.children[3].text;
+			
+			// Clave corta del transportador
+			var keyShortConveyor = e.row.children[2].attributedString;
 			
 			//Nombre del transportador
-			var nameConveyor = JSON.stringify(e.row.children[2].text);
+			var nameConveyor     = e.row.children[2].text;
 			
 			// Imagen del transportador
-			var imgConveyor = JSON.stringify(e.row.children[0].children[0].image);
+			var imgConveyor     = e.row.children[0].children[0].image;
 			
 			// Obj con los datos del transportador
 			var objDataConveyor = {
-				"idConveyor" : idConveyor ,
+				"idConveyor"   : idConveyor ,
+				"keyShort"     : keyShortConveyor,
 				"nameConveyor" : nameConveyor,
-				"imgConveyor" : imgConveyor
+				"imgConveyor"  : imgConveyor
 			};
+			
+			Ti.API.info("DATOS DEL TRANSPORTADOR: " + JSON.stringify(e.row.children[2].attributedString));
 			//JSON.stringify(e.row.children[3].attributedString)
 			//alert(JSON.stringify(e.row.children[3].attributedString));
 			// Llamamos a la funcion agregar cotizacion
