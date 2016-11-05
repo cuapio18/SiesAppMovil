@@ -7,6 +7,23 @@ Ti.API.info("ACCESORIOS DEL TRANSPORTADOR:" + JSON.stringify(args));
 
 var objAccesoriesConveyor = args;
 
+// DATOS PARA GUARDAR UN MODELO Y GENERAR UNA COTIZACION
+
+var dataFullModelAccesories = {
+	"id" : "1",
+	"model" : "TMR900FTP9018SM2-5SP1212",
+	"accessories" : [{
+		"id" : 1,
+		"price" : 500.00,
+		"quantity" : 1
+	}, {
+		"id" : 2,
+		"price" : 200.00,
+		"quantity" : 1
+	}]
+}; 
+
+
 // EJECUTAMOS FUNCION PARA CREAR LA VISTA DE ACCESORIOS
 
 fillAccessoriePicker(objAccesoriesConveyor);
@@ -15,13 +32,15 @@ fillAccessoriePicker(objAccesoriesConveyor);
 $.btnAddConveyor.addEventListener('click', function() {
 	
 	// Ventana del paso numero 4 de la cotizacion
-	var winAddQuotationFour = Alloy.createController('addQuotationFour').getView();
+	//var winAddQuotationFour = Alloy.createController('addQuotationFour').getView();
 	
 	// Abrir ventana
-	winAddQuotationFour.open();
+	//winAddQuotationFour.open();
+	
+	generarCotizacionModeloAccesorios(dataFullModelAccesories);
 	
 	// CLICK EN EL BOTON REGRESAR
-	winAddQuotationFour.addEventListener("open", function(evt) {
+	/*winAddQuotationFour.addEventListener("open", function(evt) {
 		
 		var actionBar = winAddQuotationFour.activity.actionBar;
 		
@@ -31,7 +50,7 @@ $.btnAddConveyor.addEventListener('click', function() {
 			winAddQuotationFour.close();
 		};
 		
-	});
+	});*/
 	
 });
 
@@ -286,3 +305,33 @@ function fillAccessoriePicker(objOptionsAccessoriePicker) {
 
 //populateLists(list, 'list', 0, cellOffset + Alloy.Globals.layout.lists.cell.height + 20);
 //populateListAccessories(0, cellOffset + Alloy.Globals.layout.lists.cell.height + 20);
+
+function generarCotizacionModeloAccesorios(objModelAccesories) 
+{
+
+	// Url del servicio rest
+	var url    = "http://" + Alloy.Globals.URL_GLOBAL_SIES + "/sies-rest/quotation/saveQuotationTemp";
+	
+	// Creamoss un cliente http
+	var client = Ti.Network.createHTTPClient({
+		// función de llamada cuando los datos de respuesta está disponible
+		onload : function(e) {
+			Ti.API.info("Received text: " + this.responseText);
+		},
+		// función de llamada cuando se produce un error, incluyendo un tiempo de espera
+		onerror : function(e) {
+			//Ti.API.debug(e.error);
+		},
+		timeout : 5000 // en milisegundos
+	});
+	
+	// Preparar la conexión.
+	client.open("POST", url);
+	
+	// Establecer la cabecera para el formato JSON correcta
+	client.setRequestHeader("Content-Type", "application/json; charset=utf-8");
+	
+	// Enviar la solicitud.
+	client.send(JSON.stringify(objModelAccesories)); 
+	
+}

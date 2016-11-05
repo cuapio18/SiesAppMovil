@@ -13,12 +13,15 @@ var idConveyorArg    = parseInt(args.idConveyor);
 // Clave corta del transportador
 var keyShortConveyor = args.keyShort;
 
+// Tipo de transportador
+var typeConveyor     = args.typeConveyor;
+
 Ti.API.info("KEY SHORT: " + keyShortConveyor);
 
 // VARIABLES CON LOS VALORES DE LOS PICKER
 
 // Largo
-/*var valuePickerLong      = "";
+/*var valuePickerLongGrade      = "";
 var valuePickerBandSerie = "";
 var valueBandMaterial    = "";
 var valueUtilWidth      = "";
@@ -34,7 +37,7 @@ var valueSpeed = "";*/
 $.btnSearchConveyor.addEventListener('click', function() {
 	
 	// Asignamos un valor a largo
-	var valPickerLong        = $.pickerLong.getSelectedRow(0).keyshort;
+	var valPickerLongGrade   = $.pickerLongGrade.getSelectedRow(0).keyshort;
 	
 	// Asignamos valor a serie de la banda
 	var valPickerBandSerie   = $.pickerBandSerie.getSelectedRow(0).keyshort;
@@ -57,11 +60,43 @@ $.btnSearchConveyor.addEventListener('click', function() {
 	// Asignamos valor a la velocidad
 	var valSpeed             = $.pickerSpeed.getSelectedRow(0).keyshort;
 	
-	// MODELO DEL TRANSPORTADOR
-	//var modelConvey    = keyShortConveyor + valPickerLong + valPickerBandSerie + valBandMaterial + valUtilWidth + valTypeSupport + valInputOutputHeight + valDriveUnit + valSpeed;
-	var modelConveyor = "TMR900FTACA4018SW2-5SP1212";
+	// Tipo de soporte
+	var typeSupportConveyor  = $.pickerTypeSupport.getSelectedRow(0).id;
 	
-	Ti.API.info("LARGO: " + valPickerLong);
+	var modelConvey = "";
+	Ti.API.info("Tipo de soporte: " + typeSupportConveyor);
+	// VALIDAMOS EL TIPO DE SOPORTE (piso - techo)
+	if (typeSupportConveyor == 1) {
+		
+		// Validamos el tipo de transportador (recto - curvo)
+		if (typeConveyor == "R") {
+			
+			modelConvey = keyShortConveyor + valPickerBandSerie + valBandMaterial + valPickerLongGrade + valUtilWidth + valDriveUnit + valSpeed + valTypeSupport + valInputOutputHeight + valInputOutputHeight;
+			
+		} else if(typeConveyor == "C") {
+			
+			modelConvey = keyShortConveyor + valPickerBandSerie + valBandMaterial + valPickerLongGrade + valUtilWidth + valDriveUnit + valSpeed + valTypeSupport + valInputOutputHeight + valInputOutputHeight;
+			
+		};
+		
+	} else if(typeSupportConveyor == 2){
+		// Validamos el tipo de transportador (recto - curvo)
+		if (typeConveyor == "R") {
+			
+			modelConvey = keyShortConveyor + valPickerBandSerie + valBandMaterial + valPickerLongGrade + valUtilWidth + valDriveUnit + valSpeed + valTypeSupport;
+
+		} else if(typeConveyor == "C") {
+			
+			modelConvey = keyShortConveyor + valPickerBandSerie + valBandMaterial + valPickerLongGrade + valUtilWidth + valDriveUnit + valSpeed + valTypeSupport;		
+
+		};
+	};
+	
+	// MODELO DEL TRANSPORTADOR
+	//var modelConvey    = keyShortConveyor + valPickerLongGrade + valPickerBandSerie + valBandMaterial + valUtilWidth + valTypeSupport + valInputOutputHeight + valDriveUnit + valSpeed;
+	//var modelConveyor = "TMR900FTACA4018SW2-5SP1212";
+	
+	Ti.API.info("LARGO: " + valPickerLongGrade);
 	Ti.API.info("SERIE DE LA BANDA: " + valPickerBandSerie);
 	Ti.API.info("MATERIAL DE LA BANDA: " + valBandMaterial);
 	Ti.API.info("ANCHO UTIL: " + valUtilWidth);
@@ -86,7 +121,7 @@ $.btnSearchConveyor.addEventListener('click', function() {
 	//alert(containerInput.getChildren());
 	
 	// Abrir ventana
-	//winAddQuotationTwo.open();
+	winAddQuotationTwo.open();
 	
 	// CLICK EN EL BOTON REGRESAR
 	winAddQuotationTwo.addEventListener("open", function(evt) {
@@ -106,7 +141,7 @@ $.btnSearchConveyor.addEventListener('click', function() {
 
 // FUNCION AL APLICAR UN CAMBIO EN EL PICKER LARGO
 
-/*$.pickerLong.addEventListener("change", function(e) {
+/*$.pickerLongGrade.addEventListener("change", function(e) {
 	
 	// index del elemento seleccionado
 	var indexItem               = parseInt(e.rowIndex);
@@ -214,7 +249,7 @@ function getAllOptionsPickerGlobal(idConveyor)
 			var responseWS = JSON.parse(this.responseText);
 			
 			// 1.- funcion que llena el combo de largo
-			fillLongPicker(responseWS.longs);
+			fillLongGradePicker(responseWS.longs, responseWS.grade);
 			
 			// 2.- funcion que llena el combo de serie de la banda
 			fillBandSeriePicker(responseWS.serieBand);
@@ -303,24 +338,49 @@ function getAllOptPickerBandMaterialUtilWidth(idBandSerie)
 
 // GENERAMOS LAS OPCIONES DEL PICKER LARGO
 
-function fillLongPicker(objOptionsLongPicker)
+function fillLongGradePicker(objOptionsLongPicker, objOptionsGradePicker)
 {
+	// picker
+	var pickerLongGrade = $.pickerLongGrade;
 	
-	var pickerLong = $.pickerLong;
+	// Label
+	var labelLongGrade  = $.labelLongGrade;
+	
+	// Objeto
+	var objDataFull     = {};
+	
+	// Dependiendo el tipo de transportador hacemos una accion
+	if (typeConveyor == "R") {
+		
+		// Asignamos el texto
+		labelLongGrade.setText("Largo (Pulg):");
+		
+		// Objeto a recorrer
+		objDataFull = objOptionsLongPicker;
+		
+	} else if(typeConveyor == "C"){
+		
+		// Asignamos el texto
+		labelLongGrade.setText("Grado:");
+		
+		// Objeto a recorrer
+		objDataFull = objOptionsGradePicker;
+		
+	};
 	
 	// RECORREMOS EL OBJETO QUE LLEGA
-	objOptionsLongPicker.forEach(function(optLong){
+	objDataFull.forEach(function(optLongGrade){
 		
 		var row = Ti.UI.createPickerRow({
-			id       : optLong.id,
-			title    : optLong.measure,
-			keyshort : optLong.measure
+			id       : optLongGrade.id,
+			title    : optLongGrade.measure,
+			keyshort : optLongGrade.measure
 			//title : optLong.description
 		});
 		
-		pickerLong.add(row);
-		pickerLong.selectionIndicator = true;
-		pickerLong.setSelectedRow(0, 0, false);
+		pickerLongGrade.add(row);
+		pickerLongGrade.selectionIndicator = true;
+		pickerLongGrade.setSelectedRow(0, 0, false);
 		
 	});
 	

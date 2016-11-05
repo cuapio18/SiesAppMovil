@@ -7,57 +7,115 @@
 			
 			<ScrollView id="scrollviewConveyorDesc">
 			
-			<!--<Label id="labelTitleAddQuoThree">Transportador</Label>-->
-			<Label id="labelSubtitleAddQuo"></Label>
+			<Label id="labelTitleConveyor"></Label>
+			<Label id="labelTitleModel"></Label>
+			<Label id="labelTitlePrice"></Label>
 			
 			<View id="viewContainerImg">
 				<ImageView id="imgConveyor" image="http://img.mecalux.com.mx/external/products/es-MX/transportadores-para-cajas-183047.jpg"></ImageView>
 			</View>
 			
 			<View class="viewContainer">
+				
 				<View class="viewItem">
-					<Label class="align_text_left" id="labelAnchura">Anchura:</Label>
-				</View>
+					<Label class="align_text_left" id="labelLongGrade">Largo/Grado:</Label>
+				</View> <!--/.viewItem-->
+				
 				<View class="viewItem">
-					<Label class="align_text_right" id="labelAnchuraValor"></Label>
-				</View>
-			</View>
+					<Label class="align_text_right" id="labelValueLongGrade"></Label>
+				</View> <!--/.viewItem-->
+				
+			</View> <!--/.viewContainer-->
 			
 			<View class="viewContainer">
+				
 				<View class="viewItem">
-					<Label class="align_text_left" id="labelLongitud">Longitud:</Label>
-				</View>
+					<Label class="align_text_left" id="labelBandSerie">Serie de la banda:</Label>
+				</View> <!--/.viewItem-->
+				
 				<View class="viewItem">
-					<Label class="align_text_right" id="labelLongitudValor"></Label>
-				</View>
-			</View>
+					<Label class="align_text_right" id="labelValueBandSerie"></Label>
+				</View> <!--/.viewItem-->
+				
+			</View> <!--/.viewContainer-->
 			
 			<View class="viewContainer">
+				
 				<View class="viewItem">
-					<Label class="align_text_left" id="labelVelocidad">Velocidad:</Label>
-				</View>
+					<Label class="align_text_left" id="labelBandMaterial">Material de la banda:</Label>
+				</View> <!--/.viewItem-->
+				
 				<View class="viewItem">
-					<Label class="align_text_right" id="labelVelocidadValor"></Label>
-				</View>
-			</View>
+					<Label class="align_text_right" id="labelValueBandMaterial"></Label>
+				</View> <!--/.viewItem-->
+				
+			</View> <!--/.viewContainer-->
 			
 			<View class="viewContainer">
+				
 				<View class="viewItem">
-					<Label class="align_text_left" id="labelUnidadMotriz">Unidad motriz:</Label>
-				</View>
+					<Label class="align_text_left" id="labelUsefulWidth">Ancho útil (Pulg):</Label>
+				</View> <!--/.viewItem-->
+				
 				<View class="viewItem">
-					<Label class="align_text_right" id="labelUnidadMotrizValor"></Label>
-				</View>
-			</View>
+					<Label class="align_text_right" id="labelValueUsefulWidth"></Label>
+				</View> <!--/.viewItem-->
+				
+			</View> <!--/.viewContainer-->
 			
 			<View class="viewContainer">
+				
 				<View class="viewItem">
-					<Label class="align_text_left" id="labelDenominacionBanda">Denominación de la banda:</Label>
-				</View>
+					<Label class="align_text_left" id="labelTypeSupport">Tipo de soporte:</Label>
+				</View> <!--/.viewItem-->
+				
 				<View class="viewItem">
-					<Label class="align_text_right" id="labelDenominacionBandaValor"></Label>
-				</View>
-			</View>
+					<Label class="align_text_right" id="labelValueTypeSupport"></Label>
+				</View> <!--/.viewItem-->
+				
+			</View> <!--/.viewContainer-->
+			
+			<View class="viewContainer">
+				
+				<View class="viewItem">
+					<Label class="align_text_left" id="labelInputOutputHeight">Altura de entrada y salida (Pulg):</Label>
+				</View> <!--/.viewItem-->
+				
+				<View class="viewItem">
+					<Label class="align_text_right" id="labelValueInputOutputHeight"></Label>
+				</View> <!--/.viewItem-->
+				
+			</View> <!--/.viewContainer-->
+			
+			<View class="viewContainer">
+				
+				<View class="viewItem">
+					<Label class="align_text_left" id="labelDriveUnit">Unidad motriz:</Label>
+				</View> <!--/.viewItem-->
+				
+				<View class="viewItem">
+					<Label class="align_text_right" id="labelValueDriveUnit"></Label>
+				</View> <!--/.viewItem-->
+				
+			</View> <!--/.viewContainer-->
+			
+			<View class="viewContainer">
+				
+				<View class="viewItem">
+					<Label class="align_text_left" id="labelSpeed">Velocidad(m/min):</Label>
+				</View> <!--/.viewItem-->
+				
+				<View class="viewItem">
+					<Label class="align_text_right" id="labelValueSpeed"></Label>
+				</View> <!--/.viewItem-->
+				
+			</View> <!--/.viewContainer-->
+			
+			<View class="viewContainer">
+				
+				<Label left="20" right="20" textAlign="Ti.UI.TEXT_ALIGNMENT_CENTER" id="labelValueDescription"></Label>
+				
+			</View> <!--/.viewContainer-->
 			
 			</ScrollView>
 			

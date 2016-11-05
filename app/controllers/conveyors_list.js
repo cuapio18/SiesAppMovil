@@ -90,15 +90,21 @@ function fillConveyorsView(objJsonConveyor) {
 			// Imagen del transportador
 			var imgConveyor     = e.row.children[0].children[0].image;
 			
+			// Tipo del transportador
+			var typeConveyor = keyShortConveyor.substr(-1);
+			
 			// Obj con los datos del transportador
 			var objDataConveyor = {
 				"idConveyor"   : idConveyor ,
 				"keyShort"     : keyShortConveyor,
 				"nameConveyor" : nameConveyor,
+				"typeConveyor" : typeConveyor,
 				"imgConveyor"  : imgConveyor
-			};
+			};			
 			
-			Ti.API.info("DATOS DEL TRANSPORTADOR: " + JSON.stringify(e.row.children[2].attributedString));
+			Ti.API.info("TIPO TRANSPORTADOR: " + typeConveyor);
+			//Ti.API.info("KEYSHORT TRANSPORTADOR: " + keyShortConveyor);
+			//Ti.API.info("DATOS DEL TRANSPORTADOR: " + JSON.stringify(e.row.children[2].attributedString));
 			//JSON.stringify(e.row.children[3].attributedString)
 			//alert(JSON.stringify(e.row.children[3].attributedString));
 			// Llamamos a la funcion agregar cotizacion

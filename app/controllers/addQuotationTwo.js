@@ -1,10 +1,9 @@
 // Arguments passed into this controller can be accessed via the `$.args` object directly or:
 var args = $.args;
 
-//Ti.API.info("MODELO DEL TRANSPORTADOR:" + JSON.stringify(args.model));
+Ti.API.info("MODELO DEL TRANSPORTADOR:" + JSON.stringify(args));
 
 var modelConveyor = args.model;
-
 var objAccesoriesWS;
 var objModelWS;
 
@@ -27,7 +26,7 @@ function getModelAndAccesoriesOfConveyor() {
 			
 			objAccesoriesWS   = objResponseWS.acccesorie;
 			
-			objModelWS = objResponseWS.model;
+			objModelWS        = objResponseWS.model;
 			
 			// FUNCION PARA MOSTRAR LOS DATOS DEL TRANSPORTADOR
 			dataModelConveyor(objModelWS);
@@ -57,19 +56,44 @@ getModelAndAccesoriesOfConveyor();
 
 function dataModelConveyor(objModelWS)
 {
-	//Ti.API.info("MODELO: " + JSON.stringify(objModelWS));
+	Ti.API.info("MODELO: " + JSON.stringify(objModelWS));
+	
 	// Titulo
-	$.labelSubtitleAddQuo.setText(objModelWS.conveyor.conveyor);
-	//Ancho
-	$.labelAnchuraValor.setText(objModelWS.width.measure + "PLG");
+	$.labelTitleConveyor.setText(objModelWS.conveyor.conveyor + " - " + objModelWS.conveyor.keyShort);
 	
-	$.labelLongitudValor.setText(objModelWS.longs.measure + "PLG");
+	// Modelo del transportador
+	$.labelTitleModel.setText(objModelWS.model);
 	
-	$.labelVelocidadValor.setText(objModelWS.speed.speed);
+	// Precio
+	$.labelTitlePrice.setText("$" + objModelWS.priceModel);
 	
-	$.labelUnidadMotrizValor.setText(objModelWS.driveUnit.name);
+	// Largo o Grado
+	$.labelValueLongGrade.setText(objModelWS.longs.measure);
 	
-	$.labelDenominacionBandaValor.setText(" FLAT TO AZUL FLAT TOP AZUL FLAT TOP AZUL");
+	// Serie de la banda
+	$.labelValueBandSerie.setText(objModelWS.serieBand.serieBand);
+	
+	// Material de la banda
+	$.labelValueBandMaterial.setText(objModelWS.materialBand.materialBand);
+	
+	// Ancho util
+	$.labelValueUsefulWidth.setText(objModelWS.width.measure + " PLG");
+	
+	// Tipo de soporte
+	$.labelValueTypeSupport.setText(objModelWS.support.support);
+	
+	// Altura de entrada y alida
+	$.labelValueInputOutputHeight.setText(objModelWS.heightInput.height);
+	
+	// Unidad motriz
+	$.labelValueDriveUnit.setText(objModelWS.driveUnit.name);
+	
+	// Velocidad
+	$.labelValueSpeed.setText(objModelWS.speed.speed);
+	
+	// Descripcion
+	$.labelValueDescription.setText("Descripción: " + objModelWS.description);
+	
 }
 
 // Click en el boton siguiente paso de la cotizacción

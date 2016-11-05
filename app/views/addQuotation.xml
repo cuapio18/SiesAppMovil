@@ -13,9 +13,9 @@
 
 					<View class="viewGeneral">
 
-						<Label class="label_align_left" id="labelPickerLong">Largo (Pulg):</Label>
+						<Label class="label_align_left" id="labelLongGrade">Largo (Pulg):</Label>
 						
-						<Picker class="picker_align_left" id="pickerLong">
+						<Picker class="picker_align_left" id="pickerLongGrade">
 							<PickerRow title="Seleccione" id="" keyshort=""></PickerRow>
 						</Picker>
 						
@@ -47,7 +47,7 @@
 					
 					<View class="viewGeneral">
 
-						<Label class="label_align_right" id="labelUsefulWidth">Ancho util (Pulg):</Label>
+						<Label class="label_align_right" id="labelUsefulWidth">Ancho útil (Pulg):</Label>
 						
 						<Picker class="picker_align_right" id="pickerUsefulWidth">
 							<PickerRow title="Seleccione" id="" keyshort=""></PickerRow>
