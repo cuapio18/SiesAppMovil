@@ -105,6 +105,10 @@
 	showVerticalScrollIndicator: false,
 	opacity: 0
 }*/
+"#tabGroupQuotations" : {
+	backgroundImage : "/img/IMAGOTIPO_opt.png",
+	backgroundRepeat : false
+},
 "#searchQuotation": {
 	showAsAction: Ti.Android.SHOW_AS_ACTION_ALWAYS,
 	icon: Ti.Android.R.drawable.ic_menu_search

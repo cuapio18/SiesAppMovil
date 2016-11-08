@@ -14,7 +14,7 @@ listViewQuot.addEventListener('itemclick', function(e) {
 	
 	//alert("INDEX: " + e.source.selectedIndex);
 	Ti.API.info("ITEM:" + JSON.stringify(item));
-	Ti.API.info("E: " + JSON.stringify(e));
+	//Ti.API.info("E: " + JSON.stringify(e));
 	var windDetailQuotation = Alloy.createController('detailQuotation').getView();
 	//windDetailQuotation.open();
 	
@@ -103,21 +103,33 @@ function createListAllQuotations(quotations)
 }
 
 // FUNCION PARA OBTENER LAS COTIZACIONES
+
 getAllQuotations(idUsuarioSession);
 
 var dialog;
-var myArray = ['Editar', 'Eliminar', 'Comentarios'];
-var opts = {
+var myArray = ['Editar', 'Eliminar', 'Comentarios', 'Cancelar'];
+var opts    = {
 	title:"Cotización",
-	//cancel : 2,
+	cancel : 3,
 	options : myArray,
-	//selectedIndex : 0,
-	//destructive : 0,
+	//selectedIndex : 3, // Define la opción seleccionada por defecto.
+	destructive : 0, // Índice para definir la opción destructiva, indicada por una señal visual cuando se procesa.
 };
 
+// Datos de la cotizacion
+var dataItemSelected = {};
+
+// FUNCION AL DAR CLICK PROLONGADO SOBRE ALGUN ELEMENTO
+
 function longCB(e) {
-	var itemIndex = e.itemIndex;
-	//Ti.API.info(JSON.stringify(e.section.items));
+	
+	// Indice del elemento presionado
+	var itemIndex    = e.itemIndex;
+	
+	// Datos del elemento presionado
+	dataItemSelected = e.section.items[parseInt(itemIndex)];
+	
+	//Ti.API.info("LONGCB: " + JSON.stringify(dataItemSelected));
 	//alert(JSON.stringify(e.section.items[parseInt(itemIndex)].title_quotation.text ));
 	dialog = Ti.UI.createOptionDialog(opts);
 	dialog.show();
@@ -125,14 +137,60 @@ function longCB(e) {
 
 };
 
+// FUNCION AL PRESIONAR ALGUNA OPCION DEL ALERTA DIALOGO
+
 function onSelectDialog(event) {
-	alert(event);
+	
+	//Ti.API.info("Opción seleccionada: " + JSON.stringify(event));
+	Ti.API.info("Cotizacion seleccionada: " + JSON.stringify(dataItemSelected));
+	
+	// indice del elemento seleccionado
 	var selectedIndex = event.source.selectedIndex;
+	
+	//Ti.API.info("Index del elemento seleccionado: " + parseInt(selectedIndex));
+	
+	// Realizamos una accion dependiendo lo que se eligio
+	switch(parseInt(selectedIndex)) {
+		case 0 :
+			// Llamamos a la funcion
+			editQuotation(dataItemSelected);
+			break;
+		case 1:
+			// Llamamos a la funcion
+			deleteQuotation(dataItemSelected);
+			break;
+		case 2:
+			// Llamamos a la funcion
+			seeCommentsQuotation(dataItemSelected);
+			break;
+		default:
+			Ti.API.info("Opcion no encontrada.");
+			break;
+	}
 	//OR
 	//var selectedIndex = dialog.selectedIndex();
 	//alert('Usted ha seleccionado ' + myArray[selectedIndex]);
 }
 
+// FUNCION PARA EDITAR UNA COTIZACION
 
+function editQuotation(dataItemSelected)
+{
+	Ti.API.info("Editar la cotización. " +  dataItemSelected.title_quotation.text + " # " + dataItemSelected.title_quotation.id);
+}
+
+// FUNCION PAARA ELIMINAR UNA COTIZACION
+
+function deleteQuotation(idQuotation)
+{
+	Ti.API.info("Eliminar la cotización. " +  dataItemSelected.title_quotation.text + " # " + dataItemSelected.title_quotation.id);
+}
+
+// FUNCION PARA VER LOS COMETRIOS DE UNA COTIZACION
+
+function seeCommentsQuotation(idQuotation)
+{
+	Ti.API.info("Cometarios de la cotización. " +  dataItemSelected.title_quotation.text + " # " + dataItemSelected.title_quotation.id);
+}
 
 

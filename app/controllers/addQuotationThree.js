@@ -1,11 +1,19 @@
 // Arguments passed into this controller can be accessed via the `$.args` object directly or:
 var args = $.args;
 
-Ti.API.info("ACCESORIOS DEL TRANSPORTADOR:" + JSON.stringify(args));
+Ti.API.info("ARGUMENTOS RECIBIDOS:" + JSON.stringify(args));
+Ti.API.info("ACCESORIOS DEL TRANSPORTADOR:" + JSON.stringify(args.accesories));
 
 // ACCESORIOS
 
-var objAccesoriesConveyor = args;
+var objAccesoriesConveyor = args.accesories;
+
+// ID del modelo
+
+var idModel   = args.model.id;
+
+// Modelo
+var nameModel = args.model.model;
 
 // DATOS PARA GUARDAR UN MODELO Y GENERAR UNA COTIZACION
 
@@ -31,16 +39,83 @@ fillAccessoriePicker(objAccesoriesConveyor);
 // Click en el boton siguiente paso de la cotizacion
 $.btnAddConveyor.addEventListener('click', function() {
 	
+	//Ti.API.info("Contenedor de accesorios: " + JSON.stringify($.containerAccesorios.children));
+	
+	var idAccConv;
+	var nameAccConv;
+	var priceAccConv;
+	var backColorAccConv;
+	var statusSelectedAccConv;
+	var jsonAccConvSaveQuot = [];
+	
+	// Recorremos elementos
+	$.containerAccesorios.children.forEach(function(objAcc, idx){
+		
+		// ID del accesorio
+		idAccConv   = objAcc.children[2].children[0].attributedString;
+		
+		// Nombre accesorio
+		nameAccConv  = objAcc.children[2].children[0].text;
+		
+		// Precio accesorio
+		priceAccConv = objAcc.children[2].children[1].text;
+		
+		// Convertimos el precio a numero
+		var convertriceAccesory = priceAccConv.split("$ ")[1].replace(new RegExp(",", "g"), "");
+		
+		// Color de fondo del accesorio
+		backColorAccConv = objAcc.children[2].backgroundColor;
+		
+		// Validamos el color de fondo
+		// Para saber si fue seleccionado o no
+		if (backColorAccConv == "#0B3C4C") {
+			statusSelectedAccConv = "checked";
+		} else if (backColorAccConv == "#000") {
+			statusSelectedAccConv = "unchecked";
+		};
+		
+		//Ti.API.info("ACCESORIO: " + JSON.stringify(objAcc.children[2]));
+		//Ti.API.info("Elementos recorridos: " + "Nombre: " + nameAccConv + " Precio: " + priceAccConv + " Color: " + backColorAccConv + " Status: " + statusSelectedAccConv);
+		
+		//Ti.API.info("Precio: " + convertriceAccesory);
+		//Ti.API.info("Precio 2: " + parseFloat(convertriceAccesory));
+		
+		// Validamos el status
+		if (statusSelectedAccConv == "checked") {
+			// Creamos un objeto con los datos de los accesorios
+			jsonAccConvSaveQuot.push({
+				id                     : idAccConv,
+				//nameAccessoryConveyor  : nameAccConv,
+				price                  : parseFloat(convertriceAccesory),
+				quantity               : 1,
+				//colorAccesoryConveyor  : backColorAccConv,
+				//statusAccesoryConveyor : statusSelectedAccConv
+			});
+		};
+		
+	});
+	
+	//Ti.API.info("OBJETO DE ACCESORIOS DE MODELOS: " + JSON.stringify(jsonAccConvSaveQuot));
+	
+	// Creamo objeto para guardar la cotizacion
+	var objSaveQuotationJson = {
+		id          : idModel,
+		model       : nameModel,
+		accessories : jsonAccConvSaveQuot
+	};
+	
+	Ti.API.info("OBJETO PARA GUARDAR COTIZACION: " + JSON.stringify(objSaveQuotationJson));
+	
 	// Ventana del paso numero 4 de la cotizacion
-	//var winAddQuotationFour = Alloy.createController('addQuotationFour').getView();
+	var winAddQuotationFour = Alloy.createController('addQuotationFour').getView();
 	
 	// Abrir ventana
 	//winAddQuotationFour.open();
 	
-	generarCotizacionModeloAccesorios(dataFullModelAccesories);
+	//generarCotizacionModeloAccesorios(dataFullModelAccesories);
 	
 	// CLICK EN EL BOTON REGRESAR
-	/*winAddQuotationFour.addEventListener("open", function(evt) {
+	winAddQuotationFour.addEventListener("open", function(evt) {
 		
 		var actionBar = winAddQuotationFour.activity.actionBar;
 		
@@ -50,7 +125,7 @@ $.btnAddConveyor.addEventListener('click', function() {
 			winAddQuotationFour.close();
 		};
 		
-	});*/
+	});
 	
 });
 
@@ -122,7 +197,8 @@ function fillAccessoriePicker(objOptionsAccessoriePicker) {
 				
 			},
 			"#title_label" : {
-				text: optAcce.nameAccessorie
+				text             : optAcce.nameAccessorie,
+				attributedString : optAcce.id
 			},
 			"#price_accessory" : {
 				text : '$ ' + optAcce.price

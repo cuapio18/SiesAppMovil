@@ -4,7 +4,7 @@
 		<ImageView id="imageview" />
 		<View class="gradient_view" />
 		<View id="overlay_view">
-			<Label id="title_label" />
+			<Label id="title_label" attributedString="" />
 			<Label id="price_accessory"></Label>
 		</View>
 	</View>

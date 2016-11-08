@@ -5,7 +5,7 @@
 // Arguments passed into this controller can be accessed via the `$.args` object directly or:
 var args = $.args;
 
-Ti.API.info("Argumentos pasados:" + JSON.stringify(args));
+//Ti.API.info("Argumentos pasados:" + JSON.stringify(args));
 
 // ID del transportador
 var idConveyorArg    = parseInt(args.idConveyor);
@@ -16,7 +16,7 @@ var keyShortConveyor = args.keyShort;
 // Tipo de transportador
 var typeConveyor     = args.typeConveyor;
 
-Ti.API.info("KEY SHORT: " + keyShortConveyor);
+//Ti.API.info("KEY SHORT: " + keyShortConveyor);
 
 // VARIABLES CON LOS VALORES DE LOS PICKER
 
@@ -157,7 +157,7 @@ $.btnSearchConveyor.addEventListener('click', function() {
 
 // FUNCION AL APLICAR UN CAMBIO EN EL PICKER SOPORTE
 
-$.pickerTypeSupport.addEventListener("change", function(e) {
+/*$.pickerTypeSupport.addEventListener("change", function(e) {
 	
 	// index del elemento seleccionado
 	var indexItem               = parseInt(e.rowIndex);
@@ -198,11 +198,11 @@ $.pickerTypeSupport.addEventListener("change", function(e) {
 		
 	};
 	
-});
+});*/
 
 // FUNCION AL APLICAR UN CAMBIO EN EL PICKER SERIE DE LA BANDA
 
-$.pickerBandSerie.addEventListener("change", function(e) {
+/*$.pickerBandSerie.addEventListener("change", function(e) {
 	
 	// Indeex del elemento seleccionado
 	var indexItem = parseInt(JSON.stringify(e.rowIndex));
@@ -220,7 +220,7 @@ $.pickerBandSerie.addEventListener("change", function(e) {
 	//var column = $.pickerSpeed.getColumns()[0];
 	//column.removeRow(column.rowAt(0));
 	
-});
+});*/
 
 // ***********************************************************
 // PETICION GLOBAL PARA LLENAR TODOS LOS PICKER DINAMICAMENTE
@@ -302,7 +302,7 @@ function getAllOptPickerBandMaterialUtilWidth(idBandSerie)
 	var client = Ti.Network.createHTTPClient({
 		// función de llamada cuando los datos de respuesta está disponible
 		onload : function(e) {
-			Ti.API.info("Respuesta obtenida por el WS: " + this.responseText);
+			//Ti.API.info("Respuesta obtenida por el WS: " + this.responseText);
 			
 			// PARSEAMOS LA RESPUESTA A UN OBJETO JSON
 			var responseWS = JSON.parse(this.responseText);
@@ -412,6 +412,30 @@ function fillBandSeriePicker(objOptionsBandSeriePicker)
 		
 	});
 	
+	// FUNCION AL APLICAR UN CAMBIO EN EL PICKER SERIE DE LA BANDA
+	
+	pickerBandSerie.addEventListener("change", function(e) {
+		
+		Ti.API.info("INICIANDO CAMBIO EN PICKER SERIE DE BANDA!");
+	
+		// Indeex del elemento seleccionado
+		var indexItem = parseInt(JSON.stringify(e.rowIndex));
+		
+		// Datos del elemento seleccionado
+		var pickerDataSelected = e.source.children[0].rows[indexItem];
+		// Titulo - pickerDataSelected.title
+		// ID -pickerDataSelected.id
+		
+		getAllOptPickerBandMaterialUtilWidth(parseInt(pickerDataSelected.id));
+		
+		//JSON.stringify(e.source.children[0].rows[1])
+		//Ti.API.info(JSON.stringify(e));
+		//alert(pickerDataSelected.id);
+		//var column = $.pickerSpeed.getColumns()[0];
+		//column.removeRow(column.rowAt(0));
+		
+	});
+	
 }
 
 // **************************************************
@@ -466,7 +490,7 @@ function fillBandMaterialPicker(objOptionsBandMaterialPicker)
 	// Creamos una fila por defecto
 	var rowDef = Ti.UI.createPickerRow({
 			id       : "",
-			title    : "Seleccione Woow 1",
+			title    : "Seleccione!",
 			keyshort : ""
 	});
 	
@@ -528,7 +552,7 @@ function fillUtilWidthPicker(objOptionsUsefulWidthPicker)
 	// Creamos una fila por defecto
 	var rowDef = Ti.UI.createPickerRow({
 			id       : "",
-			title    : "Seleccione Woow 2",
+			title    : "Seleccione!",
 			keyshort : ""
 	});
 	
@@ -575,6 +599,53 @@ function fillTypeSupportPicker(objOptionsTypeSupportPicker)
 		pickerTypeSupport.add(row);
 		pickerTypeSupport.selectionIndicator = true;
 		pickerTypeSupport.setSelectedRow(0, 0, false);
+		
+	});
+	
+	// FUNCION AL APLICAR UN CAMBIO EN EL PICKER SOPORTE
+	
+	pickerTypeSupport.addEventListener("change", function(e) {
+		
+		Ti.API.info("HAY CAMBIO EN EL PICKER SOPORTE!");
+	
+		// index del elemento seleccionado
+		var indexItem               = parseInt(e.rowIndex);
+		
+		// Label
+		var labelInputOutputHeightSH  = $.labelInputOutputHeight;
+		
+		// Picker Altura de entrada y salida
+		var pickerInputOutputHeightSH = $.pickerInputOutputHeight;
+		
+		//JSON.stringify(e.source.children[0].rows[1])
+		//Ti.API.info(JSON.stringify(e));
+		Ti.API.info("Index Picker Support: " + JSON.stringify(e.rowIndex));
+		
+		// Preguntamos cual elemento se selecciono
+		if (indexItem == 1 || indexItem == 0) {
+			
+			// Mostramos Label
+			labelInputOutputHeightSH.show();
+			
+			// Mostramos picker
+			pickerInputOutputHeightSH.show();
+			
+		} else if (indexItem == 2) {
+			
+			// Ocultamos Label
+			labelInputOutputHeightSH.hide();
+			
+			// Oculatamos picker
+			pickerInputOutputHeightSH.hide();
+			
+			// Determina si se muestra el indicador de selección visual.
+			// Si es true, el indicador de selección está habilitado.
+			pickerInputOutputHeightSH.selectionIndicator = true;
+			
+			// Selecciona la fila de una columna.
+			pickerInputOutputHeightSH.setSelectedRow(0, 0, false);
+			
+		};
 		
 	});
 	

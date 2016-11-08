@@ -1,8 +1,10 @@
 ".container" : {
-  layout: 'vertical',
-  //modal: true,
-  title: 'Términos y Condiciones',
-  //fullscreen: true
+	layout: 'vertical',
+	//modal: true,
+	title: 'Términos y Condiciones',
+	backgroundImage : "/img/IMAGOTIPO_opt.png",
+	backgroundRepeat : false
+	//fullscreen: true
 },
 "#scrollviewTermsConditions": {
 	layout: 'vertical',

@@ -102,7 +102,7 @@ function fillConveyorsView(objJsonConveyor) {
 				"imgConveyor"  : imgConveyor
 			};			
 			
-			Ti.API.info("TIPO TRANSPORTADOR: " + typeConveyor);
+			//Ti.API.info("TIPO TRANSPORTADOR: " + typeConveyor);
 			//Ti.API.info("KEYSHORT TRANSPORTADOR: " + keyShortConveyor);
 			//Ti.API.info("DATOS DEL TRANSPORTADOR: " + JSON.stringify(e.row.children[2].attributedString));
 			//JSON.stringify(e.row.children[3].attributedString)
@@ -216,7 +216,7 @@ function addQuotation(objDataConveyor) {
 		actionBar.displayHomeAsUp = true;
 		//AL DAR CLICK EN EL BOTON  VOLVER
 		actionBar.onHomeIconItemSelected = function(e) {
-			Ti.API.info(evt);
+			//Ti.API.info(evt);
 			//CERRAMOS LA VENTANA
 			winAddQuotation.close();
 		};

@@ -1,5 +1,7 @@
 ".container": {
-	layout: "vertical"
+	layout: "vertical",
+	backgroundImage : "/img/IMAGOTIPO_opt.png",
+	backgroundRepeat : false
 },
 
 "#containerOne": {

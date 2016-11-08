@@ -5,11 +5,11 @@
 		
 		<View class="settings_container">
 			<View class="setting_container">
-				<Label class="setting_label">Device motion animation</Label>
+				<Label class="setting_label">Animación de movimiento del dispositivo</Label>
 				<Switch id="motion_switch" class="setting_switch" />
 			</View>
 			<View class="setting_container">
-				<Label class="setting_label">Parallax animation</Label>
+				<Label class="setting_label">Animación de Parallax</Label>
 				<Switch id="list_animation_switch" class="setting_switch" />
 			</View>
 		</View>

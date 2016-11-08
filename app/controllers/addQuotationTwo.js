@@ -3,6 +3,7 @@ var args = $.args;
 
 Ti.API.info("MODELO DEL TRANSPORTADOR:" + JSON.stringify(args));
 
+// Modelo
 var modelConveyor = args.model;
 var objAccesoriesWS;
 var objModelWS;
@@ -99,8 +100,14 @@ function dataModelConveyor(objModelWS)
 // Click en el boton siguiente paso de la cotizacción
 $.btnAcceptConveyor.addEventListener('click', function(){
 	
+	// Objeto que vamos a enviar a la vista 
+	var objModelAndAccesoriesWS = {
+		model      : objModelWS,
+		accesories : objAccesoriesWS
+	};
+	
 	// Ventana del paso numero 3 de la cotizacion
-	var winAddQuotationThree = Alloy.createController('addQuotationThree', objAccesoriesWS).getView();
+	var winAddQuotationThree = Alloy.createController('addQuotationThree', objModelAndAccesoriesWS).getView();
 	
 	// Abrir ventana
 	winAddQuotationThree.open();
