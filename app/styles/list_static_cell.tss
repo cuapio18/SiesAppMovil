@@ -29,7 +29,7 @@
 },
 "#title_label": {
 	top:5,
-	bottom: 0,
+	bottom: 5,
 	left: 5,
 	right: 5,
 	width: Ti.UI.FILL,
@@ -52,6 +52,24 @@
 	textAlign: 'center',
 	color: '#ffffff',
 	touchEnabled: false
+},
+"#quantity_accesory" : {
+	inputType    : Titanium.UI.INPUT_TYPE_CLASS_NUMBER,
+	width        : 0,
+	height       : 0,
+	//top          : "100%",
+	//right        : 0,
+	color        : "#FFFFFF",
+	textAlign    : Titanium.UI.TEXT_ALIGNMENT_CENTER,
+	//focusable    : false,
+	//touchEnabled : true,
+	bubbleParent : false,
+	keyboardType : Titanium.UI.KEYBOARD_TYPE_NUMBER_PAD,
+	//borderStyle  : Titanium.UI.INPUT_BORDERSTYLE_ROUNDED,
+	//softKeyboardOnFocus : Titanium.UI.Android.SOFT_KEYBOARD_HIDE_ON_FOCUS
+	visible: false,
+	//borderColor : "yellow"
+	
 },
 "#overlay_view": {
 	layout: 'vertical',

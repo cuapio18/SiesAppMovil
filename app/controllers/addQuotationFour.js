@@ -1,6 +1,40 @@
 // Arguments passed into this controller can be accessed via the `$.args` object directly or:
 var args = $.args;
 
+Ti.API.info("ARGUMENTOS RECIBIDOS:" + JSON.stringify(args));
+
+// Modelos de la cotizacion
+var objModelsConveyorsQuotation = args;
+
+// EJECUTAMOS LA FUNCION
+
+getAllModelsConveyorsQuotation(objModelsConveyorsQuotation);
+
+// FUNCION QUE GENERA LOS MODELOS DE LA COTIZACION
+
+function getAllModelsConveyorsQuotation(modelsConvQuotaion) {
+	
+	// Array para guardar los datos
+	var items = [];
+	
+	// RECORREMOS EL OBJETO
+	modelsConvQuotaion.forEach(function(model, idx){
+		
+		// Vamos agregando los datos al arreglo
+		items.push({
+			modelConveyor    : {text : model.modelConveyor.model},
+			quantityConveyor : {text : model.quantity},
+			priceConveyor    : {text : model.price},
+			totalConveyor    : {text : "total"}
+		});
+		
+		// Agregamos los datos a la lista
+		$.listViewModelConveyorQuotation.sections[0].setItems(items);
+		
+	});
+	
+}
+
 function saveQuotation(e) {
 	alert(e);
 }

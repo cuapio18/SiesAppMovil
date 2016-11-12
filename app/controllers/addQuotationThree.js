@@ -1,6 +1,9 @@
 // Arguments passed into this controller can be accessed via the `$.args` object directly or:
 var args = $.args;
 
+// ID DEL USUARIO
+var idUsuarioSession = Alloy.Globals.PROPERTY_INFO_USER.userLogin.id;
+
 Ti.API.info("ARGUMENTOS RECIBIDOS:" + JSON.stringify(args));
 Ti.API.info("ACCESORIOS DEL TRANSPORTADOR:" + JSON.stringify(args.accesories));
 
@@ -44,6 +47,7 @@ $.btnAddConveyor.addEventListener('click', function() {
 	var idAccConv;
 	var nameAccConv;
 	var priceAccConv;
+	var quantityAccConv;
 	var backColorAccConv;
 	var statusSelectedAccConv;
 	var jsonAccConvSaveQuot = [];
@@ -62,6 +66,9 @@ $.btnAddConveyor.addEventListener('click', function() {
 		
 		// Convertimos el precio a numero
 		var convertriceAccesory = priceAccConv.split("$ ")[1].replace(new RegExp(",", "g"), "");
+		
+		// Cantidad de accesorios
+		quantityAccConv = objAcc.children[2].children[2].value;
 		
 		// Color de fondo del accesorio
 		backColorAccConv = objAcc.children[2].backgroundColor;
@@ -87,7 +94,7 @@ $.btnAddConveyor.addEventListener('click', function() {
 				id                     : idAccConv,
 				//nameAccessoryConveyor  : nameAccConv,
 				price                  : parseFloat(convertriceAccesory),
-				quantity               : 1,
+				quantity               : parseInt(quantityAccConv),
 				//colorAccesoryConveyor  : backColorAccConv,
 				//statusAccesoryConveyor : statusSelectedAccConv
 			});
@@ -99,33 +106,37 @@ $.btnAddConveyor.addEventListener('click', function() {
 	
 	// Creamo objeto para guardar la cotizacion
 	var objSaveQuotationJson = {
+		idUser      : idUsuarioSession,
 		id          : idModel,
 		model       : nameModel,
 		accessories : jsonAccConvSaveQuot
 	};
 	
-	Ti.API.info("OBJETO PARA GUARDAR COTIZACION: " + JSON.stringify(objSaveQuotationJson));
+	// Dialogo para agregar cotizacion
+	var dialogAddQuotation = Ti.UI.createAlertDialog({
+		persistent  : true,
+		cancel      : 0,
+		buttonNames : ['Confirmar', 'Cancelar'],
+		message     : "¿Deseas confirmar esta acción?",
+		title       : "Agregar Cotización"
+	});
 	
-	// Ventana del paso numero 4 de la cotizacion
-	var winAddQuotationFour = Alloy.createController('addQuotationFour').getView();
-	
-	// Abrir ventana
-	//winAddQuotationFour.open();
-	
-	//generarCotizacionModeloAccesorios(dataFullModelAccesories);
-	
-	// CLICK EN EL BOTON REGRESAR
-	winAddQuotationFour.addEventListener("open", function(evt) {
+	// Click sobre el dialogo
+	dialogAddQuotation.addEventListener('click', function(e){
 		
-		var actionBar = winAddQuotationFour.activity.actionBar;
+		Ti.API.info("Indice boton: " + e.index);
 		
-		actionBar.displayHomeAsUp = true;
-		actionBar.onHomeIconItemSelected = function(e) {
-			//Ti.API.info(evt);
-			winAddQuotationFour.close();
+		// Si se presiona confirmar
+		if (e.index == 0) {
+			Ti.API.info("OBJETO PARA GUARDAR COTIZACION: " + JSON.stringify(objSaveQuotationJson));
+			// GUARDAMOS LA COTIZACION
+			generarCotizacionModeloAccesorios(objSaveQuotationJson);
 		};
 		
 	});
+	
+	// Mostramos el dialogo
+	dialogAddQuotation.show();
 	
 });
 
@@ -205,6 +216,10 @@ function fillAccessoriePicker(objOptionsAccessoriePicker) {
 			},
 			"#imageview" : {
 				image : 'http://image.made-in-china.com/2f0j10pvjtGEnMaqba/-Cinta-transportadora-con-el-accesorio-.jpg'
+			},
+			"#quantity_accesory" : {
+				value : 1,
+				//focusable : true,
 			}
 			
 		});
@@ -216,6 +231,7 @@ function fillAccessoriePicker(objOptionsAccessoriePicker) {
 			// Al hacer click sobre cada elemento
 			cell.getView().addEventListener("click", function(e) {
 				
+				Ti.API.info("Se activa click");
 				// Validamos el color de fondo de la vista
 				if(e.source.getChildren()[2].getBackgroundColor() == "#0B3C4C") {
 					
@@ -231,6 +247,18 @@ function fillAccessoriePicker(objOptionsAccessoriePicker) {
 					// Cambiamos el color al label precio
 					e.source.getChildren()[2].getChildren()[1].setColor("#fff");
 					
+					// Cambiamos el color del campo de texto
+					e.source.getChildren()[2].getChildren()[2].setColor("#fff");
+					
+					// Ocultamos el campo de texto
+					e.source.getChildren()[2].getChildren()[2].hide();
+					
+					// Cambiamos el ancho del campo de texto
+					e.source.getChildren()[2].getChildren()[2].setWidth(0);
+					
+					// Cambiamos la altura del campo de texto
+					e.source.getChildren()[2].getChildren()[2].setHeight(0);
+					
 				} else {
 					
 					// Cambiamos el tamano del fondo
@@ -244,6 +272,18 @@ function fillAccessoriePicker(objOptionsAccessoriePicker) {
 					
 					// Cambiamos el color al label precio
 					e.source.getChildren()[2].getChildren()[1].setColor("#ECAE73");//0DD1BE - ECAE73
+					
+					// Cambiamos el color del campo de texto
+					e.source.getChildren()[2].getChildren()[2].setColor("#ECAE73");
+					
+					// Mostramos el campo de texto
+					e.source.getChildren()[2].getChildren()[2].show();
+					
+					// Cambiamos el ancho del campo de texto
+					e.source.getChildren()[2].getChildren()[2].setWidth(Titanium.UI.SIZE);
+					
+					// Cambiamos la altura del campo de texto
+					e.source.getChildren()[2].getChildren()[2].setHeight(Titanium.UI.SIZE);
 					
 				}
 				
@@ -382,7 +422,7 @@ function fillAccessoriePicker(objOptionsAccessoriePicker) {
 //populateLists(list, 'list', 0, cellOffset + Alloy.Globals.layout.lists.cell.height + 20);
 //populateListAccessories(0, cellOffset + Alloy.Globals.layout.lists.cell.height + 20);
 
-function generarCotizacionModeloAccesorios(objModelAccesories) 
+function generarCotizacionModeloAccesorios(objSaveQuotationJson) 
 {
 
 	// Url del servicio rest
@@ -392,7 +432,30 @@ function generarCotizacionModeloAccesorios(objModelAccesories)
 	var client = Ti.Network.createHTTPClient({
 		// función de llamada cuando los datos de respuesta está disponible
 		onload : function(e) {
+			
 			Ti.API.info("Received text: " + this.responseText);
+			
+			// Respuesta del servicio
+			var objResponseWS = JSON.parse(this.responseText);
+			
+			// Ventana del paso numero 4 de la cotizacion
+			var winAddQuotationFour = Alloy.createController('addQuotationFour', objResponseWS.listTemp).getView();
+			
+			// Abrir ventana
+			winAddQuotationFour.open();
+			
+			// CLICK EN EL BOTON REGRESAR
+			/*winAddQuotationFour.addEventListener("open", function(evt) {
+				
+				var actionBar = winAddQuotationFour.activity.actionBar;
+				
+				actionBar.displayHomeAsUp = true;
+				actionBar.onHomeIconItemSelected = function(e) {
+					//Ti.API.info(evt);
+					winAddQuotationFour.close();
+				};
+				
+			});*/
 		},
 		// función de llamada cuando se produce un error, incluyendo un tiempo de espera
 		onerror : function(e) {
@@ -408,6 +471,6 @@ function generarCotizacionModeloAccesorios(objModelAccesories)
 	client.setRequestHeader("Content-Type", "application/json; charset=utf-8");
 	
 	// Enviar la solicitud.
-	client.send(JSON.stringify(objModelAccesories)); 
+	client.send(JSON.stringify(objSaveQuotationJson)); 
 	
 }

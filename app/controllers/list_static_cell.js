@@ -178,3 +178,9 @@ function longAcce(e) {
 	alert(e);
 }
 
+/*function ActivarFoco(e) {
+	Ti.API.info(JSON.stringify(e));
+	//e.source.focusable = true;
+	//e.source.setFocusable(true);
+	$.quantity_accesory.focusable = true;
+}*/

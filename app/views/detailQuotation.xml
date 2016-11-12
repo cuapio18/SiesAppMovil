@@ -7,7 +7,7 @@
 			<MenuItem id="edit_quotation" title="Editar"/>
 		</Menu>
 		
-		<ListView id="listView" defaultItemTemplate="template">
+		<ListView id="listViewModelConveyorQuotationDetail" defaultItemTemplate="template">
 			
 			<Templates>
 				<ItemTemplate name="template">
@@ -18,10 +18,7 @@
 				</ItemTemplate>
 			</Templates>
 
-			<ListSection>
-				<ListItem modelConveyor:text="Modelo 1" quantityConveyor:text="Cantidad: 1" priceConveyor:text="Precio unit: $1,111.00" totalConveyor:text="Total: $1,111.00"/>
-				<ListItem modelConveyor:text="Modelo 2" quantityConveyor:text="Cantidad: 2" priceConveyor:text="Precio unit: $1,111.00" totalConveyor:text="Total: $1,111.00"/>
-			</ListSection>
+			<ListSection name="sectionModelConveyorsQuotationDetail"></ListSection>
 			
         </ListView>
         

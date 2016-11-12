@@ -6,28 +6,28 @@
 "#modelConveyor" : {
     color: 'black',
     font: { fontFamily:'Arial', fontSize: '20dp', fontWeight:'bold' },
-    left: '20dp', top: 0
+    left: '20dp', top: '10dp'
 },
 "#quantityConveyor" : {
     color: 'gray',
     font: { fontFamily:'Arial', fontSize: '14dp' },
-    left: '20dp', top: 25
+    left: '20dp', top: 35
 }
 "#priceConveyor" : {
     //width: '50dp', height: '50dp', left: 0
 	color: 'gray',
     font: { fontFamily:'Arial', fontSize: '14dp' },
-    left: '20dp', top: 45
+    left: '20dp', top: 55, bottom : '10dp'
 },
 "#totalConveyor": {
 	color: 'gray',
     font: { fontFamily:'Arial', fontSize: '14dp' },
-    left: '170dp', top: 45
+    left: '170dp', top: 55, bottom : '10dp'
 },
-"ListItem": {
+/*"ListItem": {
 	top:10,
 	bottom: 10
-},
+},*/
 "MenuItem": {
     showAsAction: Ti.Android.SHOW_AS_ACTION_ALWAYS
 },
@@ -38,7 +38,7 @@
 "#labelTotalQuotation": {
 	top: 300
 },
-"#listView": {
+"#listViewModelConveyorQuotationDetail": {
 	width: Titanium.UI.FILL,
 	height: Titanium.UI.SIZE
 }

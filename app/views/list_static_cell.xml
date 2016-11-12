@@ -6,6 +6,7 @@
 		<View id="overlay_view">
 			<Label id="title_label" attributedString="" />
 			<Label id="price_accessory"></Label>
+			<TextField id="quantity_accesory"></TextField>
 		</View>
 	</View>
 </Alloy>

@@ -9,27 +9,27 @@ var listViewQuot = $.listViewQuotations;
 // CLICK EN UN ELEMENTO DE LA LISTA
 listViewQuot.addEventListener('itemclick', function(e) {
 	
-	var item = e.section.getItemAt(e.itemIndex);
-	//var item = eA.section.getItemAt(e.itemIndex);
+	// Elemento seleccionado
+	var itemClickQuotation  = e.section.getItemAt(e.itemIndex);
 	
-	//alert("INDEX: " + e.source.selectedIndex);
-	Ti.API.info("ITEM:" + JSON.stringify(item));
-	//Ti.API.info("E: " + JSON.stringify(e));
-	var windDetailQuotation = Alloy.createController('detailQuotation').getView();
-	//windDetailQuotation.open();
+	Ti.API.info("ITEM:" + JSON.stringify(itemClickQuotation));
+
+	var windDetailQuotation = Alloy.createController('detailQuotation', itemClickQuotation).getView();
 	
+	// Abrimos la ventana
+	windDetailQuotation.open();
+	
+	// Evento que se ejecuta ala abri la ventana
 	windDetailQuotation.addEventListener("open", function(evt) {
 		var actionBar = windDetailQuotation.activity.actionBar;
 		actionBar.displayHomeAsUp = true;
+		// Al hacer click en el boton Home Icon
 		actionBar.onHomeIconItemSelected = function(e) {
-			//Ti.API.info(evt);
-			//alert(e);
-			//$.miVentana2.close();
+			// Cerramos la ventana actual
 			windDetailQuotation.close();
 		};
 	});
 
-		
 });
 
 // FUNCION QUE OBTIENE LAS COTIZACIONES
@@ -181,14 +181,62 @@ function editQuotation(dataItemSelected)
 
 // FUNCION PAARA ELIMINAR UNA COTIZACION
 
-function deleteQuotation(idQuotation)
+function deleteQuotation(dataItemSelected)
 {
+	Ti.API.info("ITEM SELECCIONADO: " + JSON.stringify(dataItemSelected));
 	Ti.API.info("Eliminar la cotización. " +  dataItemSelected.title_quotation.text + " # " + dataItemSelected.title_quotation.id);
+	
+	// Dialogo de eliminar cotizacion
+	var dialogDeleteQuotation = Ti.UI.createAlertDialog({
+		persistent  : true, 
+		cancel      : 0,
+		buttonNames : ['Cancelar', 'Confirmar'],
+		message     : "¿Seguro de realizar esta acción?",
+		title       : "Eliminar Cotización"
+	});
+	
+	// Click sobre el dialogo
+	dialogDeleteQuotation.addEventListener('click', function(e){
+		
+    	if (e.index == 1) {
+    		
+    		// Eliminamos el elemento seleccionado de la vista
+    		
+    		// Preguntamos si solo queda un elemento en la vista
+			if($.listViewQuotations.sections[0].items.length == 1) {
+				
+				// Eliminamos la seccion
+				$.listViewQuotations.deleteSectionAt(0);
+
+				// Creamos una seccion con un titulo
+				var section0 = Ti.UI.createListSection({ headerTitle: "No existen cotizaciones registradas!"});
+				
+				// Array vacio
+				var sections = [];
+				
+				// Agregamos nuestra seccion al array
+				sections.push(section0);
+				
+				// Agregamos nuestro array de secciones a la lista
+				$.listViewQuotations.setSections(sections);
+				
+			} else {
+				// Eliminamos un elemento de la lista
+				$.listViewQuotations.sections[0].deleteItemsAt(parseInt(dataItemSelected.title_quotation.idx), 1);
+			}
+			
+    	};
+    	
+	});
+	
+	// Mostramos el dialogo
+	dialogDeleteQuotation.show();
+	
 }
 
 // FUNCION PARA VER LOS COMETRIOS DE UNA COTIZACION
 
-function seeCommentsQuotation(idQuotation)
+function seeCommentsQuotation(dataItemSelected)
 {
 	Ti.API.info("Cometarios de la cotización. " +  dataItemSelected.title_quotation.text + " # " + dataItemSelected.title_quotation.id);
 }

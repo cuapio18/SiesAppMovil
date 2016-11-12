@@ -29,7 +29,7 @@
 "#date_quotation" : {
     color: 'gray',
     font: { fontFamily:'Arial', fontSize: '14dp' },
-    left: '70dp', top: '25dp'
+    left: '70dp', top: '35dp'
 },
 "#status_quotation": {
 	color: '#228765',

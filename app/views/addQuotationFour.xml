@@ -13,7 +13,7 @@
 				
 				<!--<Label id="labelTilteWeaponQuotation">Arma tu Cotización</Label>-->
 				
-				<ListView id="listView" defaultItemTemplate="template">
+				<ListView id="listViewModelConveyorQuotation" defaultItemTemplate="template">
 			
 					<Templates>
 						<ItemTemplate name="template">
@@ -26,15 +26,7 @@
 						</ItemTemplate>
 					</Templates>
 		
-					<ListSection>
-						<ListItem modelConveyor:text="Modelo 1" quantityConveyor:text="Cantidad: 1" priceConveyor:text="Precio unit: $1,111.00" totalConveyor:text="Total: $1,111.00"/>
-						<ListItem modelConveyor:text="Modelo 2" quantityConveyor:text="Cantidad: 2" priceConveyor:text="Precio unit: $1,111.00" totalConveyor:text="Total: $1,111.00"/>
-						<ListItem modelConveyor:text="Modelo 3" quantityConveyor:text="Cantidad: 1" priceConveyor:text="Precio unit: $1,111.00" totalConveyor:text="Total: $1,111.00"/>
-						<ListItem modelConveyor:text="Modelo 4" quantityConveyor:text="Cantidad: 2" priceConveyor:text="Precio unit: $1,111.00" totalConveyor:text="Total: $1,111.00"/>
-						<ListItem modelConveyor:text="Modelo 5" quantityConveyor:text="Cantidad: 1" priceConveyor:text="Precio unit: $1,111.00" totalConveyor:text="Total: $1,111.00"/>
-						<ListItem modelConveyor:text="Modelo 6" quantityConveyor:text="Cantidad: 2" priceConveyor:text="Precio unit: $1,111.00" totalConveyor:text="Total: $1,111.00"/>
-						<ListItem modelConveyor:text="Modelo 7" quantityConveyor:text="Cantidad: 1" priceConveyor:text="Precio unit: $1,111.00" totalConveyor:text="Total: $1,111.00"/>
-						<ListItem modelConveyor:text="Modelo 8" quantityConveyor:text="Cantidad: 2" priceConveyor:text="Precio unit: $1,111.00" totalConveyor:text="Total: $1,111.00"/>
+					<ListSection name="sectionModelConveyorsQuotation">
 					</ListSection>
 					
 		        </ListView>
