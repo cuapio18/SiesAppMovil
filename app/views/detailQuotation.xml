@@ -11,10 +11,12 @@
 			
 			<Templates>
 				<ItemTemplate name="template">
-					<Label bindId="modelConveyor" id="modelConveyor" />
-					<Label bindId="quantityConveyor" id="quantityConveyor" />
-					<Label bindId="priceConveyor" id="priceConveyor" />
-					<Label bindId="totalConveyor" id="totalConveyor" />
+					<View id="container_model_temp" onLongpress="longPressModelConveyor">
+						<Label bindId="modelConveyor" id="modelConveyor" />
+						<Label bindId="quantityConveyor" id="quantityConveyor" />
+						<Label bindId="priceConveyor" id="priceConveyor" />
+						<Label bindId="totalConveyor" id="totalConveyor" />
+					</View>
 				</ItemTemplate>
 			</Templates>
 

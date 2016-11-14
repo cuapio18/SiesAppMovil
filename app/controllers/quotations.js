@@ -106,12 +106,13 @@ function createListAllQuotations(quotations)
 
 getAllQuotations(idUsuarioSession);
 
-var dialog;
-var myArray = ['Editar', 'Eliminar', 'Comentarios', 'Cancelar'];
-var opts    = {
+// DIALOGO DE COTIZACION
+var dialogQuotation;
+var arrayDialogQuo = ['Editar', 'Eliminar', 'Comentarios', 'Cancelar'];
+var optsDialogQuo  = {
 	title:"Cotización",
 	cancel : 3,
-	options : myArray,
+	options : arrayDialogQuo,
 	//selectedIndex : 3, // Define la opción seleccionada por defecto.
 	destructive : 0, // Índice para definir la opción destructiva, indicada por una señal visual cuando se procesa.
 };
@@ -119,21 +120,24 @@ var opts    = {
 // Datos de la cotizacion
 var dataItemSelected = {};
 
+// Index del elemento sellecionado
+var itemIndexQuotation;
+
 // FUNCION AL DAR CLICK PROLONGADO SOBRE ALGUN ELEMENTO
 
 function longCB(e) {
 	
 	// Indice del elemento presionado
-	var itemIndex    = e.itemIndex;
+	itemIndexQuotation    = e.itemIndex;
 	
 	// Datos del elemento presionado
-	dataItemSelected = e.section.items[parseInt(itemIndex)];
+	dataItemSelected = e.section.items[parseInt(itemIndexQuotation)];
 	
 	//Ti.API.info("LONGCB: " + JSON.stringify(dataItemSelected));
 	//alert(JSON.stringify(e.section.items[parseInt(itemIndex)].title_quotation.text ));
-	dialog = Ti.UI.createOptionDialog(opts);
-	dialog.show();
-	dialog.addEventListener('click', onSelectDialog);
+	dialogQuotation = Ti.UI.createOptionDialog(optsDialogQuo);
+	dialogQuotation.show();
+	dialogQuotation.addEventListener('click', onSelectDialog);
 
 };
 
@@ -145,12 +149,12 @@ function onSelectDialog(event) {
 	Ti.API.info("Cotizacion seleccionada: " + JSON.stringify(dataItemSelected));
 	
 	// indice del elemento seleccionado
-	var selectedIndex = event.source.selectedIndex;
+	var selectedIndexDialogQuotation = event.source.selectedIndex;
 	
 	//Ti.API.info("Index del elemento seleccionado: " + parseInt(selectedIndex));
 	
 	// Realizamos una accion dependiendo lo que se eligio
-	switch(parseInt(selectedIndex)) {
+	switch(parseInt(selectedIndexDialogQuotation)) {
 		case 0 :
 			// Llamamos a la funcion
 			editQuotation(dataItemSelected);
@@ -186,44 +190,79 @@ function deleteQuotation(dataItemSelected)
 	Ti.API.info("ITEM SELECCIONADO: " + JSON.stringify(dataItemSelected));
 	Ti.API.info("Eliminar la cotización. " +  dataItemSelected.title_quotation.text + " # " + dataItemSelected.title_quotation.id);
 	
+	// Objeto con el id de la cotizacion
+	var objIdQuotation = {
+		"id" : parseInt(dataItemSelected.title_quotation.id)
+	};
+	
 	// Dialogo de eliminar cotizacion
 	var dialogDeleteQuotation = Ti.UI.createAlertDialog({
 		persistent  : true, 
 		cancel      : 0,
-		buttonNames : ['Cancelar', 'Confirmar'],
+		buttonNames : ['Confirmar', 'Cancelar'],
 		message     : "¿Seguro de realizar esta acción?",
 		title       : "Eliminar Cotización"
 	});
 	
 	// Click sobre el dialogo
-	dialogDeleteQuotation.addEventListener('click', function(e){
+	dialogDeleteQuotation.addEventListener('click', function(e) {
 		
-    	if (e.index == 1) {
+		// Si presionamos confirmar
+    	if (e.index == 0) {
     		
-    		// Eliminamos el elemento seleccionado de la vista
+    		// URL del servicio rest
+			var url = "http://" + Alloy.Globals.URL_GLOBAL_SIES + "/sies-rest/quotation/delete";
+			
+			// Cliente para realizar la peticion
+			var client = Ti.Network.createHTTPClient({
+				onload : function(e) {
+					
+					Ti.API.info("Received text: " + this.responseText);
+		
+					//var responseWS = JSON.parse(this.responseText);
+					
+					// Eliminamos el elemento seleccionado de la vista
     		
-    		// Preguntamos si solo queda un elemento en la vista
-			if($.listViewQuotations.sections[0].items.length == 1) {
-				
-				// Eliminamos la seccion
-				$.listViewQuotations.deleteSectionAt(0);
-
-				// Creamos una seccion con un titulo
-				var section0 = Ti.UI.createListSection({ headerTitle: "No existen cotizaciones registradas!"});
-				
-				// Array vacio
-				var sections = [];
-				
-				// Agregamos nuestra seccion al array
-				sections.push(section0);
-				
-				// Agregamos nuestro array de secciones a la lista
-				$.listViewQuotations.setSections(sections);
-				
-			} else {
-				// Eliminamos un elemento de la lista
-				$.listViewQuotations.sections[0].deleteItemsAt(parseInt(dataItemSelected.title_quotation.idx), 1);
-			}
+			    	// Preguntamos si solo queda un elemento en la vista
+					if($.listViewQuotations.sections[0].items.length == 1) {
+							
+						// Eliminamos la seccion
+						$.listViewQuotations.deleteSectionAt(0);
+			
+						// Creamos una seccion con un titulo
+						var section0 = Ti.UI.createListSection({
+							headerTitle: "No existen cotizaciones registradas!"
+						});
+							
+						// Array vacio
+						var sections = [];
+							
+						// Agregamos nuestra seccion al array
+						sections.push(section0);
+							
+						// Agregamos nuestro array de secciones a la lista
+						$.listViewQuotations.setSections(sections);
+							
+					} else {
+						// Eliminamos un elemento de la lista
+						$.listViewQuotations.sections[0].deleteItemsAt(parseInt(itemIndexQuotation), 1);
+					}
+					
+				},
+				onerror : function(e) {
+					Ti.API.info(e.error);
+				},
+				timeout : 5000
+			});
+			
+			// Preparamos conexion
+			client.open("POST", url);
+		
+			// Establecer la cabecera para el formato JSON correcta
+			client.setRequestHeader("Content-Type", "application/json; charset=utf-8");
+		
+			// Enviar peticion
+			client.send(JSON.stringify(objIdQuotation));
 			
     	};
     	
