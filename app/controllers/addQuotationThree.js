@@ -4,6 +4,9 @@ var args = $.args;
 // ID DEL USUARIO
 var idUsuarioSession = Alloy.Globals.PROPERTY_INFO_USER.userLogin.id;
 
+// ID DE LA COTIZACION
+var idQuo = Alloy.Globals.ID_GLOBAL_QUOTATION;
+
 Ti.API.info("ARGUMENTOS RECIBIDOS:" + JSON.stringify(args));
 Ti.API.info("ACCESORIOS DEL TRANSPORTADOR:" + JSON.stringify(args.accesories));
 
@@ -103,6 +106,7 @@ $.btnAddConveyor.addEventListener('click', function() {
 	});
 	
 	//Ti.API.info("OBJETO DE ACCESORIOS DE MODELOS: " + JSON.stringify(jsonAccConvSaveQuot));
+	//var objSaveQuotationJson = [];
 	
 	// Creamo objeto para guardar la cotizacion
 	var objSaveQuotationJson = {
@@ -110,6 +114,11 @@ $.btnAddConveyor.addEventListener('click', function() {
 		id          : idModel,
 		model       : nameModel,
 		accessories : jsonAccConvSaveQuot
+	};
+	
+	// Si el id de la cotizacion es diferente de cero agregamos un valor al array}
+	if (idQuo > 0) {
+		objSaveQuotationJson['idQuotation'] = idQuo;
 	};
 	
 	// Dialogo para agregar cotizacion
@@ -128,6 +137,7 @@ $.btnAddConveyor.addEventListener('click', function() {
 		
 		// Si se presiona confirmar
 		if (e.index == 0) {
+			Ti.API.info("ID de la Cotización: " + Alloy.Globals.ID_GLOBAL_QUOTATION);
 			Ti.API.info("OBJETO PARA GUARDAR COTIZACION: " + JSON.stringify(objSaveQuotationJson));
 			// GUARDAMOS LA COTIZACION
 			generarCotizacionModeloAccesorios(objSaveQuotationJson);

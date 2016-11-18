@@ -36,7 +36,15 @@ function getAllModelsConveyorsQuotation(modelsConvQuotaion) {
 }
 
 function saveQuotation(e) {
-	alert(e);
+	//alert(e);
+	// Limpiamos el valor del id de la cotizacion
+	Alloy.Globals.ID_GLOBAL_QUOTATION = 0;
+	
+	// Venta principal de cotizaciones
+	var winHomeQuotations = Alloy.createController('home').getView();
+	
+	// Abrimos ventana
+	winHomeQuotations.open();
 }
 
 //$.btnOne.addEventListener('buyQuotation()');

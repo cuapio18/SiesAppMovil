@@ -28,6 +28,12 @@ Alloy.Globals.PROPERTY_INFO_USER = 'PROPERTY_INFO_USER';
 // Variable global para guardar la url
 Alloy.Globals.URL_GLOBAL_SIES = '192.168.1.73:8080';
 
+// Variable Global para guardar el id de la cotización
+Alloy.Globals.ID_GLOBAL_QUOTATION = 0;
+
+// TABS de cotizaciones y agregar cotizacion
+Alloy.Globals.TABGROUP_QUOTATIONS = "";
+
 // Conjunto de propiedades predeterminadas
 // Validamos si existen las propiedades almacenadas en la aplicacion
 if (!Ti.App.Properties.hasProperty(Alloy.Globals.PROPERTY_ENABLE_MOTION_ANIMATION)) {

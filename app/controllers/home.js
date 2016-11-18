@@ -1,6 +1,8 @@
 // Arguments passed into this controller can be accessed via the `$.args` object directly or:
 var args = $.args;
 
+var tabGroupQuotations = $.tabGroupQuotations;
+
 // *****************************
 // CLICK EN CERRAR SESION
 // *****************************
@@ -58,9 +60,60 @@ function showSettings(e) {
 // *****************************
 // CLICK EN EL BOTON FISICO VOLVER
 // *****************************
-$.tabGroupQuotations.addEventListener('android:back', function(e){
+/*$.tabGroupQuotations.addEventListener('android:back', function(e){
 	//alert(e);
 	e.cancelBubble = true;
 	var winLogin = Alloy.createController('index').getView();
 	winLogin.open();
+});*/
+
+/*$.tabgroupsies.addEventListener('open', function(e) {
+	$.tabgroupsies.setActiveTab(1);
+	Ti.API.info('****************** activeTab: ' + $.tabgroupsies.getActiveTab().getTitle());
+});
+
+function doClick(e){
+	$.tabgroupsies.setActiveTab(1);
+    Titanium.API.info("You clicked the button");
+};*/
+
+// ACTIVAMOS UN TAB AL CARGAR LA PANTALLA
+
+tabGroupQuotations.addEventListener('open', function(e){
+	
+	// Activamo un tab
+	tabGroupQuotations.setActiveTab(0);
+	
+	// Guardamos el tabgroup en una variable global
+	Alloy.Globals.TABGROUP_QUOTATIONS = tabGroupQuotations;
+	
+	Ti.API.info('****************** activeTab: ****************** ' + tabGroupQuotations.getActiveTab().getTitle());
+
+});
+
+tabGroupQuotations.addEventListener('focus', function(e) {
+	// Recreate the TabGroup Action Bar menu
+	//$.tabGroup.activity.invalidateOptionsMenu();
+	Ti.API.info("EVENT: " + e);
+});
+
+tabGroupQuotations.addEventListener('swipe', function(e){
+	
+	var activeTabIndex = tabGroupQuotations.tabs.indexOf(tabGroupQuotations.activeTab);
+	
+	Ti.API.info("Dirección: " + e.direction);
+
+    if(e.direction === 'right' && activeTabIndex == 1) {
+    	
+    	Ti.API.info("Dirección: " + e.direction);
+
+        //tabGroup.setActiveTab(activeTabIndex - 1);
+
+    } else if(e.direction === 'left' && activeTabIndex == 0) {
+		
+		Ti.API.info("Dirección: " + e.direction);
+        //tabGroup.setActiveTab(activeTabIndex + 1);
+
+    }
+    
 });

@@ -179,6 +179,11 @@ function deleteModelTemp(dataItemSelected)
 	Ti.API.info("ITEM SELECCIONADO: " + JSON.stringify(dataItemSelected));
 	Ti.API.info("Eliminar model temp. " +  dataItemSelected.modelConveyor.text + " # " + dataItemSelected.modelConveyor.id);
 	
+	// Objeto con el ID del modelo temp
+	var objIdModelTemp = {
+		"id" : parseInt(dataItemSelected.modelConveyor.id)	
+	};
+	
 	// Dialogo para confirmar "Borrar modelo temp"
 	var dialogDeleteModelTemp = Ti.UI.createAlertDialog({
 		persistent  : true,
@@ -194,32 +199,57 @@ function deleteModelTemp(dataItemSelected)
 		// Si presionamos confirmar
 		if (e.index == 0) {
 			
-			// Preguntamos si solo queda un elemento en la lista
-			if ($.listViewModelConveyorQuotationDetail.sections[0].items.length == 1) {
-				
-				// Eliminamos la seccion
-				$.listViewModelConveyorQuotationDetail.deleteSectionAt(0);
-				
-				// Creamos una seccion con un titulo
-				var sectionDefaulModelTemp = Ti.UI.createListSection({
-					headerTitle : 'No existen modelos para mostrar!'
-				});
-				
-				// Array vacio
-				var sectionsDefModTemp = [];
-				
-				// Agregamos nuestra seccion al array
-				sectionsDefModTemp.push(sectionDefaulModelTemp);
-				
-				// Agregamos nuestro array de secciones a la lista
-				$.listViewModelConveyorQuotationDetail.setSections(sectionsDefModTemp);
-				
-			} else {
-				
-				// Eliminamos un elemento de la lista
-				$.listViewModelConveyorQuotationDetail.sections[0].deleteItemsAt(parseInt(itemIndexModelTemp), 1);
-				
-			};
+			// URL del servicio rest
+			var url = "http://" + Alloy.Globals.URL_GLOBAL_SIES + "/sies-rest/quotation/deleteModelTemp";
+			
+			// Cliente para realizar la peticion
+			var client = Ti.Network.createHTTPClient({
+				onload : function(e) {
+					
+					Ti.API.info("Received text: " + this.responseText);
+					
+					// Preguntamos si solo queda un elemento en la lista
+					if ($.listViewModelConveyorQuotationDetail.sections[0].items.length == 1) {
+						
+						// Eliminamos la seccion
+						$.listViewModelConveyorQuotationDetail.deleteSectionAt(0);
+						
+						// Creamos una seccion con un titulo
+						var sectionDefaulModelTemp = Ti.UI.createListSection({
+							headerTitle : 'No existen modelos para mostrar!'
+						});
+						
+						// Array vacio
+						var sectionsDefModTemp = [];
+						
+						// Agregamos nuestra seccion al array
+						sectionsDefModTemp.push(sectionDefaulModelTemp);
+						
+						// Agregamos nuestro array de secciones a la lista
+						$.listViewModelConveyorQuotationDetail.setSections(sectionsDefModTemp);
+						
+					} else {
+						
+						// Eliminamos un elemento de la lista
+						$.listViewModelConveyorQuotationDetail.sections[0].deleteItemsAt(parseInt(itemIndexModelTemp), 1);
+						
+					};
+					
+				},
+				onerror : function(e) {
+					Ti.API.info("ERROR: " + e.error);
+				},
+				timeout : 5000
+			});
+			
+			// Preparamos conexion
+			client.open("POST", url);
+			
+			// Establecer la cabecera para el formato JSON correcta
+			client.setRequestHeader("Content-Type", "application/json; charset=utf-8");
+			
+			// Enviar petición
+			client.send(JSON.stringify(objIdModelTemp));
 			
 		};
 	});

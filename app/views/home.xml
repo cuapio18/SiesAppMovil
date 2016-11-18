@@ -1,5 +1,21 @@
 <Alloy>
 	
+	<!--<TabGroup backgroundColor="white" id="tabgroupsies">
+		
+		<Tab id="tab1" title="Tab 1">
+			<Window id="win1" title="Tab 1">
+				<Button id="button" onClick="doClick" title="Hello" top="10" width="100" height="50" />
+			</Window>
+		</Tab>
+		
+		<Tab id="tab2" title="Tab 2">
+			<Window id="win2" title="Tab 2">
+				<Label id="label2" color="#999">I am Window 2</Label>
+			</Window>
+		</Tab>
+		
+	</TabGroup>-->
+	
 	<TabGroup id="tabGroupQuotations">
 		
 		<ActionBar id="actionbarHomeQuotation" title="Sies"></ActionBar>
@@ -21,25 +37,8 @@
 		<Tab id="tabAddQuotation" title="Nueva Cot.">
 			
 			<Require src="conveyors_list"></Require>
-			<!--<Window id="window">
-				<TableView id="tableview">
-					
-		        </TableView>
-				<ActivityIndicator id="activity_indicator" />
-				
-			</Window>-->
-			<!--<Window id="winAddQuotation">-->
-				<!--<Require src="list_static_cell"></Require>-->
-			<!--</Window>-->
 			
 		</Tab>
-		
-		<!--<ActionBar id="actionbarHomeQuotation" title="Sies"></ActionBar>
-		
-		<Menu>
-			<MenuItem title="Ajustes"></MenuItem>
-			<MenuItem title="Salir" onClick="logutApp"></MenuItem>
-		</Menu>-->
 		
 	</TabGroup>
 		

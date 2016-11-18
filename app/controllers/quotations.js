@@ -180,7 +180,29 @@ function onSelectDialog(event) {
 
 function editQuotation(dataItemSelected)
 {
+	// Create an instance of the controller
+	var tabGroupQuot = Alloy.Globals.TABGROUP_QUOTATIONS;
+
+	//tabGroupQuot.getActiveTab().setTitle("Tab Modif.");
+	
+	//tabGroupQuot.removeTab(tabGroupQuot.getTabs()[1]);
+	
+	// Activamos la tab de modelos
+	tabGroupQuot.setActiveTab(1);
+	// Modificamos titulo del tab
+	tabGroupQuot.getActiveTab().setTitle("Editar Cot.");
+	
+	//Ti.API.info('Alloy.Globals.TABGROUP_QUOTATIONS' + tabGroupQuot.getTabsBackgroundColor());
+	
+	// Limpiamos el valor del id de la cotizacion
+	Alloy.Globals.ID_GLOBAL_QUOTATION = 0;
 	Ti.API.info("Editar la cotización. " +  dataItemSelected.title_quotation.text + " # " + dataItemSelected.title_quotation.id);
+	Ti.API.info("ID Cotización: " + Alloy.Globals.ID_GLOBAL_QUOTATION);
+	
+	// Asignamos un id
+	Alloy.Globals.ID_GLOBAL_QUOTATION = parseInt(dataItemSelected.title_quotation.id);
+	Ti.API.info("ID Cotización: " + Alloy.Globals.ID_GLOBAL_QUOTATION);
+
 }
 
 // FUNCION PAARA ELIMINAR UNA COTIZACION
