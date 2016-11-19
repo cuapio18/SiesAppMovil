@@ -92,12 +92,33 @@ tabGroupQuotations.addEventListener('open', function(e){
 });
 
 tabGroupQuotations.addEventListener('focus', function(e) {
-	// Recreate the TabGroup Action Bar menu
-	//$.tabGroup.activity.invalidateOptionsMenu();
-	Ti.API.info("EVENT: " + e);
+	
+	var idQuotation       = Alloy.Globals.ID_GLOBAL_QUOTATION;
+	var activeTabQuo      = tabGroupQuotations.getTabs()[0].getActive();
+	var titleActiveTabQuo = tabGroupQuotations.getTabs()[1].getTitle();
+	//Ti.API.info("EVENT: " + e);
+	//Ti.API.info('ID DE COTIZACION: ' + idQuotation);
+	//Ti.API.info('TAB ACTIVO: ' + activeTabQuo);
+	//Ti.API.info('TITULO TAB ACTIVO: ' + titleActiveTabQuo);
+	
+	// Si el id es diferente de 0 - Editar Cot.
+	if ( idQuotation != 0 && activeTabQuo == true && titleActiveTabQuo == 'Editar Cot.' ) {
+		
+		// Limpimos el id de la cotizacion
+		Alloy.Globals.ID_GLOBAL_QUOTATION = 0;
+		
+		// Cambiamos el nombre al tab
+		tabGroupQuotations.getTabs()[1].setTitle('Nueva Cot.');
+		
+		Ti.API.info('ID DE COTIZACION: ' + idQuotation);
+		
+	} else {
+		Ti.API.info('ID DE COTIZACION: ' + idQuotation);
+	};
+	
 });
 
-tabGroupQuotations.addEventListener('swipe', function(e){
+/*tabGroupQuotations.addEventListener('swipe', function(e){
 	
 	var activeTabIndex = tabGroupQuotations.tabs.indexOf(tabGroupQuotations.activeTab);
 	
@@ -116,4 +137,4 @@ tabGroupQuotations.addEventListener('swipe', function(e){
 
     }
     
-});
+});*/

@@ -36,7 +36,7 @@ function getAllModelsConveyorsQuotation(modelsConvQuotaion) {
 }
 
 function saveQuotation(e) {
-	//alert(e);
+	
 	// Limpiamos el valor del id de la cotizacion
 	Alloy.Globals.ID_GLOBAL_QUOTATION = 0;
 	

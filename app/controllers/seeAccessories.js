@@ -10,11 +10,11 @@ Ti.API.info("ID del model conveyor temp: " + parseInt(idModelConTemp));
 
 // EJECUTAMOS FUNCION QUE OBTIENE LOS ACCESORIOS DEL MODEL CONVEYOR TEMP
 
-getAllModelConveyorTemp(idModelConTemp);
+getAllAccessoriesModelConveyorTemp(idModelConTemp);
 
 // FUNCION QUE OBTIENE LOS ACCESORIOS DEL MODEL CONVEYOR TEMP
 
-function getAllModelConveyorTemp(idModelConTemp) {
+function getAllAccessoriesModelConveyorTemp(idModelConTemp) {
 
 	// OBJ CON EL ID DEL MODEL CONVEYOR TEMP
 	var objIdModelConvTemp = {
@@ -31,7 +31,7 @@ function getAllModelConveyorTemp(idModelConTemp) {
 			Ti.API.info("ResponseWSQuotations: " + this.responseText);
 			
 			// FUNCION QUE GENERA LA LISTA DE LOS MODELOS DE LA COTIZACION
-			//createAllModelsConveyorsQuotation(responseWS.listTemp);
+			createAllAccessoriesModelsConveyorTemp(responseWS.accessories);
 		},
 		onerror : function(e) {
 			Ti.API.info(e.error);
@@ -39,48 +39,110 @@ function getAllModelConveyorTemp(idModelConTemp) {
 		timeout : 5000
 	});
 	
-	// Preparamos conexion
+	// Preparamos conexion.
 	client.open("POST", url);
 
-	// Establecer la cabecera para el formato JSON correcta
+	// Establecer la cabecera para el formato JSON correcta.
 	client.setRequestHeader("Content-Type", "application/json; charset=utf-8");
 
-	// Enviar peticion
+	// Enviar peticion.
 	client.send(JSON.stringify(objIdModelConvTemp));
 
 }
 
-// FUNCION QUE GENERA LOS MODELOS DE LA COTIZACION
+// FUNCION QUE GENERA LOS ACCESORIOS DE UN MODELO TEMPORAL
 
-function createAllModelsConveyorsQuotation(modelsConvQuotaion) {
+function createAllAccessoriesModelsConveyorTemp(modelsAccessoriesModelTemp) {
 
 	// Array para guardar los datos
 	var items = [];
 
 	// RECORREMOS EL OBJETO
-	modelsConvQuotaion.forEach(function(model, idx) {
+	modelsAccessoriesModelTemp.forEach(function(accessory, idx) {
 
 		// Vamos agregando los datos al arreglo
 		items.push({
-			modelConveyor : {
-				text : model.modelConveyor.model,
-				id   : model.id, 
+			name_accessory : {
+				text : accessory.accessorie.nameAccessorie,
+				id   : accessory.accessorie.id, 
 				idx  : parseInt(idx)
 			},
-			quantityConveyor : {
-				text : "Cantidad: " + model.quantity
-			},
-			priceConveyor : {
-				text : "Precio: " + model.price
-			},
-			totalConveyor : {
-				text : "Total:"
+			quantity_accessory : {
+				text : "Cantidad: " + accessory.count
 			}
 		});
 
 		// Agregamos los datos a la lista
-		$.listViewModelConveyorQuotationDetail.sections[0].setItems(items);
+		$.listViewSeeAccessories.sections[0].setItems(items);
 
 	});
 
+}
+
+// Dialogo de accesorios seleccionados
+var dialogAccessorySelected;
+var arrayDialogAccSelect = ['Cantidad Acc. -/+', 'Eliminar', 'Cancelar'];
+var optDialogAccSelect   = {
+	title   : "Accesorio Seleccionado",
+	cancel  : 2,
+	options : arrayDialogAccSelect,
+	destructive : 0
+};
+
+// Datos del elemento presionado
+var dataItemSelectedAccesory = {};
+
+// Index del elemento seleccionado
+var itemIndexAccessory;
+
+// PRESION LARGA EN UN ELEMENTO DE LA LISTA
+
+function longPressAccessory(e) {
+	
+	// Indice del elemento presionado
+	itemIndexAccessory = e.itemIndex;
+	
+	// Datos del elemento presionado
+	dataItemSelectedAccesory = e.section.items[parseInt(itemIndexAccessory)];
+	
+	Ti.API.info("ITEM INDEX: " + itemIndexAccessory);
+	Ti.API.info("ITEM SELECTED: " + JSON.stringify(dataItemSelectedAccesory));
+	
+	dialogAccessorySelected = Ti.UI.createOptionDialog(optDialogAccSelect);
+	dialogAccessorySelected.show();
+	dialogAccessorySelected.addEventListener('click', onSelectedDialogAccessory);
+	
+}
+
+// FUNCION QUE SE EJECUTA AL PRESIONAR UN ELEMENTO DEL DIALOGO
+
+function onSelectedDialogAccessory(event) {
+	
+	Ti.API.info("Accesorio seleccionado: " + JSON.stringify(dataItemSelectedAccesory));
+	
+	// Indice del elemento seleccionado del dialogo
+	var selectedIndexDialogAccessory = event.source.selectedIndex;
+	
+	Ti.API.info("Index del elemento seleccionado: " + parseInt(selectedIndexDialogAccessory));
+	
+	// Realizamos una accion dependiendo lo que fue seleccionado
+	switch(parseInt(selectedIndexDialogAccessory)) {
+		case 0:
+			Ti.API.info("Cantidad Accesorio.");
+			$.alertDialogAccesoryQuantity.show();
+			break;
+		case 1:
+			Ti.API.info("Eliminar Accesorio");
+			break;
+		default:
+			Ti.API.info("Opcion no encontrada.");
+			break;
+	}
+
+}
+
+$.slider.text = $.slider.value;
+
+function updateLabel(e){
+    $.label.text = String.format("%3.1f", e.value);
 }

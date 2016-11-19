@@ -97,21 +97,70 @@ $.listViewModelConveyorQuotationDetail.addEventListener('itemclick', function(e)
 	// Ventana
 	var winSeeAccesories = Alloy.createController('seeAccessories', itemClickModelTemp).getView();
 	
+	// Evento que se ejecuta al abrir la ventana
+	winSeeAccesories.addEventListener("open", function(ev) {
+		
+		// Action Bar
+		var actionBar;
+		
+		// Activity
+		var activitySeeAcc = winSeeAccesories.activity;
+		
+		// Validamos el sistema operativo
+		if (Ti.Platform.osname === "android") {
+			
+			if (! activitySeeAcc) {
+				Ti.API.error("No se puede acceder a la barra de acción en una ventana ligera.");
+			} else {
+			
+				// Action Bar de la ventana
+				actionBar = winSeeAccesories.activity.actionBar;
+				
+				// Validamos si existe un actionbar
+				if (actionBar) {
+					
+					// Agregamos un menu
+					activitySeeAcc.onCreateOptionsMenu = function(ev) {
+						
+						// Menu
+						var menu = ev.menu;
+						
+						// Item Menu
+						var menuItem = menu.add({
+							title        : 'Item 1',
+							icon         : Ti.Android.R.drawable.ic_menu_add,
+							showAsAction : Ti.Android.SHOW_AS_ACTION_ALWAYS
+						});
+						
+						// Click sobre un item del menu
+						menuItem.addEventListener('click', function(e){
+							Ti.API.info("I was clicked: " + JSON.stringify(e));
+						});
+						
+					};
+					
+					// Mostramos boton Home Icon
+					actionBar.displayHomeAsUp = true;
+					
+					// Agregamos un titulo
+					actionBar.title = "Accesorios seleccionados";
+					
+					// Al hacer click en el boton Home Icon
+					actionBar.onHomeIconItemSelected = function(e) {
+						// Cerramos la ventana actual
+						winSeeAccesories.close();
+					};
+				
+				};
+				
+			};
+			
+		};
+		
+	});
+	
 	// Abrimos la ventana
 	winSeeAccesories.open();
-	
-	// Evento que se ejecuta al abrir la ventana
-	winSeeAccesories.addEventListener("open", function(ev){
-		// Action Bar de la ventana
-		var actionBar = winSeeAccesories.activity.actionBar;
-		// Mostramos boton Home Icon
-		actionBar.displayHomeAsUp = true;
-		// Al hacer click en el boton Home Icon
-		actionBar.onHomeIconItemSelected = function(e) {
-			// Cerramos la ventana actual
-			winSeeAccesories.close();
-		};
-	});
 
 });
 
@@ -149,6 +198,7 @@ function longPressModelConveyor(e) {
 }
 
 // FUNCION QUE SE EJECUTA AL PRESIONAR UN ELEMENTO DEL DIALOGO
+
 function onSelectDialogModelTemp(event) {
 	Ti.API.info("Modelo Temp seleccionado: " + JSON.stringify(dataItemSelected));
 

@@ -1,5 +1,39 @@
 <Alloy>
 	<Window class="container">
-		<Label>Ver accesorios</Label>
+		
+		<AlertDialog id="alertDialogAccesoryQuantity" title="Cantidad de accesorio" message="Selecciona la cantidad de accesorios." cancel="1">
+			
+			<ButtonNames>
+				<ButtonName>Confirmar</ButtonName>
+				<ButtonName>Cancelar</ButtonName>
+			</ButtonNames>
+			
+			<View layout="vertical" platform="android">
+				<Slider id="slider" top="50" min="0" max="100" width="100%" value="50" onChange="updateLabel"/>
+        		<Label id="label" width="100%" top="30" left="0" />
+			</View>
+			
+		</AlertDialog>
+		
+		<ListView id="listViewSeeAccessories" defaultItemTemplate="templateSeeAccessories">
+			
+			<Templates>
+				
+				<ItemTemplate name="templateSeeAccessories">
+					
+					<View id="container_accessory" onLongpress="longPressAccessory">
+						<Label bindId="name_accessory" id="name_accessory" />
+                    	<Label bindId="quantity_accessory" id="quantity_accessory" />
+                    	<Slider bindId="slider_quantity_acc" id="slider_quantity_acc"></Slider>
+                    </View>
+                    
+				</ItemTemplate>
+				
+			</Templates>
+			
+			<ListSection name="sectionSeeAccessories"></ListSection>
+			
+		</ListView>
+		
 	</Window>
 </Alloy>

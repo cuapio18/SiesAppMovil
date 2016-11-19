@@ -1,4 +1,37 @@
-
-".container" : {
-  
+".container": {
+	
+},
+"#name_accessory": {
+	color: 'black',
+	font: {
+		fontFamily: 'Arial',
+		fontSize: '20dp',
+		fontWeight: 'bold'
+	},
+	left: 0,
+	top : 0
+},
+"#quantity_accessory": {
+	color: 'gray',
+	font: {
+		fontFamily: 'Arial',
+		fontSize: '14dp'
+	},
+	left: 0,
+	top  : '28dp'
+},
+"#container_accessory": {
+	width: Titanium.UI.FILL,
+	height: Titanium.UI.SIZE,
+	left : '10dp',
+	right : '10dp',
+	top : '6dp',
+	bottom : '6dp'
+},
+"#slider_quantity_acc": {
+	top : '58dp',
+	min : 1,
+	max : 10,
+	width : '100%',
+	value : 1
 }
