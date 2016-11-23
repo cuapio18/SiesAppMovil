@@ -8,9 +8,9 @@
 				<ButtonName>Cancelar</ButtonName>
 			</ButtonNames>
 			
-			<View layout="vertical" platform="android">
-				<Slider id="slider" top="50" min="0" max="100" width="100%" value="50" onChange="updateLabel"/>
-        		<Label id="label" width="100%" top="30" left="0" />
+			<View layout="vertical">
+				<Label id="label" width="100%" top="30" left="20" />
+				<Slider id="slider" top="50" min="0" max="50" width="100%" value="1" onChange="updateLabel"/>
 			</View>
 			
 		</AlertDialog>

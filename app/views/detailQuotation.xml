@@ -1,5 +1,19 @@
 <Alloy>
 	<Window class="container">
+		
+		<AlertDialog id="alertDialogModelTemp" title="Cantidad del modelo" message="Elige la cantidad de modelos." persistent="true" cancel="1">
+			
+			<ButtonNames>
+				<ButtonName>Connfirmar</ButtonName>
+				<ButtonName>Cancelar</ButtonName>
+			</ButtonNames>
+			
+			<View layout="vertical">
+				<Label id="labelQuantityModelTemp"></Label>
+				<Slider min="1" max="50" value="1" onChange="updateValueLabelMT"></Slider>
+			</View>
+			
+		</AlertDialog>
 
 		<ActionBar id="actionbarDetailQuot" title="Detalle de cotzación"/>
 		<!--<Label>Detalle de cotización</Label>-->

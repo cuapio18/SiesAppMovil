@@ -166,7 +166,7 @@ $.listViewModelConveyorQuotationDetail.addEventListener('itemclick', function(e)
 
 // Dialogo
 var dialogModelTemp;
-var arrayDialogModelTemp = ['Ver Accesorios', 'Eliminar', 'Cancelar'];
+var arrayDialogModelTemp = ['Cantidad Modelo +/-', 'Eliminar', 'Cancelar'];
 var optDialogMdelTemp    = {
 	title   : "Modelo Temporal",
 	cancel  : 2,
@@ -211,7 +211,10 @@ function onSelectDialogModelTemp(event) {
 	switch(parseInt(selectedIndexDialModelTemp))
 	{
 		case 0 :
-			Ti.API.info("Ver Accesorios Model Temp");
+			Ti.API.info("Cambiar Cantidad Modelo Temp.");
+			
+			changeQuantityModelTemp(dataItemSelected);
+			
 			break;
 		case 1 :
 			Ti.API.info("Eliminar Modelo Temp");
@@ -223,7 +226,50 @@ function onSelectDialogModelTemp(event) {
 	}
 }
 
+// ACTUALIZAR EL TEXTO DEL LABEL MODEL TEMP QUANTITY
+function updateValueLabelMT(e) {
+	Ti.API.info("SLIDER: " + parseInt(e.value));
+	$.labelQuantityModelTemp.text = parseInt(e.value);
+}
+
+
+var dialogQuantityModlTemp = "";
+
+// FUNCION PARA AUMENTA O DISMINUIR LA CANTIDAD DE MODELOS TEMP
+function changeQuantityModelTemp(dataItemSelected)
+{
+	dialogQuantityModlTemp = $.alertDialogModelTemp;
+	
+	var dialogTets = Ti.UI.createAlertDialog({
+		persistent  : true,
+		cancel      : 0,
+		buttonNames : ['Confirmar', 'Cancelar'],
+		message     : '¿Seguro de realizar esta acción?',
+		title       : 'Dialogo Test'
+	});
+	
+	Ti.API.info("ITEM SELECCIONADO: " + JSON.stringify(dataItemSelected));
+	Ti.API.info("Cantida de model temp. " +  dataItemSelected.modelConveyor.text + " # " + dataItemSelected.modelConveyor.id);
+			
+	// Al hacer click sobre alguna opcion del alert dialog
+	dialogQuantityModlTemp.addEventListener('click', function(e){
+		
+		Ti.API.info("Item Index: " + e.index);
+		
+		// Si presionamos confirmar
+		if (e.index == 0) {
+			Ti.API.info("Aumentar o disminuir cantidad de modelo!");
+		};
+				
+	});
+			
+	// Mostramos el dialogo
+	dialogQuantityModlTemp.show();
+	
+}
+
 // FUNCION PARA ELIMINAR UN MODELO TEMPORAL
+
 function deleteModelTemp(dataItemSelected)
 {
 	Ti.API.info("ITEM SELECCIONADO: " + JSON.stringify(dataItemSelected));

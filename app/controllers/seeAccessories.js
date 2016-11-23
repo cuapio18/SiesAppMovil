@@ -59,18 +59,23 @@ function createAllAccessoriesModelsConveyorTemp(modelsAccessoriesModelTemp) {
 
 	// RECORREMOS EL OBJETO
 	modelsAccessoriesModelTemp.forEach(function(accessory, idx) {
+		
+		// Validamos si el accesorio esta seleccionado
+		if (accessory.check == 1) {
 
-		// Vamos agregando los datos al arreglo
-		items.push({
-			name_accessory : {
-				text : accessory.accessorie.nameAccessorie,
-				id   : accessory.accessorie.id, 
-				idx  : parseInt(idx)
-			},
-			quantity_accessory : {
-				text : "Cantidad: " + accessory.count
-			}
-		});
+			// Vamos agregando los datos al arreglo
+			items.push({
+				name_accessory : {
+					text : accessory.accessorie.nameAccessorie,
+					id   : accessory.accessorie.id, 
+					idx  : parseInt(idx)
+				},
+				quantity_accessory : {
+					text : "Cantidad: " + accessory.count
+				}
+			});
+		
+		};
 
 		// Agregamos los datos a la lista
 		$.listViewSeeAccessories.sections[0].setItems(items);
@@ -81,7 +86,7 @@ function createAllAccessoriesModelsConveyorTemp(modelsAccessoriesModelTemp) {
 
 // Dialogo de accesorios seleccionados
 var dialogAccessorySelected;
-var arrayDialogAccSelect = ['Cantidad Acc. -/+', 'Eliminar', 'Cancelar'];
+var arrayDialogAccSelect = ['Cantidad Acc. +/-', 'Eliminar', 'Cancelar'];
 var optDialogAccSelect   = {
 	title   : "Accesorio Seleccionado",
 	cancel  : 2,
@@ -144,5 +149,7 @@ function onSelectedDialogAccessory(event) {
 $.slider.text = $.slider.value;
 
 function updateLabel(e){
-    $.label.text = String.format("%3.1f", e.value);
+	Ti.API.info("SLIDER: " + parseInt(e.value));
+	$.label.text = parseInt(e.value);
+    //$.label.text = String.format("%3.1f", e.value);
 }
