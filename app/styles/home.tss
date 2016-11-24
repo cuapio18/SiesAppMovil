@@ -109,8 +109,12 @@
 	backgroundImage : "/img/IMAGOTIPO_opt.png",
 	backgroundRepeat : false
 },
-"#searchQuotation": {
+/*"#searchQuotation": {
 	showAsAction: Ti.Android.SHOW_AS_ACTION_ALWAYS,
 	icon: Ti.Android.R.drawable.ic_menu_search
+},*/
+"#winListQuotations" : {
+	layout: 'vertical',
+	//backgroundColor : 'green'
 }
 

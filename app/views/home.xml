@@ -18,13 +18,13 @@
 	
 	<TabGroup id="tabGroupQuotations">
 		
-		<ActionBar id="actionbarHomeQuotation" title="Sies"></ActionBar>
+		<!--<ActionBar id="actionbarHomeQuotation" title="Sies"></ActionBar>
 		
 		<Menu>
 			<MenuItem title="Buscar" id="searchQuotation"></MenuItem>
 			<MenuItem title="Ajustes" onClick="showSettings"></MenuItem>
 			<MenuItem title="Salir" onClick="logutApp"></MenuItem>
-		</Menu>
+		</Menu>-->
 		
 		<Tab id="tabQuotations" title="Cotizaciones">
 			

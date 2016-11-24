@@ -1,4 +1,5 @@
 <Alloy>
+	
 	<Window class="container">
 		
 		<AlertDialog id="alertDialogAccesoryQuantity" title="Cantidad de accesorio" message="Selecciona la cantidad de accesorios." cancel="1">
@@ -9,8 +10,8 @@
 			</ButtonNames>
 			
 			<View layout="vertical">
-				<Label id="label" width="100%" top="30" left="20" />
-				<Slider id="slider" top="50" min="0" max="50" width="100%" value="1" onChange="updateLabel"/>
+				<Label id="labelAccesoryQuantity" />
+				<Slider id="sliderlabelAccesoryQuantity" min="1" max="50" value="1" onChange="updateLabel"/>
 			</View>
 			
 		</AlertDialog>
@@ -21,10 +22,12 @@
 				
 				<ItemTemplate name="templateSeeAccessories">
 					
-					<View id="container_accessory" onLongpress="longPressAccessory">
+					<View id="container_accessory" onLongpress="longPressAccessory" >
+						
 						<Label bindId="name_accessory" id="name_accessory" />
+						
                     	<Label bindId="quantity_accessory" id="quantity_accessory" />
-                    	<Slider bindId="slider_quantity_acc" id="slider_quantity_acc"></Slider>
+                    	
                     </View>
                     
 				</ItemTemplate>
@@ -36,4 +39,5 @@
 		</ListView>
 		
 	</Window>
+	
 </Alloy>

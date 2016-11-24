@@ -63,9 +63,10 @@ function createAllModelsConveyorsQuotation(modelsConvQuotaion) {
 		// Vamos agregando los datos al arreglo
 		items.push({
 			modelConveyor : {
-				text : model.modelConveyor.model,
-				id   : model.id, 
-				idx  : parseInt(idx)
+				text     : model.modelConveyor.model,
+				id       : model.id, 
+				idx      : parseInt(idx),
+				quantity : model.quantity
 			},
 			quantityConveyor : {
 				text : "Cantidad: " + model.quantity
@@ -127,7 +128,7 @@ $.listViewModelConveyorQuotationDetail.addEventListener('itemclick', function(e)
 						
 						// Item Menu
 						var menuItem = menu.add({
-							title        : 'Item 1',
+							title        : 'Agregar accesorios',
 							icon         : Ti.Android.R.drawable.ic_menu_add,
 							showAsAction : Ti.Android.SHOW_AS_ACTION_ALWAYS
 						});
@@ -138,6 +139,8 @@ $.listViewModelConveyorQuotationDetail.addEventListener('itemclick', function(e)
 						});
 						
 					};
+					
+					activitySeeAcc.invalidateOptionsMenu();
 					
 					// Mostramos boton Home Icon
 					actionBar.displayHomeAsUp = true;
@@ -171,7 +174,8 @@ var optDialogMdelTemp    = {
 	title   : "Modelo Temporal",
 	cancel  : 2,
 	options : arrayDialogModelTemp,
-	destructive : 0
+	destructive  : 0,
+	bubbleParent : false
 };
 
 // Datos del elemento presionado
@@ -197,6 +201,10 @@ function longPressModelConveyor(e) {
 	dialogModelTemp.addEventListener('click', onSelectDialogModelTemp);
 }
 
+// DIALOGO DE CANTIDAD DE MODELOS TEMPORALES
+
+var dialogQuantityModlTemp = $.alertDialogModelTemp;
+
 // FUNCION QUE SE EJECUTA AL PRESIONAR UN ELEMENTO DEL DIALOGO
 
 function onSelectDialogModelTemp(event) {
@@ -211,13 +219,19 @@ function onSelectDialogModelTemp(event) {
 	switch(parseInt(selectedIndexDialModelTemp))
 	{
 		case 0 :
-			Ti.API.info("Cambiar Cantidad Modelo Temp.");
+			//Ti.API.info("Cambiar Cantidad Modelo Temp.");
 			
-			changeQuantityModelTemp(dataItemSelected);
+			// Modificar value del slider
+			var valueSQMT = $.sliderQuantityModelTemp;
+				
+			valueSQMT.value = parseInt(dataItemSelected.modelConveyor.quantity);
+
+			// Mostramos el dialogo
+			dialogQuantityModlTemp.show();
 			
 			break;
 		case 1 :
-			Ti.API.info("Eliminar Modelo Temp");
+			//Ti.API.info("Eliminar Modelo Temp");
 			deleteModelTemp(dataItemSelected);
 			break;
 		default :
@@ -226,46 +240,86 @@ function onSelectDialogModelTemp(event) {
 	}
 }
 
-// ACTUALIZAR EL TEXTO DEL LABEL MODEL TEMP QUANTITY
-function updateValueLabelMT(e) {
-	Ti.API.info("SLIDER: " + parseInt(e.value));
-	$.labelQuantityModelTemp.text = parseInt(e.value);
-}
 
+// AL HACER CLICK SOBRE ALGUNA OPCION DEL ALERT DIALOG DE CANTIDAD DE MODELOS TEMP
 
-var dialogQuantityModlTemp = "";
+dialogQuantityModlTemp.addEventListener('click', function(e) {
+		
+	Ti.API.info("Item Index Dialog Alert CMT: " + e.index);
+		
+	// Si presionamos confirmar
+	if (e.index == 0) {
+		// Llamamos a la funcion para actualizar la cantidad del modelo
+		changeQuantityModelTemp();
+	};
+				
+});
 
 // FUNCION PARA AUMENTA O DISMINUIR LA CANTIDAD DE MODELOS TEMP
-function changeQuantityModelTemp(dataItemSelected)
+
+function changeQuantityModelTemp()
 {
-	dialogQuantityModlTemp = $.alertDialogModelTemp;
-	
-	var dialogTets = Ti.UI.createAlertDialog({
-		persistent  : true,
-		cancel      : 0,
-		buttonNames : ['Confirmar', 'Cancelar'],
-		message     : '¿Seguro de realizar esta acción?',
-		title       : 'Dialogo Test'
-	});
-	
 	Ti.API.info("ITEM SELECCIONADO: " + JSON.stringify(dataItemSelected));
-	Ti.API.info("Cantida de model temp. " +  dataItemSelected.modelConveyor.text + " # " + dataItemSelected.modelConveyor.id);
-			
-	// Al hacer click sobre alguna opcion del alert dialog
-	dialogQuantityModlTemp.addEventListener('click', function(e){
-		
-		Ti.API.info("Item Index: " + e.index);
-		
-		// Si presionamos confirmar
-		if (e.index == 0) {
-			Ti.API.info("Aumentar o disminuir cantidad de modelo!");
-		};
-				
-	});
-			
-	// Mostramos el dialogo
-	dialogQuantityModlTemp.show();
+	Ti.API.info("Cantidad model temp. " +  dataItemSelected.modelConveyor.text + " # " + dataItemSelected.modelConveyor.id);
+	var valueSliderQMT = $.sliderQuantityModelTemp;
+	Ti.API.info("VALOR DE SLIDER: " + parseInt(valueSliderQMT.value));
+	Ti.API.info("Aumentar o disminuir cantidad de modelo!");
 	
+	// Objeto a enviar en la peticion
+	var objJSONQuantityMT = {
+		id       : parseInt(dataItemSelected.modelConveyor.id),
+		quantity : parseInt(valueSliderQMT.value)
+	};
+	Ti.API.info("OBJ JSON QMT: " + JSON.stringify(objJSONQuantityMT));
+	
+	// URL del sevicio
+	var url = "http://" + Alloy.Globals.URL_GLOBAL_SIES + "/sies-rest/quotation/addCountQuotationTemp";
+	
+	// Cliente para realizar la peticion
+	var client = Ti.Network.createHTTPClient({
+		onload : function(e) {
+			
+			//Ti.API.info("Received text: " + this.responseText);
+			
+			// Item seleccionado
+			var row = $.listViewModelConveyorQuotationDetail.sections[0].getItemAt(parseInt(itemIndexModelTemp));
+			
+			//Ti.API.info("ROW: " + JSON.stringify(row));
+			
+			// Modificamos el atributo cantidad del item list seleccionado
+			row.quantityConveyor.text = "Cantidad: " + parseInt(valueSliderQMT.value);
+			
+			// Modificamos el atributo cantidad del item list seleccionado
+			row.modelConveyor.quantity = parseInt(valueSliderQMT.value);
+			
+			//Ti.API.info("ROW 2: " + JSON.stringify(row));
+			
+			// Modificamos el item de la lista con los nuevos datos
+			$.listViewModelConveyorQuotationDetail.sections[0].updateItemAt(parseInt(itemIndexModelTemp), row, { animated:true });
+		},
+		onerror : function(e) {
+			Ti.API.info(e.error);
+		},
+		timeout : 5000
+	});
+	
+	// Preparamos conexion
+	client.open("POST", url);
+	
+	// Establece rla cabecera para el formato JSON correcta.
+	client.setRequestHeader("Content-Type", "application/json; charset=utf-8");
+	
+	// Enviar peticion.
+	client.send(JSON.stringify(objJSONQuantityMT));
+	
+}
+
+// ACTUALIZAR EL TEXTO DEL LABEL MODEL TEMP QUANTITY
+
+function updateValueLabelMT(e)
+{
+	Ti.API.info("SLIDER: " + parseInt(e.value));
+	$.labelQuantityModelTemp.text = parseInt(e.value);
 }
 
 // FUNCION PARA ELIMINAR UN MODELO TEMPORAL

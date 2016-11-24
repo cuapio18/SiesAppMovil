@@ -1,8 +1,9 @@
 <Alloy>
+		
 	<Window class="container">
 		
 		<AlertDialog id="alertDialogModelTemp" title="Cantidad del modelo" message="Elige la cantidad de modelos." persistent="true" cancel="1">
-			
+	
 			<ButtonNames>
 				<ButtonName>Connfirmar</ButtonName>
 				<ButtonName>Cancelar</ButtonName>
@@ -10,35 +11,44 @@
 			
 			<View layout="vertical">
 				<Label id="labelQuantityModelTemp"></Label>
-				<Slider min="1" max="50" value="1" onChange="updateValueLabelMT"></Slider>
+				<Slider id="sliderQuantityModelTemp" min="1" max="50" value="1" onChange="updateValueLabelMT"></Slider>
 			</View>
-			
+	
 		</AlertDialog>
 
-		<ActionBar id="actionbarDetailQuot" title="Detalle de cotzación"/>
-		<!--<Label>Detalle de cotización</Label>-->
+		<!--<ActionBar id="actionbarDetailQuot" title="Detalle de cotzación"/>
+		
 		<Menu>
 			<MenuItem id="edit_quotation" title="Editar"/>
-		</Menu>
+		</Menu>-->
 		
-		<ListView id="listViewModelConveyorQuotationDetail" defaultItemTemplate="template">
+		<ScrollView id="scrollViewDetailQuotation">
 			
-			<Templates>
-				<ItemTemplate name="template">
-					<View id="container_model_temp" onLongpress="longPressModelConveyor">
-						<Label bindId="modelConveyor" id="modelConveyor" />
-						<Label bindId="quantityConveyor" id="quantityConveyor" />
-						<Label bindId="priceConveyor" id="priceConveyor" />
-						<Label bindId="totalConveyor" id="totalConveyor" />
-					</View>
-				</ItemTemplate>
-			</Templates>
-
-			<ListSection name="sectionModelConveyorsQuotationDetail"></ListSection>
+			<ListView id="listViewModelConveyorQuotationDetail" defaultItemTemplate="template">
 			
-        </ListView>
-        
-        <Label id="labelTotalQuotation">Total USD + IVA  $111,111.00</Label>
+				<Templates>
+					
+					<ItemTemplate name="template">
+						
+						<View id="container_model_temp" onLongpress="longPressModelConveyor">
+							<Label bindId="modelConveyor" id="modelConveyor" />
+							<Label bindId="quantityConveyor" id="quantityConveyor" />
+							<Label bindId="priceConveyor" id="priceConveyor" />
+							<Label bindId="totalConveyor" id="totalConveyor" />
+						</View>
+						
+					</ItemTemplate>
+					
+				</Templates>
+	
+				<ListSection name="sectionModelConveyorsQuotationDetail"></ListSection>
+			
+        	</ListView>
+        	
+        	<Label id="labelTotalQuotation">Total USD + IVA  $111,111.00</Label>
+			
+		</ScrollView>
 
 	</Window>
+	
 </Alloy>

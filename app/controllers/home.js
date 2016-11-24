@@ -41,7 +41,8 @@ function logutApp(e)
 // *****************************
 // MOSTRAR AJUSTES
 // *****************************
-function showSettings(e) {
+function showSettings(e)
+{
 	
 	var winSettings = Alloy.createController('settings').getView();
 	winSettings.open();
@@ -79,7 +80,8 @@ function doClick(e){
 
 // ACTIVAMOS UN TAB AL CARGAR LA PANTALLA
 
-tabGroupQuotations.addEventListener('open', function(e){
+tabGroupQuotations.addEventListener('open', function(e)
+{
 	
 	// Activamo un tab
 	tabGroupQuotations.setActiveTab(0);
@@ -88,6 +90,70 @@ tabGroupQuotations.addEventListener('open', function(e){
 	Alloy.Globals.TABGROUP_QUOTATIONS = tabGroupQuotations;
 	
 	Ti.API.info('****************** activeTab: ****************** ' + tabGroupQuotations.getActiveTab().getTitle());
+	
+	// Action Bar
+	var actionBar;
+		
+	// Activity
+	var activityHomeQ = tabGroupQuotations.activity;
+	
+	// Validamos el sistema operativo
+	if (Ti.Platform.osname === "android") {
+		
+		if (! activityHomeQ) {
+			Ti.API.info("No se puede acceder a la barra de acción en una ventana ligera.");
+		} else {
+			
+			// Action Bar de la ventana
+			actionBar = tabGroupQuotations.activity.actionBar;
+			
+			// Validamos si existe un actionbar
+			if (actionBar) {
+				
+				// Agregamos un menu
+				activityHomeQ.onCreateOptionsMenu = function(ev) {
+					
+					// Menu
+					var menu = ev.menu;
+					
+					// Item Menu Settings
+					var menuItemSettings = menu.add({
+						title        : 'Ajustes',
+						//icon         : Ti.Android.R.drawable.ic_menu_add,
+						showAsAction : Ti.Android.SHOW_AS_ACTION_NEVER
+					});
+					
+					// Click sobre un item del menu
+					menuItemSettings.addEventListener('click', function(e){
+						Ti.API.info("I was clicked: " + JSON.stringify(e));
+						showSettings(e);
+					});
+					
+					// Item Menu Logout
+					var menuItemLogout = menu.add({
+						title        : 'Salir',
+						//icon         : Ti.Android.R.drawable.ic_menu_add,
+						showAsAction : Ti.Android.SHOW_AS_ACTION_NEVER
+					});
+					
+					// Click sobre un item del menu
+					menuItemLogout.addEventListener('click', function(e){
+						Ti.API.info("I was clicked 2: " + JSON.stringify(e));
+						logutApp(e);
+					});
+					
+				};
+				
+				activityHomeQ.invalidateOptionsMenu();
+				
+				// Agregamos un titulo
+				actionBar.title = "SIES MOVIL";
+				
+			};
+			
+		};
+		
+	};
 
 });
 

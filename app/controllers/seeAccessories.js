@@ -66,9 +66,10 @@ function createAllAccessoriesModelsConveyorTemp(modelsAccessoriesModelTemp) {
 			// Vamos agregando los datos al arreglo
 			items.push({
 				name_accessory : {
-					text : accessory.accessorie.nameAccessorie,
-					id   : accessory.accessorie.id, 
-					idx  : parseInt(idx)
+					text     : accessory.accessorie.nameAccessorie,
+					id       : accessory.accessorie.id, 
+					idx      : parseInt(idx),
+					quantity : accessory.count
 				},
 				quantity_accessory : {
 					text : "Cantidad: " + accessory.count
@@ -91,7 +92,8 @@ var optDialogAccSelect   = {
 	title   : "Accesorio Seleccionado",
 	cancel  : 2,
 	options : arrayDialogAccSelect,
-	destructive : 0
+	destructive  : 0,
+	bubbleParent : false
 };
 
 // Datos del elemento presionado
@@ -119,6 +121,10 @@ function longPressAccessory(e) {
 	
 }
 
+// DIALOGO DE CANTIDAD DE MODELOS TEMPORALES
+
+var dialogQuantityAccessory = $.alertDialogAccesoryQuantity;
+
 // FUNCION QUE SE EJECUTA AL PRESIONAR UN ELEMENTO DEL DIALOGO
 
 function onSelectedDialogAccessory(event) {
@@ -134,7 +140,14 @@ function onSelectedDialogAccessory(event) {
 	switch(parseInt(selectedIndexDialogAccessory)) {
 		case 0:
 			Ti.API.info("Cantidad Accesorio.");
-			$.alertDialogAccesoryQuantity.show();
+			
+			// Modificar value del slider
+			var valueSQA = $.sliderlabelAccesoryQuantity;
+				
+			valueSQA.value = parseInt(dataItemSelectedAccesory.name_accessory.quantity);
+			
+			// Mostramos el dialogo
+			dialogQuantityAccessory.show();
 			break;
 		case 1:
 			Ti.API.info("Eliminar Accesorio");
@@ -146,10 +159,34 @@ function onSelectedDialogAccessory(event) {
 
 }
 
-$.slider.text = $.slider.value;
+// AL HACER CLICK SOBRE ALGUNA OPCION DEL ALERT DIALOG DE CANTIDAD DE ACCESORIOS
 
-function updateLabel(e){
+dialogQuantityAccessory.addEventListener('click', function(e) {
+		
+	Ti.API.info("Item Index Dialog Alert CA: " + e.index);
+		
+	// Si presionamos confirmar
+	if (e.index == 0) {
+		// Llamamos a la funcion para actualizar la cantidad del modelo
+		changeQuantityAccessory();
+	};
+				
+});
+
+// FUNCION PARA AUMENTA O DISMINUIR LA CANTIDAD DE ACCESORIOS
+
+function changeQuantityAccessory()
+{
+	Ti.API.info("ITEM SELECCIONADO: " + JSON.stringify(dataItemSelectedAccesory));
+}
+
+//$.slider.text = $.slider.value;
+
+// ACTUALIZAR EL TEXTO DEL LABEL ACCESSORY QUANTITY
+
+function updateLabel(e)
+{
 	Ti.API.info("SLIDER: " + parseInt(e.value));
-	$.label.text = parseInt(e.value);
+	$.labelAccesoryQuantity.text = parseInt(e.value);
     //$.label.text = String.format("%3.1f", e.value);
 }

@@ -13,22 +13,53 @@ listViewQuot.addEventListener('itemclick', function(e) {
 	var itemClickQuotation  = e.section.getItemAt(e.itemIndex);
 	
 	Ti.API.info("ITEM:" + JSON.stringify(itemClickQuotation));
-
-	var windDetailQuotation = Alloy.createController('detailQuotation', itemClickQuotation).getView();
 	
-	// Abrimos la ventana
-	windDetailQuotation.open();
+	// Ventana
+	var windDetailQuotation = Alloy.createController('detailQuotation', itemClickQuotation).getView();
 	
 	// Evento que se ejecuta ala abri la ventana
 	windDetailQuotation.addEventListener("open", function(evt) {
-		var actionBar = windDetailQuotation.activity.actionBar;
-		actionBar.displayHomeAsUp = true;
-		// Al hacer click en el boton Home Icon
-		actionBar.onHomeIconItemSelected = function(e) {
-			// Cerramos la ventana actual
-			windDetailQuotation.close();
+		
+		// Action Bar
+		var actionBar;
+		
+		// Activity
+		var activityDetailQuotation = windDetailQuotation.activity;
+		
+		// Validamos el sistema operativo
+		if (Ti.Platform.osname === "android") {
+			
+			if (! activityDetailQuotation) {
+				Ti.API.info("No se puede acceder a la barra de acción en una ventana ligera.");
+			} else {
+				
+				actionBar = windDetailQuotation.activity.actionBar;
+				
+				// Validamos si existen un actionBar
+				if (actionBar) {
+					
+					// Mostramos boton Home Icon
+					actionBar.displayHomeAsUp = true;
+					
+					// Agregamos un titulo
+					actionBar.title = "Modelos seleccionados";
+					
+					// Al hacer click en el boton Home Icon
+					actionBar.onHomeIconItemSelected = function(e) {
+						// Cerramos la ventana actual
+						windDetailQuotation.close();
+					};	
+					
+				};
+				
+			};
+			
 		};
+		
 	});
+	
+	// Abrimos la ventana
+	windDetailQuotation.open();
 
 });
 
@@ -115,6 +146,7 @@ var optsDialogQuo  = {
 	options : arrayDialogQuo,
 	//selectedIndex : 3, // Define la opción seleccionada por defecto.
 	destructive : 0, // Índice para definir la opción destructiva, indicada por una señal visual cuando se procesa.
+	bubbleParent  : false
 };
 
 // Datos de la cotizacion

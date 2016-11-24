@@ -1,60 +1,75 @@
 ".container" : {
 	layout: 'vertical',
-	backgroundImage : "/img/IMAGOTIPO_opt.png",
+  	backgroundImage : "/img/IMAGOTIPO_opt.png",
 	backgroundRepeat : false
 },
+"#scrollViewDetailQuotation" : {
+	layout : 'vertical',
+	width  : Titanium.UI.FILL,
+	height : Titanium.UI.FILL,
+	contentWidth : 'auto',
+	contentHeight : 'auto',
+	scrollType    : 'vertical'
+},
+"#listViewModelConveyorQuotationDetail": {
+	width  : Titanium.UI.FILL,
+	height : Titanium.UI.FILL
+},
 "#container_model_temp" : {
-	width : Ti.UI.FILL,
+	width  : Ti.UI.FILL,
 	height : Ti.UI.SIZE,
-	top : 0,
-	bottom : 0,
-	left : 0,
-	right : 0,
-	//backgroundColor : "pink"
+	top    : '6dp',
+	bottom : '6dp',
+	left   : '15dp',
+	right  : '15dp',
+	//backgroundColor : "blue"
+	//borderColor : 'yellow'
 },
 "#modelConveyor" : {
-    color: 'black',
-    font: { fontFamily:'Arial', fontSize: '20dp', fontWeight:'bold' },
-    left: '20dp',
-    top: '10dp'
+    color : 'black',
+    font  : { fontFamily:'Arial', fontSize: '20dp', fontWeight:'bold' },
+    left  : 0,
+    right : 0,
+    top   : 0,
+    //borderColor : 'blue'
 },
 "#quantityConveyor" : {
-    color: 'gray',
-    font: { fontFamily:'Arial', fontSize: '14dp' },
-    left: '20dp',
-    top: 35
+    color : 'gray',
+    font  : { fontFamily:'Arial', fontSize: '14dp' },
+    left  : 0,
+    right : 0,
+    top   : '30dp',
+    //borderColor : 'red'
 }
 "#priceConveyor" : {
-    //width: '50dp', height: '50dp', left: 0
-	color: 'gray',
-    font: { fontFamily:'Arial', fontSize: '14dp' },
-    left: '20dp',
-    top: 55,
-    bottom : '10dp'
+	color : 'gray',
+    font  : { fontFamily:'Arial', fontSize: '14dp' },
+   	left  : 0,
+   	//right : 0,
+    top   : '60dp',
+    //borderColor : 'red'
 },
 "#totalConveyor": {
-	color: 'gray',
-    font: { fontFamily:'Arial', fontSize: '14dp' },
-    left: '170dp',
-    top: 55,
-    bottom : '10dp'
+	color : 'gray',
+    font  : { fontFamily:'Arial', fontSize: '14dp' },
+    //left  : '60dp',
+    right : 0,
+    top   : '60dp',
+    //borderColor : 'red'
+    //bottom : '10dp'
 },
 /*"ListItem": {
 	top:10,
 	bottom: 10,
 	backgroundColor : "red"
 },*/
-"MenuItem": {
+/*"MenuItem": {
     showAsAction: Ti.Android.SHOW_AS_ACTION_ALWAYS
 },
 "#edit_quotation": {
 	//showAsAction: Ti.Android.SHOW_AS_ACTION_ALWAYS,
 	icon: Ti.Android.R.drawable.ic_menu_edit,
-},
+},*/
 "#labelTotalQuotation": {
-	top: 300
-},
-"#listViewModelConveyorQuotationDetail": {
-	width: Titanium.UI.FILL,
-	height: Titanium.UI.SIZE
+	//top: 300
 }
