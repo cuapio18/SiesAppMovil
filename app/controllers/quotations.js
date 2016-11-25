@@ -122,7 +122,7 @@ function createListAllQuotations(quotations)
 		items.push({
 			img_quotation    : {image: 'https://www.logismarket.com.ar/ip/quintino-sistemas-transportadores-para-envios-y-correos-sistemas-transportadores-para-envios-y-correos-688836-FGR.jpg'},
 			title_quotation  : {text: 'Cotización ' + quotation.id, id : quotation.id, idx : parseInt(idx)},
-			date_quotation   : {text: dateQuo.toLocaleDateString("es-MX")},
+			date_quotation   : {text: dateQuo.toLocaleDateString("mx-MX")},
 			status_quotation : {text: quotation.status.nameStatus},
 		});
 		
@@ -333,5 +333,3 @@ function seeCommentsQuotation(dataItemSelected)
 {
 	Ti.API.info("Cometarios de la cotización. " +  dataItemSelected.title_quotation.text + " # " + dataItemSelected.title_quotation.id);
 }
-
-

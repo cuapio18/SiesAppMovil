@@ -1,4 +1,5 @@
 <Alloy>
+	
 	<Window class="container">
 		
 		<ActionBar id="actionbarAddQuotFour" title="Arma tu Cotización"></ActionBar>
@@ -9,29 +10,33 @@
 		</Menu>
 		
 		<View id="containerOne">
+			
 			<ScrollView id="scrollviewFullQuotation">
-				
-				<!--<Label id="labelTilteWeaponQuotation">Arma tu Cotización</Label>-->
 				
 				<ListView id="listViewModelConveyorQuotation" defaultItemTemplate="template">
 			
 					<Templates>
+						
 						<ItemTemplate name="template">
-							<View id="container_model_conv" onLongpress="longModelConv">
+							
+							<!-- onLongpress="longModelConv"-->
+							<View id="container_model_conv">
 								<Label bindId="modelConveyor" id="modelConveyor" />
 								<Label bindId="quantityConveyor" id="quantityConveyor" />
 								<Label bindId="priceConveyor" id="priceConveyor" />
 								<Label bindId="totalConveyor" id="totalConveyor" />	
 							</View>
+							
 						</ItemTemplate>
+						
 					</Templates>
 		
-					<ListSection name="sectionModelConveyorsQuotation">
-					</ListSection>
+					<ListSection name="sectionModelConveyorsQuotation"></ListSection>
 					
 		        </ListView>
 				
 			</ScrollView>
+			
 		</View>
 		
 		<View id="containerTwo">
@@ -39,7 +44,7 @@
 			<View class="viewSection">
 				
 				<View class="viewGeneral">
-					<Button id="btnOne" onClick="btnOneQuotation">Comprar</Button>
+					<Button id="buttonAuthorizeBuy"></Button>
 				</View>
 				
 				<View class="viewGeneral">
@@ -50,20 +55,6 @@
 			
 		</View>
 		
-		<!--<TableView id="table">
-            <TableViewSection id="sectionFruit" headerTitle="Fruit">
-                <TableViewRow title="Apple"/>
-                <TableViewRow title="Bananas"/>
-            </TableViewSection>
-            <TableViewSection id="sectionVeg" headerTitle="Vegetables">
-                <TableViewRow title="Carrots"/>
-                <TableViewRow title="Potatoes"/>
-            </TableViewSection>
-            <TableViewSection id="sectionFish" headerTitle="Fish">
-                <TableViewRow title="Cod"/>
-                <TableViewRow title="Haddock"/>
-            </TableViewSection>
-     </TableView>-->
-		
 	</Window>
+	
 </Alloy>

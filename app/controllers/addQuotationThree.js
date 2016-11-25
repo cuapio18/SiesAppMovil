@@ -449,7 +449,7 @@ function generarCotizacionModeloAccesorios(objSaveQuotationJson)
 			var objResponseWS = JSON.parse(this.responseText);
 			
 			// Ventana del paso numero 4 de la cotizacion
-			var winAddQuotationFour = Alloy.createController('addQuotationFour', objResponseWS.listTemp).getView();
+			var winAddQuotationFour = Alloy.createController('addQuotationFour', objResponseWS).getView();
 			
 			// Abrir ventana
 			winAddQuotationFour.open();

@@ -77,10 +77,10 @@
 	color: '#fff',
 	//borderColor: 'gray'
 },
-"#btnOne": {
+/*"#btnOne": {
 	left: 18,
 	right: 9
-},
+},*/
 "#btnSaveQuot": {
 	left: 9,
 	right: 18
