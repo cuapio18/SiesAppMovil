@@ -451,21 +451,97 @@ function generarCotizacionModeloAccesorios(objSaveQuotationJson)
 			// Ventana del paso numero 4 de la cotizacion
 			var winAddQuotationFour = Alloy.createController('addQuotationFour', objResponseWS).getView();
 			
+			// Evento que se ejecuta al abrir la ventana
+			winAddQuotationFour.addEventListener("open", function(evt) {
+				
+				// Action Bar
+				var actionBar;
+				
+				// Activity
+				var activityQuoFour = winAddQuotationFour.activity;
+				
+				// Validamos el sistema operativo
+				if (Ti.Platform.osname === "android") {
+					
+					if (! activityQuoFour) {
+						Ti.API.error("No se puede acceder a la barra de acción en una ventana ligera.");
+					} else {
+						
+						// Action Bar de la ventana
+						actionBar = winAddQuotationFour.activity.actionBar;
+						
+						// Validamos si existe un actionbar
+						if (actionBar) {
+							
+							// Agregamos un menu
+							activityQuoFour.onCreateOptionsMenu = function(ev) {
+								
+								// Menu
+								var menu = ev.menu;
+								
+								// Item Menu Add Model
+								var menuItemAddModelTemp = menu.add({
+									title        : 'Agregar Modelo',
+									icon         : Ti.Android.R.drawable.ic_menu_add,
+									showAsAction : Ti.Android.SHOW_AS_ACTION_ALWAYS
+								});
+								
+								// Click sobre un item del menu
+								menuItemAddModelTemp.addEventListener('click', function(e){
+									Ti.API.info("I was clicked: " + JSON.stringify(e));
+								});
+								
+								// Item Menu Cancel Quotation
+								var menuItemCancelQuo = menu.add({
+									title        : 'Cancelar',
+									icon         : Ti.Android.R.drawable.ic_menu_close_clear_cancel,
+									showAsAction : Ti.Android.SHOW_AS_ACTION_ALWAYS
+								});
+								
+								// Click sobre un item del menu
+								menuItemCancelQuo.addEventListener('click', function(e) {
+									
+									Ti.API.info("Click Item Cancelar: " + JSON.stringify(e));
+									
+									// Limpiamos el valor del id de la cotizacion
+									Alloy.Globals.ID_GLOBAL_QUOTATION = 0;
+									
+									// Venta principal de cotizaciones
+									var winHomeQuotations = Alloy.createController('home').getView();
+										
+									// Abrimos ventana
+									winHomeQuotations.open();
+									
+								});
+								
+							};
+							
+							// Metodo para mostrar menu dinamico
+							activityQuoFour.invalidateOptionsMenu();
+							
+							// Mostramos boton Home Icon
+							//actionBar.displayHomeAsUp = true;
+							
+							// Agregamos un titulo
+							actionBar.title = "Cotización Generada";
+							
+							// Al hacer click en el boton Home Icon
+							/*actionBar.onHomeIconItemSelected = function(e) {
+								//Ti.API.info(evt);
+								winAddQuotationFour.close();
+							};*/
+							
+						};
+						
+					};
+					
+				};
+				
+			});
+			
 			// Abrir ventana
 			winAddQuotationFour.open();
 			
-			// CLICK EN EL BOTON REGRESAR
-			/*winAddQuotationFour.addEventListener("open", function(evt) {
-				
-				var actionBar = winAddQuotationFour.activity.actionBar;
-				
-				actionBar.displayHomeAsUp = true;
-				actionBar.onHomeIconItemSelected = function(e) {
-					//Ti.API.info(evt);
-					winAddQuotationFour.close();
-				};
-				
-			});*/
 		},
 		// función de llamada cuando se produce un error, incluyendo un tiempo de espera
 		onerror : function(e) {

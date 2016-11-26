@@ -2,12 +2,12 @@
 	
 	<Window class="container">
 		
-		<ActionBar id="actionbarAddQuotFour" title="Arma tu Cotización"></ActionBar>
+		<!--<ActionBar id="actionbarAddQuotFour" title="Arma tu Cotización"></ActionBar>
 		
 		<Menu>
 			<MenuItem title="Adjuntar archivo" showAsAction="Ti.Android.SHOW_AS_ACTION_ALWAYS" icon="Ti.Android.R.drawable.ic_menu_upload"></MenuItem>
 			<MenuItem title="Agregar" showAsAction="Ti.Android.SHOW_AS_ACTION_ALWAYS" icon="Ti.Android.R.drawable.ic_menu_add"></MenuItem>
-		</Menu>
+		</Menu>-->
 		
 		<View id="containerOne">
 			
@@ -34,6 +34,23 @@
 					<ListSection name="sectionModelConveyorsQuotation"></ListSection>
 					
 		        </ListView>
+		        
+		        <View id="viewSectionClientComment">
+					
+					<Label class="label_align_left" text="Indique un cliente:"></Label>
+					
+					<Picker id="pickerClientByIdSeller">
+						<PickerRow title="Seleccione" id=""></PickerRow>
+	        		</Picker>
+					
+				</View>
+			
+				<View id="viewSectionCommentQuo">
+					
+					<Label class="label_align_left" text="Agrega un comentario:"></Label>
+					<TextArea id="textAreaCommentQuo" />
+					
+				</View>
 				
 			</ScrollView>
 			
