@@ -244,9 +244,10 @@ function addOneToCurrentNumber(e) {
 
 function validarBotonComprarAutorizarCotizacion() {
 	
+	// Boton comprar o autorizar
 	var buttonAuthorizeBuy = $.buttonAuthorizeBuy;
 	
-	// Validamos el tipo de usuario que inicio sesion - 4 vendedor -3 cliente
+	// Validamos el tipo de usuario que inicio sesion - 4 vendedor - 3 cliente
 	if (parseInt(idProfileUserLogin)  == 4) {
 		
 		// Cambiamos el texto al boton
@@ -297,65 +298,89 @@ function autorizarCotizacion()
 {
 	Ti.API.info("Vamos a autorizar la cotizacion");
 	
-	// OBJ JSON PARA ENVIAR EN LA PETICION
-	var objJsonAuthorizeQuotation = {
-		idQuotation : 166,
-    	comment     : "ESTA ES  UNA PRUEBA",
-		idClient    : 4,
-		idSeller    : 3
-	};
+	Ti.API.info("idClientQuo: " + idClientQuo);
 	
-	Ti.API.info("OBJ JSON AQ: " + JSON.stringify(objJsonAuthorizeQuotation));
+	// TextArea Comntario
+	var textAreaCommentQuo = $.textAreaCommentQuo.value;
 	
-	// Dialogo para autorizar un acotizacion
-	var dialogAuthorizeQuotation = Ti.UI.createAlertDialog({
-		persistent  : true,
-		cancel      : 0,
-		buttonNames : ['Confirmar', 'Cancelar'],
-		message     : '¿Seguro de realizar esta acción?',
-		title       : 'Autorizar Cotización'
-	});
+	Ti.API.info("textAreaCommentQuo: " + JSON.stringify(textAreaCommentQuo));
 	
-	// Click sobre el dialogo
-	dialogAuthorizeQuotation.addEventListener('click', function(e){
-		
-		Ti.API.info("Item Index: " + e.index);
-		
-		if (e.index == 0) {
-			
-			Ti.API.info('Se va a autorizar la cotización.');
-			
-			// URL del servicio rest
-			var url = "http://" + Alloy.Globals.URL_GLOBAL_SIES + "/sies-rest/quotation/setAut";
-			
-			// Cliente para realizar la peticion
-			var client = Ti.Network.createHTTPClient({
-				onload : function(e) {
-					
-					Ti.API.info("Received text: " + this.responseText);
-					
-				},
-				onerror : function(e) {
-					Ti.API.info("ERROR: " + e.error);
-				},
-				timeout : 5000
-			});
-			
-			// Preparamos conexion
-			client.open("POST", url);
-			
-			// Establecer la cabecera para el formato JSON correcta
-			client.setRequestHeader("Content-Type", "application/json; charset=utf-8");
-			
-			// Enviar petición
-			//client.send(JSON.stringify(objJsonAuthorizeQuotation));
-			
+	// Validamos si existe un cliente
+	if ( idClientQuo != "" && idClientQuo > 0 ) {
+	
+		// OBJ JSON PARA ENVIAR EN LA PETICION
+		var objJsonAuthorizeQuotation = {
+			idQuotation : idQuotationCurrent,
+	    	comment     : textAreaCommentQuo,
+			idClient    : idClientQuo,
+			idSeller    : idUsuarioSession
 		};
 		
-	});
-	
-	// Mostramos el Alert Dialog
-	dialogAuthorizeQuotation.show();
+		
+		Ti.API.info("OBJ JSON AQ: " + JSON.stringify(objJsonAuthorizeQuotation));
+		
+		// Dialogo para autorizar un acotizacion
+		var dialogAuthorizeQuotation = Ti.UI.createAlertDialog({
+			persistent  : true,
+			cancel      : 0,
+			buttonNames : ['Confirmar', 'Cancelar'],
+			message     : '¿Seguro de realizar esta acción?',
+			title       : 'Autorizar Cotización'
+		});
+		
+		// Click sobre el dialogo
+		dialogAuthorizeQuotation.addEventListener('click', function(e){
+			
+			Ti.API.info("Item Index: " + e.index);
+			
+			if (e.index == 0) {
+				
+				Ti.API.info('Se va a autorizar la cotización.');
+				
+				// URL del servicio rest
+				var url = "http://" + Alloy.Globals.URL_GLOBAL_SIES + "/sies-rest/quotation/setAut";
+				
+				// Cliente para realizar la peticion
+				var client = Ti.Network.createHTTPClient({
+					onload : function(e) {
+						
+						// Limpiamos el valor del id de la cotizacion
+						Alloy.Globals.ID_GLOBAL_QUOTATION = 0;
+						
+						Ti.API.info("Received text: " + this.responseText);
+						
+						// Venta principal de cotizaciones
+						var winHomeQuotations = Alloy.createController('home').getView();
+						
+						// Abrimos ventana
+						winHomeQuotations.open();
+						
+					},
+					onerror : function(e) {
+						Ti.API.info("ERROR: " + e.error);
+					},
+					timeout : 5000
+				});
+				
+				// Preparamos conexion
+				client.open("POST", url);
+				
+				// Establecer la cabecera para el formato JSON correcta
+				client.setRequestHeader("Content-Type", "application/json; charset=utf-8");
+				
+				// Enviar petición
+				//client.send(JSON.stringify(objJsonAuthorizeQuotation));
+				
+			};
+			
+		});
+		
+		// Mostramos el Alert Dialogo
+		dialogAuthorizeQuotation.show();
+		
+	} else {
+		alert("Debes seleccionar un cliente!");
+	};
 	
 }
 
@@ -365,8 +390,22 @@ function comprarCotizacion()
 {
 	Ti.API.info("Vamos a comprar la cotizacion");
 	
+	Ti.API.info("idClientQuo: " + idClientQuo);
+	
+	// TextArea Comntario
+	var textAreaCommentQuo = $.textAreaCommentQuo.value;
+	
+	Ti.API.info("textAreaCommentQuo: " + JSON.stringify(textAreaCommentQuo));
+	
+	var objJsonBuyQuotation = {
+		idQuotation : idQuotationCurrent,
+		comment     : textAreaCommentQuo,
+		idClient    : idClientQuo,
+		password    : ""
+	};
+	
 	//ventanaTerminosCondiciones.add(texto);
-	var winTermsConditions = Alloy.createController('termsConditions').getView();
+	var winTermsConditions = Alloy.createController('termsConditions', objJsonBuyQuotation).getView();
 	
 	// Mostramos la ventana
 	winTermsConditions.open();

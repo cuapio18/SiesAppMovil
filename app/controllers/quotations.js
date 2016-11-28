@@ -115,14 +115,19 @@ function createListAllQuotations(quotations)
 	// RECORREMOS LA LISTA DE COTIZACIONES
 	quotations.forEach(function(quotation, idx){
 		
-		// FORMATO A LA FECHA
-		dateQuo = new Date(quotation.creationDate);
+		// FECHA DE COTIZACION
+		var dateQuo = new Date(parseInt(quotation.creationDate));
+		// dateQuo.toLocaleDateString()
+		
+		// Formato fecha
+		var dateFormatQuo = dateQuo.getDate() + "/" + (dateQuo.getMonth() + 1) + "/" + dateQuo.getFullYear();
+		
 		
 		// GENERAMOS OBJETO CON DE COTIZACIONES
 		items.push({
 			img_quotation    : {image: 'https://www.logismarket.com.ar/ip/quintino-sistemas-transportadores-para-envios-y-correos-sistemas-transportadores-para-envios-y-correos-688836-FGR.jpg'},
 			title_quotation  : {text: 'Cotización ' + quotation.id, id : quotation.id, idx : parseInt(idx)},
-			date_quotation   : {text: dateQuo.toLocaleDateString("mx-MX")},
+			date_quotation   : {text: dateFormatQuo},
 			status_quotation : {text: quotation.status.nameStatus},
 		});
 		

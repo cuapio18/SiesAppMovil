@@ -1,7 +1,7 @@
 <Alloy>
 	<Window id="winTermsConditions" class="container">
 		
-		<AlertDialog id="alertDialogTermsCond" title="Confirmar compra" message="Introduce tu contraseña para confirmar tu compra." cancel="1">
+		<AlertDialog id="alertDialogTermsCond" title="Confirmar compra" message="Introduce tu contraseña para confirmar tu compra." cancel="1" persistent="true">
 			
 			<ButtonNames>
 				<ButtonName>Confirmar</ButtonName>
@@ -554,10 +554,17 @@
 				
 			</View>
 			
+			<View id="containerSwitchConfirmBuy">
+				
+				<Label>Aceptar terminos y condiciones</Label>
+				<Switch id="switchSwitchConfirmBuy" value="true" onChange="outputState"/>
+				
+			</View>
+			
 			<View id="containerAllBtns">
 				
 				<View class="containerBtn">
-					<Button id="btnAcepPurchase" onClick="confirmPurchase">Aceptar</Button>
+					<Button id="btnAceptPurchase" onClick="confirmPurchase">Aceptar</Button>
 				</View>
 				
 				<View class="containerBtn">

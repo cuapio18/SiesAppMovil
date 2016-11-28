@@ -7,9 +7,9 @@
 	//fullscreen: true
 },
 "#scrollviewTermsConditions": {
-	layout: 'vertical',
-	width: Ti.UI.FILL,
-	height: Titanium.UI.SIZE,
+	layout : 'vertical',
+	width  : Ti.UI.FILL,
+	height : Titanium.UI.SIZE,
 	showVerticalScrollIndicator: true
 },
 /*"Label": {
@@ -24,48 +24,52 @@
    }
 },*/
 "#containerAllBtns": {
-	layout: 'horizontal',
-	width: Ti.UI.FILL,
-	height: Ti.UI.SIZE,
-	top: 10,
-	bottom: 20
+	layout : 'horizontal',
+	width  : Ti.UI.FILL,
+	height : Ti.UI.SIZE,
+	top    : 10,
+	bottom : 20
 },
-
+"#containerSwitchConfirmBuy" :{
+	layout : 'vertical',
+	width  : Ti.UI.FILL,
+	height : Ti.UI.SIZE,
+},
 ".containerBtn": {
-	width: '50%',
-	height: Titanium.UI.SIZE
+	width  : '50%',
+	height : Titanium.UI.SIZE
 },
 "Button": {
-	color: "#fff",
-	width: Titanium.UI.FILL,
-	height: Titanium.UI.SIZE
+	color  : "#fff",
+	width  : Titanium.UI.FILL,
+	height : Titanium.UI.SIZE
 },
-"#btnAcepPurchase": {
+"#btnAceptPurchase": {
 	left: 20,
 	right: 10
 },
-"#btnCan": {
-	left: 10,
-	right: 20
+"#btnCan" : {
+	left  : 10,
+	right : 20
 },
 ".section":{
-	layout: 'vertical',
-	width: Titanium.UI.FILL,
-	height: Titanium.UI.SIZE,
-	top: 10,
-	bottom: 10,
-	left: 20,
-	right: 20
+	layout : 'vertical',
+	width  : Titanium.UI.FILL,
+	height : Titanium.UI.SIZE,
+	top    : 10,
+	bottom : 10,
+	left   : 20,
+	right  : 20
 	//backgroundColor: 'pink'
 },
 ".title_section": {
-	width: Titanium.UI.SIZE,
-	height: Titanium.UI.SIZE,
-	font:{
+	width  : Titanium.UI.SIZE,
+	height : Titanium.UI.SIZE,
+	font   : {
       fontWeight : 'bold'
    },
-   left: 0,
-   bottom: 20
+   left    : 0,
+   bottom  : 20
    //borderColor: 'blue'
 },
 '.subsection': {
