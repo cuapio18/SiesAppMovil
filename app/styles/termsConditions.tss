@@ -31,9 +31,11 @@
 	bottom : 20
 },
 "#containerSwitchConfirmBuy" :{
-	layout : 'vertical',
+	layout : 'horizontal',
 	width  : Ti.UI.FILL,
 	height : Ti.UI.SIZE,
+	left   : 20,
+	right  : 20
 },
 ".containerBtn": {
 	width  : '50%',

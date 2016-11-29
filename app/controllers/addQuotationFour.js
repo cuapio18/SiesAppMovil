@@ -3,6 +3,29 @@ var args = $.args;
 
 Ti.API.info("ARGUMENTOS RECIBIDOS:" + JSON.stringify(args));
 
+// CREAMOS UN INDICADOR
+
+// Ventana para mpstrar el indicador
+var winAddActivityIndicator = Ti.UI.createWindow({
+	theme: "Theme.AppCompat.Light.NoActionBar",
+	backgroundColor : "#000",
+	opacity: .9,
+	fullscreen : true
+});
+
+// Creamos activity Indicator
+var activityIndicator = Ti.UI.createActivityIndicator({
+	color   : '#ccc',
+	font    : {fontFamily:'Helvetica Neue', fontSize:26, fontWeight:'bold'},
+	message : 'Espere...',
+	style   : Ti.UI.ActivityIndicatorStyle.BIG_DARK,
+	height  : Ti.UI.SIZE,
+	width   : Ti.UI.SIZE
+});
+
+// Agregamos el indicador a la ventana
+winAddActivityIndicator.add(activityIndicator);
+
 // ID DE LA COTIZACION
 var idQuotationCurrent = parseInt(args.quotation.id);
 
@@ -110,11 +133,16 @@ function saveQuotation(e)
 		});
 		
 		// Click sobre el dialogo
-		dialogSaveQuotation.addEventListener('click', function(e){
+		dialogSaveQuotation.addEventListener('click', function(e) {
 			
 			Ti.API.info("Item Index: " + e.index);
 			
 			if (e.index == 0) {
+				
+				// Abrimos ventana del Indicador
+				winAddActivityIndicator.open();
+				// Mostramos el indicador
+				activityIndicator.show();
 				
 				Ti.API.info('Presionaste guardar la cotización.');
 				
@@ -126,24 +154,43 @@ function saveQuotation(e)
 					// función de llamada cuando los datos de respuesta está disponible
 					onload : function(e) {
 						
-						// Limpiamos el valor del id de la cotizacion
-						Alloy.Globals.ID_GLOBAL_QUOTATION = 0;
-						
 						Ti.API.info("Received text: " + this.responseText);
 						
 						var responseWS = JSON.parse(this.responseText);
 						
-						// Venta principal de cotizaciones
-						var winHomeQuotations = Alloy.createController('home').getView();
+						setTimeout(function() {
+							
+							// Cerramos la ventana del Indicador
+							winAddActivityIndicator.close();
+							
+							// Cerramos el indicador
+							activityIndicator.hide();
+							
+							// Limpiamos el valor del id de la cotizacion
+							Alloy.Globals.ID_GLOBAL_QUOTATION = 0;
+							
+							// Venta principal de cotizaciones
+							var winHomeQuotations = Alloy.createController('home').getView();
+							
+							// Abrimos ventana
+							winHomeQuotations.open();
 						
-						// Abrimos ventana
-						winHomeQuotations.open();
+							
+						}, 3000);
 				
 						
 					},
 					// función de llamada cuando se produce un error, incluyendo un tiempo de espera
 					onerror : function(e) {
 						Ti.API.debug(e.error);
+						
+						// Cerramos la ventana del Indicador
+						winAddActivityIndicator.close();
+							
+						// Cerramos el indicador
+						activityIndicator.hide();
+						
+						alert("Ocurrio un error.\nIntentalo nuevamente.");
 					},
 					timeout : 5000 // en milisegundos
 				});
@@ -329,11 +376,16 @@ function autorizarCotizacion()
 		});
 		
 		// Click sobre el dialogo
-		dialogAuthorizeQuotation.addEventListener('click', function(e){
+		dialogAuthorizeQuotation.addEventListener('click', function(e) {
 			
 			Ti.API.info("Item Index: " + e.index);
 			
 			if (e.index == 0) {
+				
+				// Abrimos ventana del Indicador
+				winAddActivityIndicator.open();
+				// Mostramos el indicador
+				activityIndicator.show();
 				
 				Ti.API.info('Se va a autorizar la cotización.');
 				
@@ -344,22 +396,40 @@ function autorizarCotizacion()
 				var client = Ti.Network.createHTTPClient({
 					onload : function(e) {
 						
-						// Limpiamos el valor del id de la cotizacion
-						Alloy.Globals.ID_GLOBAL_QUOTATION = 0;
+						setTimeout(function() {
+							
+							// Cerramos la ventana del Indicador
+							winAddActivityIndicator.close();
+							
+							// Cerramos el indicador
+							activityIndicator.hide();
 						
-						Ti.API.info("Received text: " + this.responseText);
-						
-						// Venta principal de cotizaciones
-						var winHomeQuotations = Alloy.createController('home').getView();
-						
-						// Abrimos ventana
-						winHomeQuotations.open();
+							// Limpiamos el valor del id de la cotizacion
+							Alloy.Globals.ID_GLOBAL_QUOTATION = 0;
+							
+							Ti.API.info("Received text: " + this.responseText);
+							
+							// Venta principal de cotizaciones
+							var winHomeQuotations = Alloy.createController('home').getView();
+							
+							// Abrimos ventana
+							winHomeQuotations.open();
+							
+						}, 3000);
 						
 					},
 					onerror : function(e) {
 						Ti.API.info("ERROR: " + e.error);
+						
+						// Cerramos la ventana del Indicador
+						winAddActivityIndicator.close();
+							
+						// Cerramos el indicador
+						activityIndicator.hide();
+						
+						alert("Ocurrio un error.\nIntentalo nuevamente.");
 					},
-					timeout : 5000
+					timeout : 10000
 				});
 				
 				// Preparamos conexion
@@ -369,7 +439,7 @@ function autorizarCotizacion()
 				client.setRequestHeader("Content-Type", "application/json; charset=utf-8");
 				
 				// Enviar petición
-				//client.send(JSON.stringify(objJsonAuthorizeQuotation));
+				client.send(JSON.stringify(objJsonAuthorizeQuotation));
 				
 			};
 			

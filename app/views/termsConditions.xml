@@ -556,8 +556,8 @@
 			
 			<View id="containerSwitchConfirmBuy">
 				
-				<Label>Aceptar terminos y condiciones</Label>
-				<Switch id="switchSwitchConfirmBuy" value="true" onChange="outputState"/>
+				<Switch id="switchTermsConditions" class="label_left" value="false" onChange="outputState"/>
+				<Label class="label_left">Aceptar terminos y condiciones</Label>
 				
 			</View>
 			

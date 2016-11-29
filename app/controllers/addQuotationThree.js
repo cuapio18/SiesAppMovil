@@ -1,6 +1,9 @@
 // Arguments passed into this controller can be accessed via the `$.args` object directly or:
 var args = $.args;
 
+// Bandera Home
+var flagHomeStatus = 0;
+
 // ID DEL USUARIO
 var idUsuarioSession = Alloy.Globals.PROPERTY_INFO_USER.userLogin.id;
 
@@ -448,6 +451,9 @@ function generarCotizacionModeloAccesorios(objSaveQuotationJson)
 			// Respuesta del servicio
 			var objResponseWS = JSON.parse(this.responseText);
 			
+			// validamos la bandera
+			Alloy.Globals.ID_GLOBAL_QUOTATION = objResponseWS.quotation.id
+			
 			// Ventana del paso numero 4 de la cotizacion
 			var winAddQuotationFour = Alloy.createController('addQuotationFour', objResponseWS).getView();
 			
@@ -488,7 +494,57 @@ function generarCotizacionModeloAccesorios(objSaveQuotationJson)
 								
 								// Click sobre un item del menu
 								menuItemAddModelTemp.addEventListener('click', function(e){
-									Ti.API.info("I was clicked: " + JSON.stringify(e));
+									
+									Ti.API.info("Me hicieron clic: " + JSON.stringify(e));
+									
+									// Dialogo para agregar un model temp
+									var dialogAddModelTempQ = Ti.UI.createAlertDialog({
+										persistent  : true,
+										cancel      : 0,
+										buttonNames : ['Confirmar', 'Cancelar'],
+										message     : '¿Deseas agregar un nuevo modelo a tu cotización?',
+										title       : 'Agregar Modelo'
+									});
+									
+									dialogAddModelTempQ.addEventListener('click', function(e) {
+										
+										Ti.API.info("Item Index: " + e.index);
+										
+										// Id de la cotizacion
+										var idQuotationAddModelTemp = Alloy.Globals.ID_GLOBAL_QUOTATION;
+			
+										if (e.index == 0) {
+											
+											// Asignamos un valor a la variable 0 - Nueva 1 - Editar
+											flagHomeStatus = 1;
+											
+											// Parametros a enviar
+											var objHomeParameters = {
+												flagHomeStatus : flagHomeStatus
+											};
+											
+											// Limpiamos el valor del id de la cotizacion
+											Alloy.Globals.ID_GLOBAL_QUOTATION = 0;
+											//Ti.API.info("Editar la cotización. " +  dataItemSelected.title_quotation.text + " # " + dataItemSelected.title_quotation.id);
+											Ti.API.info("ID Cotización: " + Alloy.Globals.ID_GLOBAL_QUOTATION);
+	
+											// Asignamos un id
+											Alloy.Globals.ID_GLOBAL_QUOTATION = parseInt(idQuotationAddModelTemp);
+											Ti.API.info("ID Cotización 2: " + Alloy.Globals.ID_GLOBAL_QUOTATION);
+											
+											// Venta principal de cotizaciones
+											var winHomeQuotations = Alloy.createController('home', objHomeParameters).getView();
+											
+											// Abrimos ventana
+											winHomeQuotations.open();
+											
+										};
+										
+									});
+									
+									// Mostramos el dialogo
+									dialogAddModelTempQ.show();
+		
 								});
 								
 								// Item Menu Cancel Quotation

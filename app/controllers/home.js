@@ -1,6 +1,8 @@
 // Arguments passed into this controller can be accessed via the `$.args` object directly or:
 var args = $.args;
 
+Ti.API.info("ARGUMENTOS RECIBIDOS:" + JSON.stringify(args));
+
 var tabGroupQuotations = $.tabGroupQuotations;
 
 // *****************************
@@ -82,9 +84,27 @@ function doClick(e){
 
 tabGroupQuotations.addEventListener('open', function(e)
 {
+	// Bandera
+	var flagHome = args.flagHomeStatus;
 	
-	// Activamo un tab
-	tabGroupQuotations.setActiveTab(0);
+	// Validamos el tipo de accion
+	if (flagHome && flagHome == 1) {
+		
+		Ti.API.info("Existes");
+											
+		// Activamos la tab de modelos
+		tabGroupQuotations.setActiveTab(1);
+		
+		// Modificamos titulo del tab
+		tabGroupQuotations.getActiveTab().setTitle("Editar Cot.");
+		
+	} else{
+		
+		Ti.API.info("No Existes");
+		
+		// Activamo tab de cotizaciones
+		tabGroupQuotations.setActiveTab(0);
+	};
 	
 	// Guardamos el tabgroup en una variable global
 	Alloy.Globals.TABGROUP_QUOTATIONS = tabGroupQuotations;

@@ -4,7 +4,12 @@ var args = $.args;
 // ID DEL USUARIO
 var idUsuarioSession = Alloy.Globals.PROPERTY_INFO_USER.userLogin.id;
 Ti.API.info("idUsuarioSession: " + idUsuarioSession);
+
 var listViewQuot = $.listViewQuotations;
+
+// FUNCION PARA OBTENER LAS COTIZACIONES
+
+getAllQuotations(idUsuarioSession);
 
 // CLICK EN UN ELEMENTO DE LA LISTA
 listViewQuot.addEventListener('itemclick', function(e) {
@@ -138,10 +143,6 @@ function createListAllQuotations(quotations)
 	
 }
 
-// FUNCION PARA OBTENER LAS COTIZACIONES
-
-getAllQuotations(idUsuarioSession);
-
 // DIALOGO DE COTIZACION
 var dialogQuotation;
 var arrayDialogQuo = ['Editar', 'Eliminar', 'Comentarios', 'Cancelar'];
@@ -238,7 +239,7 @@ function editQuotation(dataItemSelected)
 	
 	// Asignamos un id
 	Alloy.Globals.ID_GLOBAL_QUOTATION = parseInt(dataItemSelected.title_quotation.id);
-	Ti.API.info("ID Cotización: " + Alloy.Globals.ID_GLOBAL_QUOTATION);
+	Ti.API.info("ID Cotización 2: " + Alloy.Globals.ID_GLOBAL_QUOTATION);
 
 }
 
