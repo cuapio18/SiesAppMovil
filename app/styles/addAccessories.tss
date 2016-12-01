@@ -1,0 +1,18 @@
+".container" : {
+	layout: 'vertical',
+	backgroundImage : "/img/IMAGOTIPO_opt.png",
+	backgroundRepeat : false  
+},
+"#scrollViewAddAccessories" : {
+	layout        : "vertical",
+	width         : Ti.UI.FILL,
+	height        : Ti.UI.FILL,
+	contentWidth  : 'auto', 
+	contentHeight : 'auto',
+	scrollType    : 'vertical',
+},
+"#viewContainerAccessories" : {
+	width: Ti.UI.FILL,
+	height: Ti.UI.FILL,
+	layout: "horizontal"
+}

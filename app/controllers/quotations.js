@@ -19,6 +19,10 @@ listViewQuot.addEventListener('itemclick', function(e) {
 	
 	Ti.API.info("ITEM:" + JSON.stringify(itemClickQuotation));
 	
+	// Variable global para almacenar los datos de la cotizacion
+	Alloy.Globals.ALL_DATA_QUOTATION = itemClickQuotation;
+	Ti.API.info("Alloy.Globals.ALL_DATA_QUOTATION: " + JSON.stringify(Alloy.Globals.ALL_DATA_QUOTATION));
+	
 	// Ventana
 	var windDetailQuotation = Alloy.createController('detailQuotation', itemClickQuotation).getView();
 	
@@ -131,7 +135,13 @@ function createListAllQuotations(quotations)
 		// GENERAMOS OBJETO CON DE COTIZACIONES
 		items.push({
 			img_quotation    : {image: 'https://www.logismarket.com.ar/ip/quintino-sistemas-transportadores-para-envios-y-correos-sistemas-transportadores-para-envios-y-correos-688836-FGR.jpg'},
-			title_quotation  : {text: 'Cotización ' + quotation.id, id : quotation.id, idx : parseInt(idx)},
+			title_quotation  : {
+				text       : 'Cotización ' + quotation.id,
+				id         : quotation.id,
+				idx        : parseInt(idx),
+				statusQuo  : quotation.status.id,
+				commentQuo : quotation.comment
+			},
 			date_quotation   : {text: dateFormatQuo},
 			status_quotation : {text: quotation.status.nameStatus},
 		});
@@ -170,11 +180,18 @@ function longCB(e) {
 	
 	// Datos del elemento presionado
 	dataItemSelected = e.section.items[parseInt(itemIndexQuotation)];
+	Ti.API.info("LONGCB: " + JSON.stringify(dataItemSelected));
 	
-	//Ti.API.info("LONGCB: " + JSON.stringify(dataItemSelected));
+	// Variable global para almacenar los datos de la cotizacion
+	Alloy.Globals.ALL_DATA_QUOTATION = dataItemSelected;
+	Ti.API.info("Alloy.Globals.ALL_DATA_QUOTATION: " + JSON.stringify(Alloy.Globals.ALL_DATA_QUOTATION));
+
 	//alert(JSON.stringify(e.section.items[parseInt(itemIndex)].title_quotation.text ));
+	// Creamos dialogo
 	dialogQuotation = Ti.UI.createOptionDialog(optsDialogQuo);
+	// Mostramos
 	dialogQuotation.show();
+	// Al seleccionar alguna opción del dialogo
 	dialogQuotation.addEventListener('click', onSelectDialog);
 
 };
@@ -191,15 +208,34 @@ function onSelectDialog(event) {
 	
 	//Ti.API.info("Index del elemento seleccionado: " + parseInt(selectedIndex));
 	
+	// Estatus de la cotización
+	var statusOfQuotationSelected = dataItemSelected.title_quotation.statusQuo;
+	
 	// Realizamos una accion dependiendo lo que se eligio
 	switch(parseInt(selectedIndexDialogQuotation)) {
 		case 0 :
-			// Llamamos a la funcion
-			editQuotation(dataItemSelected);
+		
+			// Validamos el status de la cotizacion
+			if (statusOfQuotationSelected == 4) {
+				// Mostramos mensaje
+				Ti.UI.createAlertDialog({ message: '¡La cotización seleccionada no se puede editar!\nYa esta terminada.', title: 'Cotización terminada', ok: 'Aceptar', }).show();
+			} else {
+				// Llamamos a la funcion
+				editQuotation(dataItemSelected);
+			};
+			
 			break;
 		case 1:
-			// Llamamos a la funcion
-			deleteQuotation(dataItemSelected);
+		
+			// Validamos el status de la cotizacion
+			if (statusOfQuotationSelected == 4) {
+				// Mostramos mensaje
+				Ti.UI.createAlertDialog({ message: '¡La cotización seleccionada no se puede eliminar!\nYa esta terminada.', title: 'Cotización terminada', ok: 'Aceptar', }).show();
+			} else {
+				// Llamamos a la funcion
+				deleteQuotation(dataItemSelected);
+			};
+			
 			break;
 		case 2:
 			// Llamamos a la funcion
@@ -338,4 +374,49 @@ function deleteQuotation(dataItemSelected)
 function seeCommentsQuotation(dataItemSelected)
 {
 	Ti.API.info("Cometarios de la cotización. " +  dataItemSelected.title_quotation.text + " # " + dataItemSelected.title_quotation.id);
+	
+	// JSON FINAL DE ACCESORIOS
+	var jsonIdQuotation = {
+		id : dataItemSelected.title_quotation.id
+		
+	};
+	
+	// Url del servicio rest
+	var url    = "http://" + Alloy.Globals.URL_GLOBAL_SIES + "/sies-rest/quotation/getComment";
+	
+	// Creamoss un cliente http
+	var client = Ti.Network.createHTTPClient({
+		// función de llamada cuando los datos de respuesta está disponible
+		onload : function(e) {
+			
+			Ti.API.info("Received text: " + this.responseText);
+			
+			// Respuesta del servicio
+			var objResponseWS = JSON.parse(this.responseText);
+			
+			if (objResponseWS.commet != null) {
+				//alert(objResponseWS.commet);
+				Ti.UI.createAlertDialog({ message: objResponseWS.commet, title: 'Comentario de Cotización', ok: 'Ok', }).show();
+			} else {
+				Ti.UI.createAlertDialog({ message: 'No hay comentario!', title: 'Comentario de Cotización', ok: 'Ok', }).show();
+				//alert("No hay comentario.");
+			};
+			
+			
+		},
+		// función de llamada cuando se produce un error, incluyendo un tiempo de espera
+		onerror : function(e) {
+			//Ti.API.debug(e.error);
+		},
+		timeout : 6000 // en milisegundos
+	});
+	
+	// Preparar la conexión.
+	client.open("POST", url);
+	
+	// Establecer la cabecera para el formato JSON correcta
+	client.setRequestHeader("Content-Type", "application/json; charset=utf-8");
+	
+	// Enviar la solicitud.
+	client.send(JSON.stringify(jsonIdQuotation)); 
 }

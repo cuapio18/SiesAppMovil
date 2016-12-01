@@ -5,7 +5,7 @@ Ti.API.info("ARGUMENTOS RECIBIDOS:" + JSON.stringify(args));
 
 // CREAMOS UN INDICADOR
 
-// Ventana para mpstrar el indicador
+// Ventana para mostrar el indicador
 var winAddActivityIndicator = Ti.UI.createWindow({
 	theme: "Theme.AppCompat.Light.NoActionBar",
 	backgroundColor : "#000",
@@ -56,7 +56,9 @@ var objModelsConveyorsQuotation = args.listTemp;
 
 getAllModelsConveyorsQuotation(objModelsConveyorsQuotation);
 
+// ********************************************
 // FUNCION QUE GENERA LOS MODELOS DE LA COTIZACION
+// ********************************************
 
 function getAllModelsConveyorsQuotation(modelsConvQuotaion) {
 	
@@ -68,10 +70,21 @@ function getAllModelsConveyorsQuotation(modelsConvQuotaion) {
 		
 		// Vamos agregando los datos al arreglo
 		items.push({
-			modelConveyor    : {text : model.modelConveyor.model},
-			quantityConveyor : {text : 'Cantidad: ' + model.quantity},
-			priceConveyor    : {text : 'Precio: ' + model.price},
-			totalConveyor    : {text : "Total: "}
+			modelConveyor    : {
+				text : model.modelConveyor.model,
+				id       : model.id, 
+				idx      : parseInt(idx),
+				quantity : model.quantity
+			},
+			quantityConveyor : {
+				text : 'Cantidad: ' + model.quantity
+			},
+			priceConveyor    : {
+				text : 'Precio: ' + model.price
+			},
+			totalConveyor    : {
+				text : "Total: "
+			}
 		});
 		
 		// Agregamos los datos a la lista
@@ -80,6 +93,25 @@ function getAllModelsConveyorsQuotation(modelsConvQuotaion) {
 	});
 	
 }
+
+// ********************************************
+// CLICK EN UN ELEMENTO DE LA LISTA
+// ********************************************
+
+$.listViewModelConveyorQuotation.addEventListener('itemclick', function(e) {
+	
+	// Elemento seleccionado
+	var itemClickModelTemp  = e.section.getItemAt(e.itemIndex);
+	
+	Ti.API.info("ITEM:" + JSON.stringify(itemClickModelTemp));
+	
+	// Ventana
+	var winAddQuotationFive = Alloy.createController('addQuotationFive', itemClickModelTemp).getView();
+	
+	// Abrimos la ventana
+	winAddQuotationFive.open();
+
+});
 
 // FUNCION PARA GUARDAR COTIZACION
 
@@ -212,67 +244,270 @@ function saveQuotation(e)
 		dialogSaveQuotation.show();
 	
 	} else {
-		alert("Debes seleccionar un cliente!");
+		//alert("Debes seleccionar un cliente!");
+		Ti.UI.createAlertDialog({ message: 'Debes seleccionar un cliente!', title: 'Cliente', ok: 'Aceptar', }).show();
 	};
 }
 
-var dialogModelConv;
-var myArrayModelConv    = ['Eliminar modelo', 'Ver accesorios', 'Ver modelo', 'Cancelar' ];
+var dialogModelTemp;
+//var myArrayModelConv    = ['Eliminar modelo', 'Ver accesorios', 'Ver modelo', 'Cancelar' ];
+var myArrayModelConv    = ['Cantidad Modelo +/-', 'Eliminar', 'Cancelar'];
 var optsDialogModelConv = {
-	title   : 'Modelo',
-	cancel  : 3,
-	options : myArrayModelConv
+	title   : 'Modelo Temporal',
+	cancel  : 2,
+	options : myArrayModelConv,
+	destructive  : 0,
+	bubbleParent : false
 };
 
-/*
+
+// DATOS DEL ELEMENTO PRESIONADO
+var dataItemSelected = {};
+
+// INDEX DEL ELEMENTO SELECCIONADO
+var itemIndexModelTemp;
+
+// ********************************************
+// CLICK PROLONGADO EN UN ELEMENTO DE LA LISTA
+// ********************************************
+
 function longModelConv(e)
 {
-	//alert(JSON.stringify(e.sectionIndex));
-	// SECCION
-	var section   = $.listView.sections[e.sectionIndex];
-	// INDICE DEL EELEMENTO
-	var itemIndex = e.itemIndex;
-	// ELEMENTO SELECCIONADO
-	var item      = section.getItemAt(e.itemIndex);
-	//alert(item);
-	// DIALOGO CON LAS OPCIONES
-	dialogModelConv = Ti.UI.createOptionDialog(optsDialogModelConv);
-	// MOSTRAMOS DIALOGO
-	dialogModelConv.show();
-	// CLICK EN ALGUNA OPCION DEL DIALOGO
-	dialogModelConv.addEventListener('click', function(e) {
-		//alert(JSON.stringify(e.index));
-		switch (parseInt(e.index)) {
-			 case 0 : 
-			 	Ti.API.info("Eliminar modelo.");
-			 	section.deleteItemsAt(itemIndex, 1);
-			 	break;
-			 case 1 : 
-			 	Ti.API.info("Ver accesorios.");
-			 	var winSeeAccessories = Alloy.createController('seeAccessories').getView();
-			 	winSeeAccessories.open();
-			 	break;
-			 case 2 : 
-			 	Ti.API.info("Ver modelo.");
-			 	var winSeeModel = Alloy.createController('seeModel').getView();
-			 	winSeeModel.open();
-			 	winSeeModel.addEventListener('open', function(ev){
-			 		var actionBarSeeModel = winSeeModel.activity.actionBar;
-			 		actionBarSeeModel.displayHomeAsUp = true;
-			 		actionBarSeeModel.onHomeIconItemSelected = function(){
-			 			winSeeModel.close();
-			 		};
-			 	});
-			 	break;
-			 default:
-			 	alert('esa opcion no existe.');
-			 	break;
-		}
-		//Ti.API.info("Delete ListView Raw = "+ JSON.stringify(e) );
-		//Ti.API.info(item.modelConveyor.text);
-	});
+	// Indice del elemento presionado
+	itemIndexModelTemp = e.itemIndex;
+	
+	// Datos del elemento presionado
+	dataItemSelected = e.section.items[parseInt(itemIndexModelTemp)];
+	
+	Ti.API.info("ITEM INDEX: " + itemIndexModelTemp);
+	Ti.API.info("ITEM SELECTED: " + JSON.stringify(dataItemSelected));
+	
+	dialogModelTemp = Ti.UI.createOptionDialog(optsDialogModelConv);
+	dialogModelTemp.show();
+	dialogModelTemp.addEventListener('click', onSelectDialogModelTemp);
+
 }
-*/
+
+// ********************************************
+// DIALOGO DE CANTIDAD DE MODELOS TEMPORALES
+// ********************************************
+
+var dialogQuantityModelTemp = $.alertDialogModelTemp;
+
+// ***********************************************************
+// FUNCION QUE SE EJECUTA AL PRESIONAR UN ELEMENTO DEL DIALOGO
+// ***********************************************************
+
+function onSelectDialogModelTemp(event)
+{
+	Ti.API.info("Modelo Temp seleccionado: " + JSON.stringify(dataItemSelected));
+
+	// Indice del elemento seleccionado del dialogo
+	var selectedIndexDialModelTemp = event.source.selectedIndex;
+	
+	Ti.API.info("Index del elemento seleccionado: " + parseInt(selectedIndexDialModelTemp));
+	
+	// Realizamos una accion dependiendo lo que fue seleccionado
+	switch(parseInt(selectedIndexDialModelTemp))
+	{
+		case 0 :
+			//Ti.API.info("Cambiar Cantidad Modelo Temp.");
+			
+			// Modificar value del slider
+			var valueSQMT = $.sliderQuantityModelTemp;
+				
+			valueSQMT.value = parseInt(dataItemSelected.modelConveyor.quantity);
+
+			// Mostramos el dialogo
+			dialogQuantityModelTemp.show();
+			
+			break;
+		case 1 :
+			//Ti.API.info("Eliminar Modelo Temp");
+			deleteModelTemp(dataItemSelected);
+			break;
+		default :
+			Ti.API.info("Opcion no encontrada.");
+			break;
+	}
+}
+
+// ***********************************************************
+// AL HACER CLICK SOBRE ALGUNA OPCION DEL ALERT DIALOG DE CANTIDAD DE MODELOS TEMP
+// ***********************************************************
+
+dialogQuantityModelTemp.addEventListener('click', function(e)
+{
+	Ti.API.info("Item Index Dialog Alert CMT: " + e.index);
+		
+	// Si presionamos confirmar
+	if (e.index == 0) {
+		// Llamamos a la funcion para actualizar la cantidad del modelo
+		changeQuantityModelTemp();
+	};		
+});
+
+// ***********************************************************
+// FUNCION PARA AUMENTA O DISMINUIR LA CANTIDAD DE MODELOS TEMP
+// ***********************************************************
+
+function changeQuantityModelTemp()
+{
+	Ti.API.info("ITEM SELECCIONADO: " + JSON.stringify(dataItemSelected));
+	Ti.API.info("Cantidad model temp. " +  dataItemSelected.modelConveyor.text + " # " + dataItemSelected.modelConveyor.id);
+	var valueSliderQMT = $.sliderQuantityModelTemp;
+	Ti.API.info("VALOR DE SLIDER: " + parseInt(valueSliderQMT.value));
+	Ti.API.info("Aumentar o disminuir cantidad de modelo!");
+	
+	// Objeto a enviar en la peticion
+	var objJSONQuantityMT = {
+		id       : parseInt(dataItemSelected.modelConveyor.id),
+		quantity : parseInt(valueSliderQMT.value)
+	};
+	
+	Ti.API.info("OBJ JSON QMT: " + JSON.stringify(objJSONQuantityMT));
+	
+	// URL del sevicio
+	var url = "http://" + Alloy.Globals.URL_GLOBAL_SIES + "/sies-rest/quotation/addCountQuotationTemp";
+	
+	// Cliente para realizar la peticion
+	var client = Ti.Network.createHTTPClient({
+		onload : function(e) {
+			
+			//Ti.API.info("Received text: " + this.responseText);
+			
+			// Item seleccionado
+			var row = $.listViewModelConveyorQuotation.sections[0].getItemAt(parseInt(itemIndexModelTemp));
+			
+			Ti.API.info("ROW: " + JSON.stringify(row));
+			
+			// Modificamos el atributo cantidad del item list seleccionado
+			row.quantityConveyor.text = "Cantidad: " + parseInt(valueSliderQMT.value);
+			
+			// Modificamos el atributo cantidad del item list seleccionado
+			row.modelConveyor.quantity = parseInt(valueSliderQMT.value);
+			
+			Ti.API.info("ROW 2: " + JSON.stringify(row));
+			
+			// Modificamos el item de la lista con los nuevos datos
+			$.listViewModelConveyorQuotation.sections[0].updateItemAt(parseInt(itemIndexModelTemp), row, { animated:true });
+		},
+		onerror : function(e) {
+			Ti.API.info(e.error);
+		},
+		timeout : 5000
+	});
+	
+	// Preparamos conexion
+	client.open("POST", url);
+	
+	// Establece rla cabecera para el formato JSON correcta.
+	client.setRequestHeader("Content-Type", "application/json; charset=utf-8");
+	
+	// Enviar peticion.
+	client.send(JSON.stringify(objJSONQuantityMT));
+	
+}
+
+// ***********************************************************
+// ACTUALIZAR EL TEXTO DEL LABEL MODEL TEMP QUANTITY
+// ***********************************************************
+
+function updateValueLabelMT(e)
+{
+	Ti.API.info("SLIDER: " + parseInt(e.value));
+	$.labelQuantityModelTemp.text = parseInt(e.value);
+}
+
+// ***********************************************************
+// FUNCION PARA ELIMINAR UN MODELO TEMPORAL
+// ***********************************************************
+
+function deleteModelTemp(dataItemSelected)
+{
+	Ti.API.info("ITEM SELECCIONADO: " + JSON.stringify(dataItemSelected));
+	Ti.API.info("Eliminar model temp. " +  dataItemSelected.modelConveyor.text + " # " + dataItemSelected.modelConveyor.id);
+	
+	// Objeto con el ID del modelo temp
+	var objIdModelTemp = {
+		"id" : parseInt(dataItemSelected.modelConveyor.id)	
+	};
+	
+	// Dialogo para confirmar "Borrar modelo temp"
+	var dialogDeleteModelTemp = Ti.UI.createAlertDialog({
+		persistent  : true,
+		cancel      : 0,
+		buttonNames : ['Confirmar', 'Cancelar'],
+		message     : '¿Seguro de realizar esta acción?',
+		title       : 'Eliminar Modelo Temporal'
+	});
+	
+	// Click sobre el dialogo
+	dialogDeleteModelTemp.addEventListener('click', function(e){
+		Ti.API.info("Item Index: " + e.index);
+		// Si presionamos confirmar
+		if (e.index == 0) {
+			
+			// URL del servicio rest
+			var url = "http://" + Alloy.Globals.URL_GLOBAL_SIES + "/sies-rest/quotation/deleteModelTemp";
+			
+			// Cliente para realizar la peticion
+			var client = Ti.Network.createHTTPClient({
+				onload : function(e) {
+					
+					Ti.API.info("Received text: " + this.responseText);
+					
+					// Preguntamos si solo queda un elemento en la lista
+					if ($.listViewModelConveyorQuotation.sections[0].items.length == 1) {
+						
+						// Eliminamos la seccion
+						$.listViewModelConveyorQuotation.deleteSectionAt(0);
+						
+						// Creamos una seccion con un titulo
+						var sectionDefaulModelTemp = Ti.UI.createListSection({
+							headerTitle : 'No existen modelos para mostrar!'
+						});
+						
+						// Array vacio
+						var sectionsDefModTemp = [];
+						
+						// Agregamos nuestra seccion al array
+						sectionsDefModTemp.push(sectionDefaulModelTemp);
+						
+						// Agregamos nuestro array de secciones a la lista
+						$.listViewModelConveyorQuotation.setSections(sectionsDefModTemp);
+						
+					} else {
+						
+						// Eliminamos un elemento de la lista
+						$.listViewModelConveyorQuotation.sections[0].deleteItemsAt(parseInt(itemIndexModelTemp), 1);
+						
+					};
+					
+				},
+				onerror : function(e) {
+					Ti.API.info("ERROR: " + e.error);
+				},
+				timeout : 5000
+			});
+			
+			// Preparamos conexion
+			client.open("POST", url);
+			
+			// Establecer la cabecera para el formato JSON correcta
+			client.setRequestHeader("Content-Type", "application/json; charset=utf-8");
+			
+			// Enviar petición
+			client.send(JSON.stringify(objIdModelTemp));
+			
+		};
+	});
+	
+	// Mostramos el Alert Dialog
+	dialogDeleteModelTemp.show();
+
+}
+
 /*
 
 function addOneToCurrentNumber(e) {
@@ -429,7 +664,7 @@ function autorizarCotizacion()
 						
 						alert("Ocurrio un error.\nIntentalo nuevamente.");
 					},
-					timeout : 10000
+					timeout : 15000
 				});
 				
 				// Preparamos conexion
@@ -566,7 +801,10 @@ function fillClientByIdSellerPicker(objOptionsClientByIdSellerPicker)
 
 }
 
+// ***********************************************************
 // Validamos el tipo de usuario que inicio sesion - 4 vendedor -3 cliente
+// ***********************************************************
+
 if (parseInt(idProfileUserLogin)  == 4) {
 	
 	Ti.API.info("Eres vendedor y vamos a cargar el combo de clientes." );
@@ -579,5 +817,81 @@ if (parseInt(idProfileUserLogin)  == 4) {
 	
 	// Asignamos un valor
 	idClientQuo = args.quotation.client.user.business.id;
+	
+	// Vista contenedora del picker cliente
+	var viewSectionClientPicker = $.viewSectionClientPicker;
+	
+	// Ocultamos el contenedor
+	viewSectionClientPicker.hide();
+	
+	// Cambiamos el alto del contenedor
+	viewSectionClientPicker.height = 0;
+	
 };
 
+// ***********************************************************
+// VALIDAMOS EL STATUS Y COMENTARIO DE LA COTIZACION
+// ***********************************************************
+
+// Estatus cotizacion
+var statusQuotation  = args.quotation.status.id;
+Ti.API.info("Estatus Cotización: " + statusQuotation);
+
+// Validamos el status 4 - Terminada
+if (statusQuotation == 4 ) {
+	
+	// Contenedor de botones de guardar - comprar o autorizar
+	var containerTwo = $.containerTwo;
+	
+	// Ocultamos contededor
+	containerTwo.hide();
+	
+	// Cambiar tamaño del contenedor
+	containerTwo.height = 0;
+	
+	// Contenedor de la lista
+	var containerOne = $.containerOne;
+	
+	// Cambiamos tamaño del contenedor
+	containerOne.height = '100%';	
+	
+};
+
+// Comentario Cotizacion
+var commentQuotation = args.quotation.comment;
+Ti.API.info("Comentario Cotización: " + commentQuotation);
+
+// Validamos si ya existe un comentario
+if(commentQuotation != null) {
+	// Asignamos valor al textArea comentario
+	$.textAreaCommentQuo.value = commentQuotation;
+}
+
+// ***********************************************************
+// FUNCION PARA MOSTRAR TOTAL Y FECHA ESTIMADA
+// ***********************************************************
+
+function setTotalAndDateEstimated()
+{
+	
+	Ti.API.info("WSMT: " + JSON.stringify(args));
+	
+	// Total de la cotizacion
+	var totalQuotation         = $.labelTotalQuotation;
+	
+	// Asignamos total
+	totalQuotation.text         = "Total USD + IVA: $" + args.totalPrice;
+	
+	// Fecha estimada de la cotizacion
+	var dateEstimatedQuotation  = $.labelDateEstimatedQuotation;
+	
+	// Asignamos Fecha Estimada
+	dateEstimatedQuotation.text = "Fecha Estimada: " + args.estimated;
+	
+}
+
+// ***********************************************************
+// EJECUTAMOS LA FUNCIÓN
+// ***********************************************************
+			
+setTotalAndDateEstimated();

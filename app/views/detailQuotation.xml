@@ -22,32 +22,78 @@
 			<MenuItem id="edit_quotation" title="Editar"/>
 		</Menu>-->
 		
-		<ScrollView id="scrollViewDetailQuotation">
-			
-			<ListView id="listViewModelConveyorQuotationDetail" defaultItemTemplate="template">
-			
-				<Templates>
-					
-					<ItemTemplate name="template">
+		<View id="containerOne">
+		
+			<ScrollView id="scrollViewDetailQuotation">
+				
+				<ListView id="listViewModelConveyorQuotationDetail" defaultItemTemplate="template">
+				
+					<Templates>
 						
-						<View id="container_model_temp" onLongpress="longPressModelConveyor">
-							<Label bindId="modelConveyor" id="modelConveyor" />
-							<Label bindId="quantityConveyor" id="quantityConveyor" />
-							<Label bindId="priceConveyor" id="priceConveyor" />
-							<Label bindId="totalConveyor" id="totalConveyor" />
-						</View>
+						<ItemTemplate name="template">
+							
+							<View id="container_model_temp" onLongpress="longPressModelConveyor">
+								<Label bindId="modelConveyor" id="modelConveyor" />
+								<Label bindId="quantityConveyor" id="quantityConveyor" />
+								<Label bindId="priceConveyor" id="priceConveyor" />
+								<Label bindId="totalConveyor" id="totalConveyor" />
+							</View>
+							
+						</ItemTemplate>
 						
-					</ItemTemplate>
+					</Templates>
+		
+					<ListSection name="sectionModelConveyorsQuotationDetail"></ListSection>
+				
+	        	</ListView>
+	        	
+	        	<View id="viewSectionDataQuotation">
+	        		<Label id="labelDataQuotation" text="Datos de cotización"></Label>
+	        	</View>
+	        	
+	        	<View id="viewSectionClientPicker">
 					
-				</Templates>
-	
-				<ListSection name="sectionModelConveyorsQuotationDetail"></ListSection>
+					<Label class="label_align_left" text="Indique un cliente:"></Label>
+					
+					<Picker id="pickerClientByIdSeller">
+						<PickerRow title="Seleccione" id=""></PickerRow>
+	        		</Picker>
+					
+				</View>
 			
-        	</ListView>
-        	
-        	<Label id="labelTotalQuotation">Total USD + IVA  $111,111.00</Label>
+				<View id="viewSectionCommentQuo">
+					
+					<Label class="label_align_left" text="Agrega un comentario:"></Label>
+					<TextArea id="textAreaCommentQuo" />
+					
+				</View>
+				
+				<View id="viewSectionPriceDateEstimated">
+					
+					<Label id="labelTotalQuotation"></Label>
+					<Label id="labelDateEstimatedQuotation"></Label>
+					
+				</View>
+				
+			</ScrollView>
+		
+		</View>
+		
+		<View id="containerTwo">
 			
-		</ScrollView>
+			<View class="viewSection">
+				
+				<View class="viewGeneral">
+					<Button id="buttonAuthorizeBuy"></Button>
+				</View>
+				
+				<View class="viewGeneral">
+					<Button id="btnSaveQuot" onClick="saveQuotation">Guardar</Button>
+				</View>
+				
+			</View>
+			
+		</View>
 
 	</Window>
 	

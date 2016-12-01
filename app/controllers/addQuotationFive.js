@@ -1,7 +1,7 @@
 // Arguments passed into this controller can be accessed via the `$.args` object directly or:
-var args = $.args;
+var args           = $.args;
 
-Ti.API.info("Argumentos recibidos: " + JSON.stringify(args));
+Ti.API.info("Argumentos recibidos addQuotationFive: " + JSON.stringify(args));
 
 // ID del model conveyor temp
 var idModelConTemp = args.modelConveyor.id;
@@ -140,46 +140,22 @@ function onSelectedDialogAccessory(event) {
 	
 	Ti.API.info("Index del elemento seleccionado: " + parseInt(selectedIndexDialogAccessory));
 	
-	// Estatus de la cotización
-	var statusOfQuotationSelected = Alloy.Globals.ALL_DATA_QUOTATION.title_quotation.statusQuo;
-	Ti.API.info("statusOfQuotationSelected: " + JSON.stringify(statusOfQuotationSelected));
-	
 	// Realizamos una accion dependiendo lo que fue seleccionado
 	switch(parseInt(selectedIndexDialogAccessory)) {
 		case 0:
 			Ti.API.info("Cantidad Accesorio.");
 			
-			// Validamos el status de la cotizacion
-			if (statusOfQuotationSelected == 4) {
-				// Mostramos mensaje
-				Ti.UI.createAlertDialog({ message: '¡El accesorio seleccionado no se puede modificar!\nLa cotizacción esta terminada.', title: 'Cotización terminada', ok: 'Aceptar', }).show();
-			} else {
+			// Modificar value del slider
+			var valueSQA = $.sliderlabelAccesoryQuantity;
 				
-				// Modificar value del slider
-				var valueSQA = $.sliderlabelAccesoryQuantity;
-					
-				valueSQA.value = parseInt(dataItemSelectedAccesory.name_accessory.quantity);
-				
-				// Mostramos el dialogo
-				dialogQuantityAccessory.show();
-				
-			};
+			valueSQA.value = parseInt(dataItemSelectedAccesory.name_accessory.quantity);
 			
+			// Mostramos el dialogo
+			dialogQuantityAccessory.show();
 			break;
 		case 1:
 			Ti.API.info("Eliminar Accesorio");
-			
-			// Validamos el status de la cotizacion
-			if (statusOfQuotationSelected == 4) {
-				// Mostramos mensaje
-				Ti.UI.createAlertDialog({ message: '¡El accesorio seleccionado no se puede eliminar!\nLa cotizacción esta terminada.', title: 'Cotización terminada', ok: 'Aceptar', }).show();
-			} else {
-				
-				//Ti.API.info("Eliminar Modelo Temp");
-				deleteAccessoryModelTemp();
-				
-			};
-			
+			deleteAccessoryModelTemp();
 			break;
 		default:
 			Ti.API.info("Opcion no encontrada.");
@@ -375,13 +351,13 @@ function deleteAccessoryModelTemp()
 // FUNCION QUE SE EJECUTA AL ABRIR LA VENTANA
 // ********************************************************
 
-$.seeAccessories.addEventListener("open", function(ev) {
+$.addQuotationFive.addEventListener("open", function(ev) {
 		
 		// Action Bar
 		var actionBar;
 		
 		// Activity
-		var activitySeeAcc = $.seeAccessories.activity;
+		var activitySeeAcc = $.addQuotationFive.activity;
 		
 		// Validamos el sistema operativo
 		if (Ti.Platform.osname === "android") {
@@ -391,7 +367,7 @@ $.seeAccessories.addEventListener("open", function(ev) {
 			} else {
 			
 				// Action Bar de la ventana
-				actionBar = $.seeAccessories.activity.actionBar;
+				actionBar = $.addQuotationFive.activity.actionBar;
 				
 				// Validamos si existe un actionbar
 				if (actionBar) {
@@ -418,27 +394,19 @@ $.seeAccessories.addEventListener("open", function(ev) {
 							var modelConveyorTempQuo = args;
 							
 							// Creamos ventana
-							var winAddAccessories = Alloy.createController('addAccessories', modelConveyorTempQuo).getView();
+							var winAddAccessories = Alloy.createController('addQuotationSix', modelConveyorTempQuo).getView();
 							
 							// Abrimos la ventana
 							winAddAccessories.open();
 							
 							// Cerramos la ventana actual
-							$.seeAccessories.close();
+							$.addQuotationFive.close();
 							
 						});
 						
 					};
 					
-					// STATUS COTIZACION
-					var estatusQuo = Alloy.Globals.ALL_DATA_QUOTATION.title_quotation.statusQuo;
-					Ti.API.info("estatusQuo: " + JSON.stringify(estatusQuo));
-					
-					// VALIDAMOS EL STATUS
-					if(estatusQuo != 4) {
-						// Mosdstramos menu
-						activitySeeAcc.invalidateOptionsMenu();
-					}
+					activitySeeAcc.invalidateOptionsMenu();
 					
 					// Mostramos boton Home Icon
 					actionBar.displayHomeAsUp = true;
@@ -449,7 +417,7 @@ $.seeAccessories.addEventListener("open", function(ev) {
 					// Al hacer click en el boton Home Icon
 					actionBar.onHomeIconItemSelected = function(e) {
 						// Cerramos la ventana actual
-						$.seeAccessories.close();
+						$.addQuotationFive.close();
 					};
 				
 				};

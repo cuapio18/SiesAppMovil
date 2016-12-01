@@ -1,0 +1,11 @@
+<Alloy>
+			
+	<Window class="container">
+		<ScrollView id="scrollViewAddAccessories">
+			
+			<View id="viewContainerAccessories"></View>
+			
+		</ScrollView>
+	</Window>
+	
+</Alloy>

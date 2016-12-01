@@ -57,7 +57,8 @@ function confirmPurchase(e) {
 		$.alertDialogTermsCond.show();
 		
 	} else {
-		alert("Tienes que aceptar los terminos y condiciones para poder realizar tu compra.");
+		Ti.UI.createAlertDialog({ message: 'Debes aceptar los terminos y condiciones para poder realizar tu compra.', title: 'Terminos y Condiciones', ok: 'Aceptar', }).show();
+		//alert("Tienes que aceptar los terminos y condiciones para poder realizar tu compra.");
 	};
 	
 }
@@ -88,7 +89,8 @@ $.alertDialogTermsCond.addEventListener('click', function(e) {
 		// Validamos si ya se escribio un password
 		if(tfConfirmPassword.value == '') {
 				
-			alert('La contraseña es obligatoria');
+			//alert('La contraseña es obligatoria');
+			Ti.UI.createAlertDialog({ message: 'La contraseña es obligatoria', title: 'Contraseña', ok: 'Aceptar', }).show();
 					
 		} else {
 			
@@ -122,16 +124,17 @@ $.alertDialogTermsCond.addEventListener('click', function(e) {
 							//activityIndicator.hide();
 							
 						});*/
-				        
-				    	// Cerramos la ventana del Indicador
-						winAddActivityIndicator.close();
-						
-						// Cerramos el indicador
-						activityIndicator.hide();
 				    
 				    	// Validamos la respuesta
 						if (responseWS.stateSave == false) {
-							alert("No se puede realiar la compra.\nIntentalo nuevamente.");
+							// Cerramos la ventana del Indicador
+							winAddActivityIndicator.close();
+							
+							// Cerramos el indicador
+							activityIndicator.hide();
+						
+							//alert("No se puede realiar la compra.\nIntentalo nuevamente.");
+							Ti.UI.createAlertDialog({ message: 'No se puede realiar la compra.\nIntentalo nuevamente.', title: 'Comprar cotización', ok: 'Aceptar', }).show();
 						} else if(responseWS.stateSave == true) {
 								
 							// Limpiamos el valor del id de la cotizacion
@@ -156,9 +159,10 @@ $.alertDialogTermsCond.addEventListener('click', function(e) {
 					// Cerramos el indicador
 					activityIndicator.hide();
 					
-					alert("Ocurrio un error.\nIntentalo nuevamente.");
+					Ti.UI.createAlertDialog({ message: 'Ocurrio un error.\nIntentalo nuevamente.', title: 'Error', ok: 'Aceptar', }).show();
+					//alert("Ocurrio un error.\nIntentalo nuevamente.");
 				},
-				timeout : 10000
+				timeout : 350000
 				
 			});
 					

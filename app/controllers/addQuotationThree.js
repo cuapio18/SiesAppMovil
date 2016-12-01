@@ -452,7 +452,7 @@ function generarCotizacionModeloAccesorios(objSaveQuotationJson)
 			var objResponseWS = JSON.parse(this.responseText);
 			
 			// validamos la bandera
-			Alloy.Globals.ID_GLOBAL_QUOTATION = objResponseWS.quotation.id
+			Alloy.Globals.ID_GLOBAL_QUOTATION = objResponseWS.quotation.id;
 			
 			// Ventana del paso numero 4 de la cotizacion
 			var winAddQuotationFour = Alloy.createController('addQuotationFour', objResponseWS).getView();

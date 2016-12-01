@@ -2,6 +2,20 @@
 	
 	<Window class="container">
 		
+		<AlertDialog id="alertDialogModelTemp" title="Cantidad del modelo" message="Elige la cantidad de modelos." persistent="true" cancel="1">
+	
+			<ButtonNames>
+				<ButtonName>Connfirmar</ButtonName>
+				<ButtonName>Cancelar</ButtonName>
+			</ButtonNames>
+			
+			<View layout="vertical">
+				<Label id="labelQuantityModelTemp"></Label>
+				<Slider id="sliderQuantityModelTemp" min="1" max="50" value="1" onChange="updateValueLabelMT"></Slider>
+			</View>
+	
+		</AlertDialog>
+		
 		<!--<ActionBar id="actionbarAddQuotFour" title="Arma tu Cotización"></ActionBar>
 		
 		<Menu>
@@ -19,8 +33,7 @@
 						
 						<ItemTemplate name="template">
 							
-							<!-- onLongpress="longModelConv"-->
-							<View id="container_model_conv">
+							<View id="container_model_conv" onLongpress="longModelConv">
 								<Label bindId="modelConveyor" id="modelConveyor" />
 								<Label bindId="quantityConveyor" id="quantityConveyor" />
 								<Label bindId="priceConveyor" id="priceConveyor" />
@@ -35,7 +48,11 @@
 					
 		        </ListView>
 		        
-		        <View id="viewSectionClientComment">
+		       <View id="viewSectionDataQuotation">
+	        		<Label id="labelDataQuotation" text="Datos de cotización"></Label>
+	        	</View>
+		        
+		        <View id="viewSectionClientPicker">
 					
 					<Label class="label_align_left" text="Indique un cliente:"></Label>
 					
@@ -49,6 +66,13 @@
 					
 					<Label class="label_align_left" text="Agrega un comentario:"></Label>
 					<TextArea id="textAreaCommentQuo" />
+					
+				</View>
+				
+				<View id="viewSectionPriceDateEstimated">
+					
+					<Label id="labelTotalQuotation"></Label>
+					<Label id="labelDateEstimatedQuotation"></Label>
 					
 				</View>
 				

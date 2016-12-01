@@ -1,5 +1,4 @@
 <Alloy>
-	
 	<Window class="container">
 		
 		<AlertDialog id="alertDialogAccesoryQuantity" title="Cantidad de accesorio" message="Selecciona la cantidad de accesorios." cancel="1">
@@ -41,5 +40,4 @@
 		</ListView>
 		
 	</Window>
-	
 </Alloy>

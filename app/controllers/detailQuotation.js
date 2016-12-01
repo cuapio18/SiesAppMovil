@@ -3,10 +3,59 @@ var args = $.args;
 
 Ti.API.info("Argumentos recibidos: " + JSON.stringify(args));
 
+// CREAMOS UN INDICADOR
+
+// Ventana para mostrar el indicador
+var winAddActivityIndicator = Ti.UI.createWindow({
+	theme: "Theme.AppCompat.Light.NoActionBar",
+	backgroundColor : "#000",
+	opacity: .9,
+	fullscreen : true
+});
+
+// Creamos activity Indicator
+var activityIndicator = Ti.UI.createActivityIndicator({
+	color   : '#ccc',
+	font    : {fontFamily:'Helvetica Neue', fontSize:26, fontWeight:'bold'},
+	message : 'Espere...',
+	style   : Ti.UI.ActivityIndicatorStyle.BIG_DARK,
+	height  : Ti.UI.SIZE,
+	width   : Ti.UI.SIZE
+});
+
+// Agregamos el indicador a la ventana
+winAddActivityIndicator.add(activityIndicator);
+
 // ID de la cotizacion
 var idQuotation = args.title_quotation.id;
 
 Ti.API.info("ID de la cotización: " + parseInt(idQuotation));
+
+// ID DE LA COTIZACION
+var idQuotationCurrent = parseInt(args.title_quotation.id);
+
+Ti.API.info("idQuotationCurrent:" + idQuotationCurrent);
+
+// ID DEL CLIENTE
+var idClientQuo = 0;
+
+Ti.API.info("idClientQuo:" + idClientQuo);
+
+// ID DEL USUARIO
+var idUsuarioSession   = Alloy.Globals.PROPERTY_INFO_USER.userLogin.id;
+
+Ti.API.info("idUsuarioSession:" + parseInt(idUsuarioSession));
+
+// PERFIL DEL USUARIO LOGUEADO
+var idProfileUserLogin = Alloy.Globals.PROPERTY_INFO_USER.userLogin.user.profile.id;
+
+Ti.API.info("idProfileUserLogin:" + parseInt(idProfileUserLogin));
+
+// PICKER CLIENTE
+var pickerClientByIdSeller = $.pickerClientByIdSeller;
+
+// VARIABLE PARA ALMACENAR LO QUE DEVUELVE EL SERVICIO DE MODELOS DE LA COTIZACION
+var objModelsConveyorQuotation = {};
 
 // EJECUTAMOS FUNCION QUE OBTIENE LOS MODELOS DE LA COTIZACION
 
@@ -27,11 +76,21 @@ function getAllModelsConveyorsQuotation(idQuotation) {
 		onload : function(e) {
 			Ti.API.info("Received text: " + this.responseText);
 
-			var responseWS = JSON.parse(this.responseText);
+			var responseMTWS = JSON.parse(this.responseText);
 			Ti.API.info("ResponseWSQuotations: " + this.responseText);
 			
+			// Asignamos valor a nuestra variable
+			objModelsConveyorQuotation = responseMTWS;
+			Ti.API.info("Varible con lo que devuelve el WSMT: " + JSON.stringify(objModelsConveyorQuotation));
+			
+			// ***********************************************************
+			// EJECUTAMOS LA FUNCIÓN
+			// ***********************************************************
+			
+			setTotalAndDateEstimated();
+			
 			// FUNCION QUE GENERA LA LISTA DE LOS MODELOS DE LA COTIZACION
-			createAllModelsConveyorsQuotation(responseWS.listTemp);
+			createAllModelsConveyorsQuotation(responseMTWS.listTemp);
 		},
 		onerror : function(e) {
 			Ti.API.info(e.error);
@@ -98,70 +157,6 @@ $.listViewModelConveyorQuotationDetail.addEventListener('itemclick', function(e)
 	// Ventana
 	var winSeeAccesories = Alloy.createController('seeAccessories', itemClickModelTemp).getView();
 	
-	// Evento que se ejecuta al abrir la ventana
-	winSeeAccesories.addEventListener("open", function(ev) {
-		
-		// Action Bar
-		var actionBar;
-		
-		// Activity
-		var activitySeeAcc = winSeeAccesories.activity;
-		
-		// Validamos el sistema operativo
-		if (Ti.Platform.osname === "android") {
-			
-			if (! activitySeeAcc) {
-				Ti.API.error("No se puede acceder a la barra de acción en una ventana ligera.");
-			} else {
-			
-				// Action Bar de la ventana
-				actionBar = winSeeAccesories.activity.actionBar;
-				
-				// Validamos si existe un actionbar
-				if (actionBar) {
-					
-					// Agregamos un menu
-					activitySeeAcc.onCreateOptionsMenu = function(ev) {
-						
-						// Menu
-						var menu = ev.menu;
-						
-						// Item Menu
-						var menuItem = menu.add({
-							title        : 'Agregar accesorios',
-							icon         : Ti.Android.R.drawable.ic_menu_add,
-							showAsAction : Ti.Android.SHOW_AS_ACTION_ALWAYS
-						});
-						
-						// Click sobre un item del menu
-						menuItem.addEventListener('click', function(e){
-							Ti.API.info("I was clicked: " + JSON.stringify(e));
-						});
-						
-					};
-					
-					activitySeeAcc.invalidateOptionsMenu();
-					
-					// Mostramos boton Home Icon
-					actionBar.displayHomeAsUp = true;
-					
-					// Agregamos un titulo
-					actionBar.title = "Accesorios seleccionados";
-					
-					// Al hacer click en el boton Home Icon
-					actionBar.onHomeIconItemSelected = function(e) {
-						// Cerramos la ventana actual
-						winSeeAccesories.close();
-					};
-				
-				};
-				
-			};
-			
-		};
-		
-	});
-	
 	// Abrimos la ventana
 	winSeeAccesories.open();
 
@@ -215,24 +210,46 @@ function onSelectDialogModelTemp(event) {
 	
 	Ti.API.info("Index del elemento seleccionado: " + parseInt(selectedIndexDialModelTemp));
 	
+	// Estatus de la cotización
+	var statusOfQuotationSelected = Alloy.Globals.ALL_DATA_QUOTATION.title_quotation.statusQuo;
+	Ti.API.info("statusOfQuotationSelected: " + JSON.stringify(statusOfQuotationSelected));
+	
 	// Realizamos una accion dependiendo lo que fue seleccionado
 	switch(parseInt(selectedIndexDialModelTemp))
 	{
 		case 0 :
 			//Ti.API.info("Cambiar Cantidad Modelo Temp.");
 			
-			// Modificar value del slider
-			var valueSQMT = $.sliderQuantityModelTemp;
+			// Validamos el status de la cotizacion
+			if (statusOfQuotationSelected == 4) {
+				// Mostramos mensaje
+				Ti.UI.createAlertDialog({ message: '¡El modelo seleccionado no se puede modificar!\nLa cotizacción esta terminada.', title: 'Cotización terminada', ok: 'Aceptar', }).show();
+			} else {
 				
-			valueSQMT.value = parseInt(dataItemSelected.modelConveyor.quantity);
-
-			// Mostramos el dialogo
-			dialogQuantityModlTemp.show();
+				// Modificar value del slider
+				var valueSQMT = $.sliderQuantityModelTemp;
+					
+				valueSQMT.value = parseInt(dataItemSelected.modelConveyor.quantity);
+	
+				// Mostramos el dialogo
+				dialogQuantityModlTemp.show();
+				
+			};
 			
 			break;
 		case 1 :
-			//Ti.API.info("Eliminar Modelo Temp");
-			deleteModelTemp(dataItemSelected);
+		
+			// Validamos el status de la cotizacion
+			if (statusOfQuotationSelected == 4) {
+				// Mostramos mensaje
+				Ti.UI.createAlertDialog({ message: '¡El modelo seleccionado no se puede eliminar!\nLa cotizacción esta terminada.', title: 'Cotización terminada', ok: 'Aceptar', }).show();
+			} else {
+				
+				//Ti.API.info("Eliminar Modelo Temp");
+				deleteModelTemp(dataItemSelected);
+				
+			};
+			
 			break;
 		default :
 			Ti.API.info("Opcion no encontrada.");
@@ -407,4 +424,521 @@ function deleteModelTemp(dataItemSelected)
 	// Mostramos el Alert Dialog
 	dialogDeleteModelTemp.show();
 
+}
+
+// ***********************************************************
+// FUNCION PARA GUARDAR COTIZACION
+// ***********************************************************
+
+function saveQuotation(e)
+{
+	// Picker Cliente
+	Ti.API.info("idClientQuo: " + idClientQuo);
+	
+	// TextArea Comntario
+	var textAreaCommentQuo = $.textAreaCommentQuo.value;
+	
+	Ti.API.info("textAreaCommentQuo: " + JSON.stringify(textAreaCommentQuo));
+	
+	// Validamos si existe un cliente
+	if ( idClientQuo != "" && idClientQuo > 0 ) {
+		
+		// Creamo objeto para enviar
+		var objJSONSaveQuotation = {
+			idQuotation : idQuotationCurrent,
+			comment     : textAreaCommentQuo,
+			idClient    : idClientQuo
+		};
+		
+		// Validamos el tipo de usuario que inicio sesion - 4 vendedor -3 cliente
+		if (parseInt(idProfileUserLogin)  == 4) {
+			Ti.API.info("Eres vendedor");
+			
+			// Atributo validate
+			objJSONSaveQuotation['validate'] = 1;
+			
+			// Atributo idSeller
+			objJSONSaveQuotation['idSeller'] = parseInt(idUsuarioSession);
+			
+		} else {
+			Ti.API.info("Eres cliente");
+			
+			// Atributo validate
+			objJSONSaveQuotation['validate'] = 0;
+			
+		};
+		
+		Ti.API.info("OBJETO GUARDAR COTIZCION: " + JSON.stringify(objJSONSaveQuotation));
+		
+		// Dialogo para guardar una acotizacion
+		var dialogSaveQuotation = Ti.UI.createAlertDialog({
+			persistent  : true,
+			cancel      : 0,
+			buttonNames : ['Confirmar', 'Cancelar'],
+			message     : '¿Seguro de realizar esta acción?',
+			title       : 'Guardar Cotización'
+		});
+		
+		// Click sobre el dialogo
+		dialogSaveQuotation.addEventListener('click', function(e) {
+			
+			Ti.API.info("Item Index: " + e.index);
+			
+			if (e.index == 0) {
+				
+				// Abrimos ventana del Indicador
+				winAddActivityIndicator.open();
+				// Mostramos el indicador
+				activityIndicator.show();
+				
+				Ti.API.info('Presionaste guardar la cotización.');
+				
+				// Url del servicio rest
+				var url    = "http://" + Alloy.Globals.URL_GLOBAL_SIES + "/sies-rest/quotation/saveQuotationEdit";
+				
+				// Creamoss un cliente http
+				var client = Ti.Network.createHTTPClient({
+					// función de llamada cuando los datos de respuesta está disponible
+					onload : function(e) {
+						
+						Ti.API.info("Received text: " + this.responseText);
+						
+						var responseWS = JSON.parse(this.responseText);
+						
+						setTimeout(function() {
+							
+							// Cerramos la ventana del Indicador
+							//winAddActivityIndicator.close();
+							
+							// Cerramos el indicador
+							//activityIndicator.hide();
+							
+							// Limpiamos el valor del id de la cotizacion
+							Alloy.Globals.ID_GLOBAL_QUOTATION = 0;
+							
+							// Venta principal de cotizaciones
+							var winHomeQuotations = Alloy.createController('home').getView();
+							
+							// Abrimos ventana
+							winHomeQuotations.open();
+						
+							
+						}, 3000);
+				
+						
+					},
+					// función de llamada cuando se produce un error, incluyendo un tiempo de espera
+					onerror : function(e) {
+						Ti.API.debug(e.error);
+						
+						// Cerramos la ventana del Indicador
+						winAddActivityIndicator.close();
+							
+						// Cerramos el indicador
+						activityIndicator.hide();
+						
+						alert("Ocurrio un error.\nIntentalo nuevamente.");
+					},
+					timeout : 5000 // en milisegundos
+				});
+				
+				// Preparar la conexión.
+				client.open("POST", url);
+				
+				// Establecer la cabecera para el formato JSON correcta
+				client.setRequestHeader("Content-Type", "application/json; charset=utf-8");
+				
+				// Enviar la solicitud.
+				client.send(JSON.stringify(objJSONSaveQuotation));
+				
+			};
+			
+		});
+		
+		// Mostramos el Alert Dialog
+		dialogSaveQuotation.show();
+	
+	} else {
+		//alert("Debes seleccionar un cliente!");
+		Ti.UI.createAlertDialog({ message: 'Debes seleccionar un cliente!', title: 'Cliente', ok: 'Aceptar', }).show();
+	};
+}
+
+// ***********************************************************
+// FUNCION PARA MOSTRAR EL BOTON AUTORIZAR O COMPRAR
+// ***********************************************************
+
+function validarBotonComprarAutorizarCotizacion()
+{
+	
+	// Boton comprar o autorizar
+	var buttonAuthorizeBuy = $.buttonAuthorizeBuy;
+	
+	// Validamos el tipo de usuario que inicio sesion - 4 vendedor - 3 cliente
+	if (parseInt(idProfileUserLogin)  == 4) {
+		
+		// Cambiamos el texto al boton
+		buttonAuthorizeBuy.title = "Autorizar";
+		
+	} else if(parseInt(idProfileUserLogin)  == 3) {
+		
+		// Cambiamos el texto al boton
+		buttonAuthorizeBuy.title = "Comprar";
+		
+	};
+	
+	// CLICK SOBRE EL BOTON COMPRAR O AUTORIZAR
+	buttonAuthorizeBuy.addEventListener('click', function(e) {
+		
+		Ti.API.info("Click Boton Comprar o autorizar: " + JSON.stringify(e));
+		
+		// Titulo del boton
+		var getTitleButtonAB = e.source.title;
+		
+		switch(getTitleButtonAB) {
+			case 'Autorizar' :
+				
+				// Llamomos a l funcion
+				autorizarCotizacion();
+				
+				break;
+			case 'Comprar' :
+			
+				// Llamomos a l funcion
+				comprarCotizacion();
+				
+				break;
+		}
+		
+	});
+	
+	
+}
+
+// ***********************************************************
+// EJECUTAMOS LA FUNCION
+// ***********************************************************
+
+validarBotonComprarAutorizarCotizacion();
+
+// ***********************************************************
+// FUNCION PARA AUTORIZAR UNA COTIZACION
+// ***********************************************************
+
+function autorizarCotizacion()
+{
+	Ti.API.info("Vamos a autorizar la cotizacion");
+	
+	Ti.API.info("idClientQuo: " + idClientQuo);
+	
+	// TextArea Comntario
+	var textAreaCommentQuo = $.textAreaCommentQuo.value;
+	
+	Ti.API.info("textAreaCommentQuo: " + JSON.stringify(textAreaCommentQuo));
+	
+	// Validamos si existe un cliente
+	if ( idClientQuo != "" && idClientQuo > 0 ) {
+	
+		// OBJ JSON PARA ENVIAR EN LA PETICION
+		var objJsonAuthorizeQuotation = {
+			idQuotation : idQuotationCurrent,
+	    	comment     : textAreaCommentQuo,
+			idClient    : idClientQuo,
+			idSeller    : idUsuarioSession
+		};
+		
+		
+		Ti.API.info("OBJ JSON AQ: " + JSON.stringify(objJsonAuthorizeQuotation));
+		
+		// Dialogo para autorizar un acotizacion
+		var dialogAuthorizeQuotation = Ti.UI.createAlertDialog({
+			persistent  : true,
+			cancel      : 0,
+			buttonNames : ['Confirmar', 'Cancelar'],
+			message     : '¿Seguro de realizar esta acción?',
+			title       : 'Autorizar Cotización'
+		});
+		
+		// Click sobre el dialogo
+		dialogAuthorizeQuotation.addEventListener('click', function(e) {
+			
+			Ti.API.info("Item Index: " + e.index);
+			
+			if (e.index == 0) {
+				
+				// Abrimos ventana del Indicador
+				winAddActivityIndicator.open();
+				// Mostramos el indicador
+				activityIndicator.show();
+				
+				Ti.API.info('Se va a autorizar la cotización.');
+				
+				// URL del servicio rest
+				var url = "http://" + Alloy.Globals.URL_GLOBAL_SIES + "/sies-rest/quotation/setAut";
+				
+				// Cliente para realizar la peticion
+				var client = Ti.Network.createHTTPClient({
+					onload : function(e) {
+						
+						setTimeout(function() {
+							
+							// Cerramos la ventana del Indicador
+							//winAddActivityIndicator.close();
+							
+							// Cerramos el indicador
+							//activityIndicator.hide();
+						
+							// Limpiamos el valor del id de la cotizacion
+							Alloy.Globals.ID_GLOBAL_QUOTATION = 0;
+							
+							Ti.API.info("Received text: " + this.responseText);
+							
+							// Venta principal de cotizaciones
+							var winHomeQuotations = Alloy.createController('home').getView();
+							
+							// Abrimos ventana
+							winHomeQuotations.open();
+							
+						}, 3000);
+						
+					},
+					onerror : function(e) {
+						Ti.API.info("ERROR: " + e.error);
+						
+						// Cerramos la ventana del Indicador
+						winAddActivityIndicator.close();
+							
+						// Cerramos el indicador
+						activityIndicator.hide();
+						
+						alert("Ocurrio un error.\nIntentalo nuevamente.");
+					},
+					timeout : 15000
+				});
+				
+				// Preparamos conexion
+				client.open("POST", url);
+				
+				// Establecer la cabecera para el formato JSON correcta
+				client.setRequestHeader("Content-Type", "application/json; charset=utf-8");
+				
+				// Enviar petición
+				client.send(JSON.stringify(objJsonAuthorizeQuotation));
+				
+			};
+			
+		});
+		
+		// Mostramos el Alert Dialogo
+		dialogAuthorizeQuotation.show();
+		
+	} else {
+		//alert("Debes seleccionar un cliente!");
+		Ti.UI.createAlertDialog({ message: 'Debes seleccionar un cliente!', title: 'Cliente', ok: 'Aceptar', }).show();
+	};
+	
+}
+
+// ***********************************************************
+// FUNCION PARA COMPRAR UNA COTIZACION
+// ***********************************************************
+
+function comprarCotizacion()
+{
+	Ti.API.info("Vamos a comprar la cotizacion");
+	
+	Ti.API.info("idClientQuo: " + idClientQuo);
+	
+	// TextArea Comntario
+	var textAreaCommentQuo = $.textAreaCommentQuo.value;
+	
+	Ti.API.info("textAreaCommentQuo: " + JSON.stringify(textAreaCommentQuo));
+	
+	var objJsonBuyQuotation = {
+		idQuotation : idQuotationCurrent,
+		comment     : textAreaCommentQuo,
+		idClient    : idClientQuo,
+		password    : ""
+	};
+	
+	//ventanaTerminosCondiciones.add(texto);
+	var winTermsConditions = Alloy.createController('termsConditions', objJsonBuyQuotation).getView();
+	
+	// Mostramos la ventana
+	winTermsConditions.open();
+}
+
+// ***********************************************************
+// FUNCION PARA CARGAR EL PICKER DE CLIENTES POR ID DE VEDEDOR - YES
+// ***********************************************************
+
+function getAllOptionsPickerClientsByIdSeller()
+{
+	// Objeto con los datos a enviar
+	var objJsonIdSeller = {
+		"id" : parseInt(idUsuarioSession)
+	};
+	
+	// Urll del servicio rest
+	var url    = "http://" + Alloy.Globals.URL_GLOBAL_SIES + "/sies-rest/quotation/searchClientBySeller";
+	
+	// Creamoss un cliente http
+	var client = Ti.Network.createHTTPClient({
+		// función de llamada cuando los datos de respuesta está disponible
+		onload : function(e) {
+			
+			Ti.API.info("Received text: " + this.responseText);
+			
+			var responseWS = JSON.parse(this.responseText);
+			
+			// Funcion que llena el combo
+			fillClientByIdSellerPicker(responseWS.business);
+			
+		},
+		// función de llamada cuando se produce un error, incluyendo un tiempo de espera
+		onerror : function(e) {
+			Ti.API.debug(e.error);
+		},
+		timeout : 5000 // en milisegundos
+	});
+	
+	// Preparar la conexión.
+	client.open("POST", url);
+	
+	// Establecer la cabecera para el formato JSON correcta
+	client.setRequestHeader("Content-Type", "application/json; charset=utf-8");
+	
+	// Enviar la solicitud.
+	client.send(JSON.stringify(objJsonIdSeller)); 
+}
+
+// ***********************************************************
+// GENERAMOS LAS OPCIONES DEL PICKER CLIENTES POR ID DE VENDEDOR - YES
+// ***********************************************************
+
+function fillClientByIdSellerPicker(objOptionsClientByIdSellerPicker)
+{
+	//Ti.API.info("ID Cliente: " + JSON.stringify( objOptionsClientByIdSellerPicker[0].user.business) );
+	
+	// RECORREMOS EL OBJETO QUE LLEGA
+	objOptionsClientByIdSellerPicker.forEach(function(optClientByIdSeller) {
+		
+		//Ti.API.info("FOREACH: " + JSON.stringify(optClientByIdSeller.user.business) );
+		
+		var row = Ti.UI.createPickerRow({
+			id       : optClientByIdSeller.user.business.id,
+			title    : optClientByIdSeller.user.business.nameCompany
+		});
+		
+		pickerClientByIdSeller.add(row);
+		pickerClientByIdSeller.selectionIndicator = true;
+		pickerClientByIdSeller.setSelectedRow(0, 0, false);
+
+	});
+	
+	// FUNCION AL APLICAR UN CAMBIO EN EL PICKER
+	
+	pickerClientByIdSeller.addEventListener("change", function(e) {
+	
+		// Index del elemento seleccionado
+		var indexItem = parseInt(JSON.stringify(e.rowIndex));
+		Ti.API.info("indexItem: " + indexItem );
+		
+		// Datos del elemento seleccionado
+		var pickerDataSelected = e.source.children[0].rows[indexItem];
+		Ti.API.info("pickerDataSelected: " + JSON.stringify(pickerDataSelected) );
+		
+		// Asignaamos un valor al id del cliente
+		idClientQuo = pickerDataSelected.id;
+	
+	});
+}
+
+// ***********************************************************
+// Validamos el tipo de usuario que inicio sesion - 4 vendedor -3 cliente
+// ***********************************************************
+
+if (parseInt(idProfileUserLogin)  == 4) {
+	
+	Ti.API.info("Eres vendedor y vamos a cargar el combo de clientes." );
+	
+	// EJECUTAMOS FUNCION
+	getAllOptionsPickerClientsByIdSeller();
+	
+} else {
+	Ti.API.info("Eres cliente y vamos a asignar un id de cliente automatico." );
+	
+	// Asignamos un valor
+	idClientQuo = Alloy.Globals.PROPERTY_INFO_USER.userLogin.user.business.id;//args.quotation.client.user.business.id;
+	
+	// Vista contenedora del picker cliente
+	var viewSectionClientPicker = $.viewSectionClientPicker;
+	
+	// Ocultamos el contenedor
+	viewSectionClientPicker.hide();
+	
+	// Cambiamos el alto del contenedor
+	viewSectionClientPicker.height = 0;
+	
+};
+
+// ***********************************************************
+// VALIDAMOS EL STATUS Y COMENTARIO DE LA COTIZACION
+// ***********************************************************
+
+// Estatus cotizacion
+var statusQuotation  = args.title_quotation.statusQuo;
+Ti.API.info("Estatus Cotización: " + statusQuotation);
+
+// Validamos el status 4 - Terminada
+if (statusQuotation == 4 ) {
+	
+	// Contenedor de botones de guardar - comprar o autorizar
+	var containerTwo = $.containerTwo;
+	
+	// Ocultamos contededor
+	containerTwo.hide();
+	
+	// Cambiar tamaño del contenedor
+	containerTwo.height = 0;
+	
+	// Contenedor de la lista
+	var containerOne = $.containerOne;
+	
+	// Cambiamos tamaño del contenedor
+	containerOne.height = '100%';	
+	
+};
+
+// Comentario Cotizacion
+var commentQuotation = args.title_quotation.commentQuo;
+Ti.API.info("Comentario Cotización: " + commentQuotation);
+
+// Validamos si ya existe un comentario
+if(commentQuotation != null) {
+	// Asignamos valor al textArea comentario
+	$.textAreaCommentQuo.value = commentQuotation;
+}
+
+// ***********************************************************
+// FUNCION PARA MOSTRAR TOTAL Y FECHA ESTIMADA
+// ***********************************************************
+
+function setTotalAndDateEstimated()
+{
+	
+	Ti.API.info("WSMT: " + JSON.stringify(objModelsConveyorQuotation));
+	
+	// Total de la cotizacion
+	var totalQuotation         = $.labelTotalQuotation;
+	
+	// Asignamos total
+	totalQuotation.text         = "Total USD + IVA: $" + objModelsConveyorQuotation.totalPrice;
+	
+	// Fecha estimada de la cotizacion
+	var dateEstimatedQuotation  = $.labelDateEstimatedQuotation;
+	
+	// Asignamos Fecha Estimada
+	dateEstimatedQuotation.text = "Fecha Estimada: " + objModelsConveyorQuotation.estimated;
+	
 }
