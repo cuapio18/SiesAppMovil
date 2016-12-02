@@ -5,7 +5,7 @@
 		<AlertDialog id="alertDialogModelTemp" title="Cantidad del modelo" message="Elige la cantidad de modelos." persistent="true" cancel="1">
 	
 			<ButtonNames>
-				<ButtonName>Connfirmar</ButtonName>
+				<ButtonName>Confirmar</ButtonName>
 				<ButtonName>Cancelar</ButtonName>
 			</ButtonNames>
 			

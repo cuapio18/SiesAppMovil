@@ -26,47 +26,6 @@ listViewQuot.addEventListener('itemclick', function(e) {
 	// Ventana
 	var windDetailQuotation = Alloy.createController('detailQuotation', itemClickQuotation).getView();
 	
-	// Evento que se ejecuta ala abri la ventana
-	windDetailQuotation.addEventListener("open", function(evt) {
-		
-		// Action Bar
-		var actionBar;
-		
-		// Activity
-		var activityDetailQuotation = windDetailQuotation.activity;
-		
-		// Validamos el sistema operativo
-		if (Ti.Platform.osname === "android") {
-			
-			if (! activityDetailQuotation) {
-				Ti.API.info("No se puede acceder a la barra de acción en una ventana ligera.");
-			} else {
-				
-				actionBar = windDetailQuotation.activity.actionBar;
-				
-				// Validamos si existen un actionBar
-				if (actionBar) {
-					
-					// Mostramos boton Home Icon
-					actionBar.displayHomeAsUp = true;
-					
-					// Agregamos un titulo
-					actionBar.title = "Modelos seleccionados";
-					
-					// Al hacer click en el boton Home Icon
-					actionBar.onHomeIconItemSelected = function(e) {
-						// Cerramos la ventana actual
-						windDetailQuotation.close();
-					};	
-					
-				};
-				
-			};
-			
-		};
-		
-	});
-	
 	// Abrimos la ventana
 	windDetailQuotation.open();
 

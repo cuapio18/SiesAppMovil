@@ -56,6 +56,8 @@ function fillConveyorsView(objJsonConveyor) {
 	// Recorremos el objeto json que recibimos
 	objJsonConveyor.forEach(function (optConv){
 		
+		var urlImgCon = "http://" + Alloy.Globals.URL_GLOBAL_SERVER_SIES + "/sies-admin" + optConv.pic;
+		
 		// Vista estatica
 		var cell = Alloy.createController("conveyors_list_cell");
 		
@@ -67,7 +69,7 @@ function fillConveyorsView(objJsonConveyor) {
 				attributedString : optConv.keyShort
 			},
 			"#thumbnail_imageview" : {
-				image : 'http://www.esysautomation.com/data/uploads/Esys%20Pictures/Assembly/Conveyors_MainContent460px.jpg'
+				image : urlImgCon//'http://www.esysautomation.com/data/uploads/Esys%20Pictures/Assembly/Conveyors_MainContent460px.jpg'
 			},
 			"#id_conveyor": {
 				text             : optConv.id,

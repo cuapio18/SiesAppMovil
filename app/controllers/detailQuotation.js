@@ -3,17 +3,25 @@ var args = $.args;
 
 Ti.API.info("Argumentos recibidos: " + JSON.stringify(args));
 
+// ***************************************************
 // CREAMOS UN INDICADOR
+// ***************************************************
 
+// ***************************************************
 // Ventana para mostrar el indicador
+// ***************************************************
+
 var winAddActivityIndicator = Ti.UI.createWindow({
-	theme: "Theme.AppCompat.Light.NoActionBar",
+	theme           : "Theme.AppCompat.Light.NoActionBar",
 	backgroundColor : "#000",
-	opacity: .9,
-	fullscreen : true
+	opacity         : .9,
+	fullscreen      : true
 });
 
+// ***************************************************
 // Creamos activity Indicator
+// ***************************************************
+
 var activityIndicator = Ti.UI.createActivityIndicator({
 	color   : '#ccc',
 	font    : {fontFamily:'Helvetica Neue', fontSize:26, fontWeight:'bold'},
@@ -23,11 +31,14 @@ var activityIndicator = Ti.UI.createActivityIndicator({
 	width   : Ti.UI.SIZE
 });
 
+// ***************************************************
 // Agregamos el indicador a la ventana
+// ***************************************************
+
 winAddActivityIndicator.add(activityIndicator);
 
 // ID de la cotizacion
-var idQuotation = args.title_quotation.id;
+var idQuotation        = args.title_quotation.id;
 
 Ti.API.info("ID de la cotización: " + parseInt(idQuotation));
 
@@ -37,7 +48,7 @@ var idQuotationCurrent = parseInt(args.title_quotation.id);
 Ti.API.info("idQuotationCurrent:" + idQuotationCurrent);
 
 // ID DEL CLIENTE
-var idClientQuo = 0;
+var idClientQuo        = 0;
 
 Ti.API.info("idClientQuo:" + idClientQuo);
 
@@ -52,16 +63,20 @@ var idProfileUserLogin = Alloy.Globals.PROPERTY_INFO_USER.userLogin.user.profile
 Ti.API.info("idProfileUserLogin:" + parseInt(idProfileUserLogin));
 
 // PICKER CLIENTE
-var pickerClientByIdSeller = $.pickerClientByIdSeller;
+var pickerClientByIdSeller     = $.pickerClientByIdSeller;
 
 // VARIABLE PARA ALMACENAR LO QUE DEVUELVE EL SERVICIO DE MODELOS DE LA COTIZACION
 var objModelsConveyorQuotation = {};
 
+// ***************************************************
 // EJECUTAMOS FUNCION QUE OBTIENE LOS MODELOS DE LA COTIZACION
+// ***************************************************
 
-getAllModelsConveyorsQuotation(idQuotation);
+//getAllModelsConveyorsQuotation(idQuotation);
 
+// ***************************************************
 // FUNCION QUE OBTIENE LOS MODELOS DE LA COTIZACION
+// ***************************************************
 
 function getAllModelsConveyorsQuotation(idQuotation) {
 
@@ -84,7 +99,24 @@ function getAllModelsConveyorsQuotation(idQuotation) {
 			Ti.API.info("Varible con lo que devuelve el WSMT: " + JSON.stringify(objModelsConveyorQuotation));
 			
 			// ***********************************************************
-			// EJECUTAMOS LA FUNCIÓN
+			// TOTAL Y FECHA ESTIMADA DE LA COTIZACION
+			// ***********************************************************
+			
+			// limpiamos nuestra variable global de total y fecha estimada
+			Alloy.Globals.DATE_ESTIMATED_TOTAL_QUOTATION = "";
+			
+			Ti.API.info("DATE_ESTIMATED_TOTAL_QUOTATION: " + JSON.stringify(Alloy.Globals.DATE_ESTIMATED_TOTAL_QUOTATION));
+			
+			// Asignamos el total y la fecha estimada a la variable global
+			Alloy.Globals.DATE_ESTIMATED_TOTAL_QUOTATION = {
+				"totalPrice" : objModelsConveyorQuotation.totalPrice,
+				"estimated"  : objModelsConveyorQuotation.estimated
+			};
+			
+			Ti.API.info("DATE_ESTIMATED_TOTAL_QUOTATION 2: " + JSON.stringify(Alloy.Globals.DATE_ESTIMATED_TOTAL_QUOTATION));
+			
+			// ***********************************************************
+			// EJECUTAMOS LA FUNCIÓN QUE CARGA TOTAL Y FECHA ESTIMADA
 			// ***********************************************************
 			
 			setTotalAndDateEstimated();
@@ -109,7 +141,9 @@ function getAllModelsConveyorsQuotation(idQuotation) {
 
 }
 
+// ***************************************************
 // FUNCION QUE GENERA LOS MODELOS DE LA COTIZACION
+// ***************************************************
 
 function createAllModelsConveyorsQuotation(modelsConvQuotaion) {
 
@@ -125,16 +159,18 @@ function createAllModelsConveyorsQuotation(modelsConvQuotaion) {
 				text     : model.modelConveyor.model,
 				id       : model.id, 
 				idx      : parseInt(idx),
-				quantity : model.quantity
+				quantity : model.quantity,
+				price    : model.price,
+				subtotal : model.subtotal
 			},
 			quantityConveyor : {
 				text : "Cantidad: " + model.quantity
 			},
 			priceConveyor : {
-				text : "Precio: " + model.price
+				text : "Precio Unit.: $" + model.price
 			},
 			totalConveyor : {
-				text : "Total:"
+				text : "Subtotal: $" + model.subtotal
 			}
 		});
 
@@ -145,7 +181,9 @@ function createAllModelsConveyorsQuotation(modelsConvQuotaion) {
 
 }
 
+// ***************************************************
 // CLICK EN UN ELEMENTO DE LA LISTA
+// ***************************************************
 
 $.listViewModelConveyorQuotationDetail.addEventListener('itemclick', function(e) {
 	
@@ -159,6 +197,9 @@ $.listViewModelConveyorQuotationDetail.addEventListener('itemclick', function(e)
 	
 	// Abrimos la ventana
 	winSeeAccesories.open();
+	
+	// Cerramos la ventana actual
+	$.detailQuotation.close();
 
 });
 
@@ -179,7 +220,9 @@ var dataItemSelected = {};
 // Index del elemento seleccionado
 var itemIndexModelTemp;
 
+// ***************************************************
 // CLICK PROLONGADO EN UN ELEMENTO DE LA LISTA
+// ***************************************************
 
 function longPressModelConveyor(e) {
 	// Indice del elemento presionado
@@ -196,13 +239,18 @@ function longPressModelConveyor(e) {
 	dialogModelTemp.addEventListener('click', onSelectDialogModelTemp);
 }
 
+// ***************************************************
 // DIALOGO DE CANTIDAD DE MODELOS TEMPORALES
+// ***************************************************
 
 var dialogQuantityModlTemp = $.alertDialogModelTemp;
 
+// ***************************************************
 // FUNCION QUE SE EJECUTA AL PRESIONAR UN ELEMENTO DEL DIALOGO
+// ***************************************************
 
 function onSelectDialogModelTemp(event) {
+	
 	Ti.API.info("Modelo Temp seleccionado: " + JSON.stringify(dataItemSelected));
 
 	// Indice del elemento seleccionado del dialogo
@@ -257,8 +305,9 @@ function onSelectDialogModelTemp(event) {
 	}
 }
 
-
+// *******************************************************************************
 // AL HACER CLICK SOBRE ALGUNA OPCION DEL ALERT DIALOG DE CANTIDAD DE MODELOS TEMP
+// *******************************************************************************
 
 dialogQuantityModlTemp.addEventListener('click', function(e) {
 		
@@ -272,13 +321,17 @@ dialogQuantityModlTemp.addEventListener('click', function(e) {
 				
 });
 
+// ************************************************************
 // FUNCION PARA AUMENTA O DISMINUIR LA CANTIDAD DE MODELOS TEMP
+// ************************************************************
 
 function changeQuantityModelTemp()
 {
 	Ti.API.info("ITEM SELECCIONADO: " + JSON.stringify(dataItemSelected));
 	Ti.API.info("Cantidad model temp. " +  dataItemSelected.modelConveyor.text + " # " + dataItemSelected.modelConveyor.id);
+	
 	var valueSliderQMT = $.sliderQuantityModelTemp;
+	
 	Ti.API.info("VALOR DE SLIDER: " + parseInt(valueSliderQMT.value));
 	Ti.API.info("Aumentar o disminuir cantidad de modelo!");
 	
@@ -287,6 +340,7 @@ function changeQuantityModelTemp()
 		id       : parseInt(dataItemSelected.modelConveyor.id),
 		quantity : parseInt(valueSliderQMT.value)
 	};
+	
 	Ti.API.info("OBJ JSON QMT: " + JSON.stringify(objJSONQuantityMT));
 	
 	// URL del sevicio
@@ -296,12 +350,40 @@ function changeQuantityModelTemp()
 	var client = Ti.Network.createHTTPClient({
 		onload : function(e) {
 			
-			//Ti.API.info("Received text: " + this.responseText);
+			Ti.API.info("Received text: " + this.responseText);
+			
+			// Objeto con la respuesta del ws
+			var responseWSQMT = JSON.parse(this.responseText);
+			
+			Ti.API.info("Response WSQMT: " + JSON.stringify(responseWSQMT));
+			
+			// ***********************************************************
+			// TOTAL Y FECHA ESTIMADA DE LA COTIZACION
+			// ***********************************************************
+			
+			// limpiamos nuestra variable global de total y fecha estimada
+			Alloy.Globals.DATE_ESTIMATED_TOTAL_QUOTATION = "";
+			
+			Ti.API.info("DATE_ESTIMATED_TOTAL_QUOTATION: " + JSON.stringify(Alloy.Globals.DATE_ESTIMATED_TOTAL_QUOTATION));
+			
+			// Asignamos el total y la fecha estimada a la variable global
+			Alloy.Globals.DATE_ESTIMATED_TOTAL_QUOTATION = {
+				"totalPrice" : responseWSQMT.totalPrice,
+				"estimated"  : responseWSQMT.estimated
+			};
+			
+			Ti.API.info("DATE_ESTIMATED_TOTAL_QUOTATION 2: " + JSON.stringify(Alloy.Globals.DATE_ESTIMATED_TOTAL_QUOTATION));
+			
+			// ***********************************************************
+			// EJECUTAMOS LA FUNCIÓN QUE CARGA TOTAL Y FECHA ESTIMADA
+			// ***********************************************************
+			
+			setTotalAndDateEstimated();
 			
 			// Item seleccionado
 			var row = $.listViewModelConveyorQuotationDetail.sections[0].getItemAt(parseInt(itemIndexModelTemp));
 			
-			//Ti.API.info("ROW: " + JSON.stringify(row));
+			Ti.API.info("ROW: " + JSON.stringify(row));
 			
 			// Modificamos el atributo cantidad del item list seleccionado
 			row.quantityConveyor.text = "Cantidad: " + parseInt(valueSliderQMT.value);
@@ -309,7 +391,17 @@ function changeQuantityModelTemp()
 			// Modificamos el atributo cantidad del item list seleccionado
 			row.modelConveyor.quantity = parseInt(valueSliderQMT.value);
 			
-			//Ti.API.info("ROW 2: " + JSON.stringify(row));
+			// Subtotal del Modelo Temp
+			var subtotalModelTemp      = (parseInt(valueSliderQMT.value) * parseFloat(dataItemSelected.modelConveyor.price)) ;
+			Ti.API.info("subtotalModelTemp: " + subtotalModelTemp);
+			
+			// Modificamos el valor de subtotal del atributo modelConveyor
+			row.modelConveyor.subtotal = subtotalModelTemp;
+			
+			// Modificamos el atributo subtotal del item list seleccionado
+			row.totalConveyor.text     = "Subtotal: $" + subtotalModelTemp;
+			
+			Ti.API.info("ROW 2: " + JSON.stringify(row));
 			
 			// Modificamos el item de la lista con los nuevos datos
 			$.listViewModelConveyorQuotationDetail.sections[0].updateItemAt(parseInt(itemIndexModelTemp), row, { animated:true });
@@ -331,7 +423,9 @@ function changeQuantityModelTemp()
 	
 }
 
+// ***************************************************
 // ACTUALIZAR EL TEXTO DEL LABEL MODEL TEMP QUANTITY
+// ***************************************************
 
 function updateValueLabelMT(e)
 {
@@ -339,7 +433,9 @@ function updateValueLabelMT(e)
 	$.labelQuantityModelTemp.text = parseInt(e.value);
 }
 
+// ***************************************************
 // FUNCION PARA ELIMINAR UN MODELO TEMPORAL
+// ***************************************************
 
 function deleteModelTemp(dataItemSelected)
 {
@@ -361,7 +457,7 @@ function deleteModelTemp(dataItemSelected)
 	});
 	
 	// Click sobre el dialogo
-	dialogDeleteModelTemp.addEventListener('click', function(e){
+	dialogDeleteModelTemp.addEventListener('click', function(e) {
 		Ti.API.info("Item Index: " + e.index);
 		// Si presionamos confirmar
 		if (e.index == 0) {
@@ -374,6 +470,32 @@ function deleteModelTemp(dataItemSelected)
 				onload : function(e) {
 					
 					Ti.API.info("Received text: " + this.responseText);
+					
+					// Respuesta del ws eliminar modelo
+					var responseWSDMT = JSON.parse(this.responseText);
+					
+					// ***********************************************************
+					// TOTAL Y FECHA ESTIMADA DE LA COTIZACION
+					// ***********************************************************
+					
+					// limpiamos nuestra variable global de total y fecha estimada
+					Alloy.Globals.DATE_ESTIMATED_TOTAL_QUOTATION = "";
+					
+					Ti.API.info("DATE_ESTIMATED_TOTAL_QUOTATION: " + JSON.stringify(Alloy.Globals.DATE_ESTIMATED_TOTAL_QUOTATION));
+					
+					// Asignamos el total y la fecha estimada a la variable global
+					Alloy.Globals.DATE_ESTIMATED_TOTAL_QUOTATION = {
+						"totalPrice" : responseWSDMT.totalPrice,
+						"estimated"  : responseWSDMT.estimated
+					};
+					
+					Ti.API.info("DATE_ESTIMATED_TOTAL_QUOTATION 2: " + JSON.stringify(Alloy.Globals.DATE_ESTIMATED_TOTAL_QUOTATION));
+					
+					// ***********************************************************
+					// EJECUTAMOS LA FUNCIÓN QUE CARGA TOTAL Y FECHA ESTIMADA
+					// ***********************************************************
+					
+					setTotalAndDateEstimated();
 					
 					// Preguntamos si solo queda un elemento en la lista
 					if ($.listViewModelConveyorQuotationDetail.sections[0].items.length == 1) {
@@ -927,18 +1049,81 @@ if(commentQuotation != null) {
 function setTotalAndDateEstimated()
 {
 	
-	Ti.API.info("WSMT: " + JSON.stringify(objModelsConveyorQuotation));
+	Ti.API.info("FUNCION QUE CARGA EL TOTAL Y LA FECHA ESTIMADA");
+	Ti.API.info("DATE_ESTIMATED_TOTAL_QUOTATION: " + JSON.stringify(Alloy.Globals.DATE_ESTIMATED_TOTAL_QUOTATION));
 	
 	// Total de la cotizacion
-	var totalQuotation         = $.labelTotalQuotation;
+	var totalQuotation          = $.labelTotalQuotation;
 	
 	// Asignamos total
-	totalQuotation.text         = "Total USD + IVA: $" + objModelsConveyorQuotation.totalPrice;
+	totalQuotation.text         = "Total USD + IVA: $" + Alloy.Globals.DATE_ESTIMATED_TOTAL_QUOTATION.totalPrice;
 	
 	// Fecha estimada de la cotizacion
 	var dateEstimatedQuotation  = $.labelDateEstimatedQuotation;
 	
 	// Asignamos Fecha Estimada
-	dateEstimatedQuotation.text = "Fecha Estimada: " + objModelsConveyorQuotation.estimated;
+	dateEstimatedQuotation.text = "Fecha Estimada: "    + Alloy.Globals.DATE_ESTIMATED_TOTAL_QUOTATION.estimated;
 	
 }
+
+// ***********************************************************
+// FUNCION QUE SE EJECUTA CUANDO ESTA CARGANDO LA VENTANA
+// ***********************************************************
+
+// Ventana
+var windDetailQuotation = $.detailQuotation;
+	
+// Evento que se ejecuta ala abri la ventana
+windDetailQuotation.addEventListener("open", function(evt) {
+	
+	Ti.API.info("Se esta abriendo la ventana!");
+	
+	// ***************************************************
+	// EJECUTAMOS FUNCION QUE OBTIENE LOS MODELOS DE LA COTIZACION
+	// ***************************************************
+	
+	getAllModelsConveyorsQuotation(idQuotation);
+	
+	// ***********************************************************
+	// EJECUTAMOS LA FUNCIÓN QUE CARGA TOTAL Y FECHA ESTIMADA
+	// ***********************************************************
+			
+	//setTotalAndDateEstimated();
+		
+	// Action Bar
+	var actionBar;
+		
+	// Activity
+	var activityDetailQuotation = windDetailQuotation.activity;
+		
+	// Validamos el sistema operativo
+	if (Ti.Platform.osname === "android") {
+			
+	if (! activityDetailQuotation) {
+		Ti.API.info("No se puede acceder a la barra de acción en una ventana ligera.");
+		} else {
+				
+			actionBar = windDetailQuotation.activity.actionBar;
+				
+			// Validamos si existen un actionBar
+			if (actionBar) {
+					
+				// Mostramos boton Home Icon
+				actionBar.displayHomeAsUp = true;
+					
+				// Agregamos un titulo
+				actionBar.title = "Modelos seleccionados";
+					
+				// Al hacer click en el boton Home Icon
+				actionBar.onHomeIconItemSelected = function(e) {
+					// Cerramos la ventana actual
+					windDetailQuotation.close();
+				};	
+					
+			};
+				
+		};
+			
+	};
+		
+});

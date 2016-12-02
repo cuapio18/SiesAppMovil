@@ -52,9 +52,11 @@ var pickerClientByIdSeller = $.pickerClientByIdSeller;
 // Modelos de la cotizacion
 var objModelsConveyorsQuotation = args.listTemp;
 
+// ********************************************
 // EJECUTAMOS LA FUNCION
+// ********************************************
 
-getAllModelsConveyorsQuotation(objModelsConveyorsQuotation);
+//getAllModelsConveyorsQuotation(objModelsConveyorsQuotation);
 
 // ********************************************
 // FUNCION QUE GENERA LOS MODELOS DE LA COTIZACION
@@ -68,22 +70,27 @@ function getAllModelsConveyorsQuotation(modelsConvQuotaion) {
 	// RECORREMOS EL OBJETO
 	modelsConvQuotaion.forEach(function(model, idx) {
 		
+		// Subtotal
+		var subtotalMCT = parseInt(model.quantity) * parseFloat(model.price);
+		
 		// Vamos agregando los datos al arreglo
 		items.push({
 			modelConveyor    : {
 				text : model.modelConveyor.model,
 				id       : model.id, 
 				idx      : parseInt(idx),
-				quantity : model.quantity
+				quantity : model.quantity,
+				price    : model.price,
+				subtotal : subtotalMCT//model.subtotal-subtotal llega null
 			},
 			quantityConveyor : {
 				text : 'Cantidad: ' + model.quantity
 			},
 			priceConveyor    : {
-				text : 'Precio: ' + model.price
+				text : 'Precio Unit.: $' + model.price
 			},
 			totalConveyor    : {
-				text : "Total: "
+				text : "Subtotal: $" + subtotalMCT
 			}
 		});
 		
@@ -91,6 +98,29 @@ function getAllModelsConveyorsQuotation(modelsConvQuotaion) {
 		$.listViewModelConveyorQuotation.sections[0].setItems(items);
 		
 	});
+	
+	// ***********************************************************
+	// TOTAL Y FECHA ESTIMADA DE LA COTIZACION
+	// ***********************************************************
+			
+	// limpiamos nuestra variable global de total y fecha estimada
+	Alloy.Globals.DATE_ESTIMATED_TOTAL_QUOTATION = "";
+			
+	Ti.API.info("DATE_ESTIMATED_TOTAL_QUOTATION: " + JSON.stringify(Alloy.Globals.DATE_ESTIMATED_TOTAL_QUOTATION));
+			
+	// Asignamos el total y la fecha estimada a la variable global
+	Alloy.Globals.DATE_ESTIMATED_TOTAL_QUOTATION = {
+		"totalPrice" : args.totalPrice,
+		"estimated"  : args.estimated
+	};
+			
+	Ti.API.info("DATE_ESTIMATED_TOTAL_QUOTATION 2: " + JSON.stringify(Alloy.Globals.DATE_ESTIMATED_TOTAL_QUOTATION));
+		
+	// ***********************************************************
+	// EJECUTAMOS LA FUNCIÓN QUE CARGA TOTAL Y FECHA ESTIMADA
+	// ***********************************************************
+			
+	setTotalAndDateEstimated();
 	
 }
 
@@ -110,6 +140,9 @@ $.listViewModelConveyorQuotation.addEventListener('itemclick', function(e) {
 	
 	// Abrimos la ventana
 	winAddQuotationFive.open();
+	
+	// * Cerramos la ventana actual para que no se acumule al volverla a abrir
+	$.addQuotationFour.close();
 
 });
 
@@ -355,7 +388,9 @@ function changeQuantityModelTemp()
 {
 	Ti.API.info("ITEM SELECCIONADO: " + JSON.stringify(dataItemSelected));
 	Ti.API.info("Cantidad model temp. " +  dataItemSelected.modelConveyor.text + " # " + dataItemSelected.modelConveyor.id);
+	
 	var valueSliderQMT = $.sliderQuantityModelTemp;
+	
 	Ti.API.info("VALOR DE SLIDER: " + parseInt(valueSliderQMT.value));
 	Ti.API.info("Aumentar o disminuir cantidad de modelo!");
 	
@@ -374,7 +409,35 @@ function changeQuantityModelTemp()
 	var client = Ti.Network.createHTTPClient({
 		onload : function(e) {
 			
-			//Ti.API.info("Received text: " + this.responseText);
+			Ti.API.info("Received text: " + this.responseText);
+			
+			// Objeto con la respuesta del ws
+			var responseWSQMT = JSON.parse(this.responseText);
+			
+			Ti.API.info("Response WSQMT: " + JSON.stringify(responseWSQMT));
+			
+			// ***********************************************************
+			// TOTAL Y FECHA ESTIMADA DE LA COTIZACION
+			// ***********************************************************
+			
+			// limpiamos nuestra variable global de total y fecha estimada
+			Alloy.Globals.DATE_ESTIMATED_TOTAL_QUOTATION = "";
+			
+			Ti.API.info("DATE_ESTIMATED_TOTAL_QUOTATION: " + JSON.stringify(Alloy.Globals.DATE_ESTIMATED_TOTAL_QUOTATION));
+			
+			// Asignamos el total y la fecha estimada a la variable global
+			Alloy.Globals.DATE_ESTIMATED_TOTAL_QUOTATION = {
+				"totalPrice" : responseWSQMT.totalPrice,
+				"estimated"  : responseWSQMT.estimated
+			};
+			
+			Ti.API.info("DATE_ESTIMATED_TOTAL_QUOTATION 2: " + JSON.stringify(Alloy.Globals.DATE_ESTIMATED_TOTAL_QUOTATION));
+			
+			// ***********************************************************
+			// EJECUTAMOS LA FUNCIÓN QUE CARGA TOTAL Y FECHA ESTIMADA
+			// ***********************************************************
+			
+			setTotalAndDateEstimated();
 			
 			// Item seleccionado
 			var row = $.listViewModelConveyorQuotation.sections[0].getItemAt(parseInt(itemIndexModelTemp));
@@ -386,6 +449,16 @@ function changeQuantityModelTemp()
 			
 			// Modificamos el atributo cantidad del item list seleccionado
 			row.modelConveyor.quantity = parseInt(valueSliderQMT.value);
+			
+			// Subtotal del Modelo Temp
+			var subtotalModelTemp      = (parseInt(valueSliderQMT.value) * parseFloat(dataItemSelected.modelConveyor.price)) ;
+			Ti.API.info("subtotalModelTemp: " + subtotalModelTemp);
+			
+			// Modificamos el valor de subtotal del atributo modelConveyor
+			row.modelConveyor.subtotal = subtotalModelTemp;
+			
+			// Modificamos el atributo subtotal del item list seleccionado
+			row.totalConveyor.text     = "Subtotal: $" + subtotalModelTemp;
 			
 			Ti.API.info("ROW 2: " + JSON.stringify(row));
 			
@@ -456,6 +529,32 @@ function deleteModelTemp(dataItemSelected)
 				onload : function(e) {
 					
 					Ti.API.info("Received text: " + this.responseText);
+					
+					// Respuesta del ws eliminar modelo
+					var responseWSDMT = JSON.parse(this.responseText);
+					
+					// ***********************************************************
+					// TOTAL Y FECHA ESTIMADA DE LA COTIZACION
+					// ***********************************************************
+					
+					// limpiamos nuestra variable global de total y fecha estimada
+					Alloy.Globals.DATE_ESTIMATED_TOTAL_QUOTATION = "";
+					
+					Ti.API.info("DATE_ESTIMATED_TOTAL_QUOTATION: " + JSON.stringify(Alloy.Globals.DATE_ESTIMATED_TOTAL_QUOTATION));
+					
+					// Asignamos el total y la fecha estimada a la variable global
+					Alloy.Globals.DATE_ESTIMATED_TOTAL_QUOTATION = {
+						"totalPrice" : responseWSDMT.totalPrice,
+						"estimated"  : responseWSDMT.estimated
+					};
+					
+					Ti.API.info("DATE_ESTIMATED_TOTAL_QUOTATION 2: " + JSON.stringify(Alloy.Globals.DATE_ESTIMATED_TOTAL_QUOTATION));
+					
+					// ***********************************************************
+					// EJECUTAMOS LA FUNCIÓN QUE CARGA TOTAL Y FECHA ESTIMADA
+					// ***********************************************************
+					
+					setTotalAndDateEstimated();
 					
 					// Preguntamos si solo queda un elemento en la lista
 					if ($.listViewModelConveyorQuotation.sections[0].items.length == 1) {
@@ -874,19 +973,20 @@ if(commentQuotation != null) {
 function setTotalAndDateEstimated()
 {
 	
-	Ti.API.info("WSMT: " + JSON.stringify(args));
+	Ti.API.info("FUNCION QUE CARGA EL TOTAL Y LA FECHA ESTIMADA");
+	Ti.API.info("DATE_ESTIMATED_TOTAL_QUOTATION: " + JSON.stringify(Alloy.Globals.DATE_ESTIMATED_TOTAL_QUOTATION));
 	
 	// Total de la cotizacion
-	var totalQuotation         = $.labelTotalQuotation;
+	var totalQuotation          = $.labelTotalQuotation;
 	
 	// Asignamos total
-	totalQuotation.text         = "Total USD + IVA: $" + args.totalPrice;
+	totalQuotation.text         = "Total USD + IVA: $" + Alloy.Globals.DATE_ESTIMATED_TOTAL_QUOTATION.totalPrice;
 	
 	// Fecha estimada de la cotizacion
 	var dateEstimatedQuotation  = $.labelDateEstimatedQuotation;
 	
 	// Asignamos Fecha Estimada
-	dateEstimatedQuotation.text = "Fecha Estimada: " + args.estimated;
+	dateEstimatedQuotation.text = "Fecha Estimada: "    + Alloy.Globals.DATE_ESTIMATED_TOTAL_QUOTATION.estimated;
 	
 }
 
@@ -894,4 +994,160 @@ function setTotalAndDateEstimated()
 // EJECUTAMOS LA FUNCIÓN
 // ***********************************************************
 			
-setTotalAndDateEstimated();
+//setTotalAndDateEstimated();
+
+// ***********************************************************
+// FUNCION QUE SE EJECUTA CUANDO ESTA CARGANDO LA VENTANA
+// ***********************************************************
+
+// Bandera Home
+var flagHomeStatus = 0;
+
+// Ventana
+var winAddQuotationFour = $.addQuotationFour;
+
+// Evento que se ejecuta al abrir la ventana
+winAddQuotationFour.addEventListener("open", function(evt) {
+	
+	Ti.API.info("Se esta abriendo la ventana!");
+	
+	// ********************************************
+	// EJECUTAMOS FUNCION QUE OBTIENE LOS MODELOS DE LA COTIZACION
+	// ********************************************
+
+	getAllModelsConveyorsQuotation(objModelsConveyorsQuotation);
+				
+	// Action Bar
+	var actionBar;
+				
+	// Activity
+	var activityQuoFour = winAddQuotationFour.activity;
+				
+	// Validamos el sistema operativo
+	if (Ti.Platform.osname === "android") {
+					
+		if (! activityQuoFour) {
+			Ti.API.error("No se puede acceder a la barra de acción en una ventana ligera.");
+		} else {
+						
+			// Action Bar de la ventana
+			actionBar = winAddQuotationFour.activity.actionBar;
+						
+			// Validamos si existe un actionbar
+			if (actionBar) {
+							
+				// Agregamos un menu
+				activityQuoFour.onCreateOptionsMenu = function(ev) {
+								
+					// Menu
+					var menu = ev.menu;
+									
+					// Item Menu Add Model
+					var menuItemAddModelTemp = menu.add({
+						title        : 'Agregar Modelo',
+						icon         : Ti.Android.R.drawable.ic_menu_add,
+						showAsAction : Ti.Android.SHOW_AS_ACTION_ALWAYS
+					});
+									
+					// Click sobre un item del menu
+					menuItemAddModelTemp.addEventListener('click', function(e){
+										
+						Ti.API.info("Me hicieron clic: " + JSON.stringify(e));
+										
+						// Dialogo para agregar un model temp
+						var dialogAddModelTempQ = Ti.UI.createAlertDialog({
+							persistent  : true,
+							cancel      : 0,
+							buttonNames : ['Confirmar', 'Cancelar'],
+							message     : '¿Deseas agregar un nuevo modelo a tu cotización?',
+							title       : 'Agregar Modelo'
+						});
+										
+						dialogAddModelTempQ.addEventListener('click', function(e) {
+											
+							Ti.API.info("Item Index: " + e.index);
+											
+							// Id de la cotizacion
+							var idQuotationAddModelTemp = Alloy.Globals.ID_GLOBAL_QUOTATION;
+				
+							if (e.index == 0) {
+												
+								// Asignamos un valor a la variable 0 - Nueva 1 - Editar
+								flagHomeStatus = 1;
+												
+								// Parametros a enviar
+								var objHomeParameters = {
+									flagHomeStatus : flagHomeStatus
+								};
+												
+								// Limpiamos el valor del id de la cotizacion
+								Alloy.Globals.ID_GLOBAL_QUOTATION = 0;
+								//Ti.API.info("Editar la cotización. " +  dataItemSelected.title_quotation.text + " # " + dataItemSelected.title_quotation.id);
+								Ti.API.info("ID Cotización: " + Alloy.Globals.ID_GLOBAL_QUOTATION);
+		
+								// Asignamos un id
+								Alloy.Globals.ID_GLOBAL_QUOTATION = parseInt(idQuotationAddModelTemp);
+								Ti.API.info("ID Cotización 2: " + Alloy.Globals.ID_GLOBAL_QUOTATION);
+												
+								// Venta principal de cotizaciones
+								var winHomeQuotations = Alloy.createController('home', objHomeParameters).getView();
+												
+								// Abrimos ventana
+								winHomeQuotations.open();
+												
+							};
+											
+						});
+										
+						// Mostramos el dialogo
+						dialogAddModelTempQ.show();
+			
+					});
+									
+					// Item Menu Cancel Quotation
+					var menuItemCancelQuo = menu.add({
+						title        : 'Cancelar',
+						icon         : Ti.Android.R.drawable.ic_menu_close_clear_cancel,
+						showAsAction : Ti.Android.SHOW_AS_ACTION_ALWAYS
+					});
+									
+					// Click sobre un item del menu
+					menuItemCancelQuo.addEventListener('click', function(e) {
+										
+						Ti.API.info("Click Item Cancelar: " + JSON.stringify(e));
+										
+						// Limpiamos el valor del id de la cotizacion
+						Alloy.Globals.ID_GLOBAL_QUOTATION = 0;
+										
+						// Venta principal de cotizaciones
+						var winHomeQuotations = Alloy.createController('home').getView();
+											
+						// Abrimos ventana
+						winHomeQuotations.open();
+										
+					});
+								
+				};
+							
+				// Metodo para mostrar menu dinamico
+				activityQuoFour.invalidateOptionsMenu();
+							
+				// Mostramos boton Home Icon
+				//actionBar.displayHomeAsUp = true;
+							
+				// Agregamos un titulo
+				actionBar.title = "Cotización Generada";
+							
+				// Al hacer click en el boton Home Icon
+				/*actionBar.onHomeIconItemSelected = function(e) {
+					//Ti.API.info(evt);
+					winAddQuotationFour.close();
+				};*/
+							
+			};
+						
+		};
+					
+	};
+				
+});

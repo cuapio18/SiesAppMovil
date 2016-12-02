@@ -1,5 +1,5 @@
 // Arguments passed into this controller can be accessed via the `$.args` object directly or:
-var args = $.args;
+var args           = $.args;
 
 // ID del model conveyor temp
 var idModelConTemp = args.modelConveyor.id;
@@ -408,116 +408,118 @@ function createAllAccessoriesModelsConveyorTemp(modelsAccessoriesModelTemp) {
 
 }
 
-//////////
+// *********************************************************************
+// Evento que se ejecuta ala abri la ventana
+// *********************************************************************
 
-	// Evento que se ejecuta ala abri la ventana
-	$.addAccessories.addEventListener("open", function(evt) {
+$.addAccessories.addEventListener("open", function(evt) {
 
-		// Action Bar
-		var actionBar;
+	// Action Bar
+	var actionBar;
 
-		// Activity
-		var activityAddAccessories = $.addAccessories.activity;
+	// Activity
+	var activityAddAccessories = $.addAccessories.activity;
 
-		// Validamos el sistema operativo
-		if (Ti.Platform.osname === "android") {
+	// Validamos el sistema operativo
+	if (Ti.Platform.osname === "android") {
 
-			if (!activityAddAccessories) {
-				Ti.API.info("No se puede acceder a la barra de acción en una ventana ligera.");
-			} else {
+		if (!activityAddAccessories) {
+			Ti.API.info("No se puede acceder a la barra de acción en una ventana ligera.");
+		} else {
 
-				actionBar = $.addAccessories.activity.actionBar;
+			actionBar = $.addAccessories.activity.actionBar;
 
-				// Validamos si existen un actionBar
-				if (actionBar) {
+			// Validamos si existen un actionBar
+			if (actionBar) {
 
-					// Agregamos un menu
-					activityAddAccessories.onCreateOptionsMenu = function(ev) {
+				// Agregamos un menu
+				activityAddAccessories.onCreateOptionsMenu = function(ev) {
 
-						// Menu
-						var menuAddAcc = ev.menu;
+					// Menu
+					var menuAddAcc = ev.menu;
 
-						// Item Menu Agregar o quitar accesorios
-						var menuItemAddAcc = menuAddAcc.add({
-							title : 'Agregar o Eliminar Accesorios',
-							icon : Ti.Android.R.drawable.ic_menu_add,
-							showAsAction : Ti.Android.SHOW_AS_ACTION_ALWAYS
+					// Item Menu Agregar o quitar accesorios
+					var menuItemAddAcc = menuAddAcc.add({
+						title : 'Agregar o Eliminar Accesorios',
+						icon : Ti.Android.R.drawable.ic_menu_add,
+						showAsAction : Ti.Android.SHOW_AS_ACTION_ALWAYS
+					});
+
+					// Click sobre itm del menu
+					menuItemAddAcc.addEventListener('click', function(e) {
+
+						Ti.API.info("Me hicieron clic: " + JSON.stringify(e));
+
+						// Dialogo para agregar un model temp
+						var dialogAddAccMT = Ti.UI.createAlertDialog({
+							persistent : true,
+							cancel : 0,
+							buttonNames : ['Confirmar', 'Cancelar'],
+							message : '¿Seguro de realizar esta acción?',
+							title : 'Agregar o Eliminar Accesorios'
 						});
 
-						// Click sobre itm del menu
-						menuItemAddAcc.addEventListener('click', function(e) {
+						dialogAddAccMT.addEventListener('click', function(e) {
 
-							Ti.API.info("Me hicieron clic: " + JSON.stringify(e));
+							Ti.API.info("Item Index: " + e.index);
 
-							// Dialogo para agregar un model temp
-							var dialogAddAccMT = Ti.UI.createAlertDialog({
-								persistent : true,
-								cancel : 0,
-								buttonNames : ['Confirmar', 'Cancelar'],
-								message : '¿Seguro de realizar esta acción?',
-								title : 'Agregar o Eliminar Accesorios'
-							});
+							// Id de la cotizacion
+							var idQuotationAddModelTemp = Alloy.Globals.ID_GLOBAL_QUOTATION;
 
-							dialogAddAccMT.addEventListener('click', function(e) {
+							if (e.index == 0) {
 
-								Ti.API.info("Item Index: " + e.index);
+								Ti.API.info('Vamos a agregar o eliminar accesorios');
 
-								// Id de la cotizacion
-								var idQuotationAddModelTemp = Alloy.Globals.ID_GLOBAL_QUOTATION;
+								// Llamamos a la  funcion que guarda o elimina accesorios
+								addOrDeleteAccessories();
 
-								if (e.index == 0) {
-
-									Ti.API.info('Vamos a agregar o eliminar accesorios');
-
-									// Llamamos a la  funcion que guarda o elimina accesorios
-									addOrDeleteAccessories();
-
-								};
-
-							});
-
-							// Mostramos el dialogo
-							dialogAddAccMT.show();
+							};
 
 						});
 
-					};
+						// Mostramos el dialogo
+						dialogAddAccMT.show();
 
-					// Metodo para mostrar menu dinamico
-					activityAddAccessories.invalidateOptionsMenu();
+					});
 
-					// Mostramos boton Home Icon
-					actionBar.displayHomeAsUp = true;
+				};
 
-					// Agregamos un titulo
-					actionBar.title = "Accesorios";
+				// Metodo para mostrar menu dinamico
+				activityAddAccessories.invalidateOptionsMenu();
 
-					// Al hacer click en el boton Home Icon
-					actionBar.onHomeIconItemSelected = function(e) {
+				// Mostramos boton Home Icon
+				actionBar.displayHomeAsUp = true;
+
+				// Agregamos un titulo
+				actionBar.title = "Accesorios";
+
+				// Al hacer click en el boton Home Icon
+				actionBar.onHomeIconItemSelected = function(e) {
 						
-						// Model Coveyor Temp
-						var dataModelCoveyorTempQuoN = args;
+					// Model Coveyor Temp
+					var dataModelCoveyorTempQuoN = args;
 			
-						// Ventana
-						var winSeeAccesoriesN = Alloy.createController('seeAccessories', dataModelCoveyorTempQuoN).getView();
+					// Ventana
+					var winSeeAccesoriesN = Alloy.createController('seeAccessories', dataModelCoveyorTempQuoN).getView();
 			
-						// Abrimos la ventana
-						winSeeAccesoriesN.open();
+					// Abrimos la ventana
+					winSeeAccesoriesN.open();
 			
-						// Cerramos la ventana actual
-						$.addAccessories.close();
-					};
-
+					// Cerramos la ventana actual
+					$.addAccessories.close();
 				};
 
 			};
 
 		};
 
-	}); 
+	};
 
+}); 
 
+// *********************************************************************
 // FUNCION QUE AGREGA O ELIMINA ACCESORIOS
+// *********************************************************************
 
 function addOrDeleteAccessories()
 {
@@ -601,7 +603,9 @@ function addOrDeleteAccessories()
 	
 }
 
+// *********************************************************************
 // FUNCION PARA GUARDAR O ELIMINAR ACCESORIOS
+// *********************************************************************
 
 function saveAddOrDelAccessories(jsonFullAddDelAcc) 
 {
@@ -617,7 +621,29 @@ function saveAddOrDelAccessories(jsonFullAddDelAcc)
 			Ti.API.info("Received text: " + this.responseText);
 			
 			// Respuesta del servicio
-			var objResponseWS = JSON.parse(this.responseText);
+			//var objResponseWS = JSON.parse(this.responseText);
+			
+			// Objeto con la respuesta del ws
+			var responseWSADAMT = JSON.parse(this.responseText);
+			
+			Ti.API.info("Response WSADAMT: " + JSON.stringify(responseWSADAMT));
+			
+			// ***********************************************************
+			// TOTAL Y FECHA ESTIMADA DE LA COTIZACION
+			// ***********************************************************
+			
+			// limpiamos nuestra variable global de total y fecha estimada
+			Alloy.Globals.DATE_ESTIMATED_TOTAL_QUOTATION = "";
+			
+			Ti.API.info("DATE_ESTIMATED_TOTAL_QUOTATION: " + JSON.stringify(Alloy.Globals.DATE_ESTIMATED_TOTAL_QUOTATION));
+			
+			// Asignamos el total y la fecha estimada a la variable global
+			Alloy.Globals.DATE_ESTIMATED_TOTAL_QUOTATION = {
+				"totalPrice" : responseWSADAMT.totalPrice,
+				"estimated"  : responseWSADAMT.estimated
+			};
+			
+			Ti.API.info("DATE_ESTIMATED_TOTAL_QUOTATION 2: " + JSON.stringify(Alloy.Globals.DATE_ESTIMATED_TOTAL_QUOTATION));
 			
 			// Model Coveyor Temp
 			var dataModelCoveyorTempQuo = args;
@@ -630,7 +656,6 @@ function saveAddOrDelAccessories(jsonFullAddDelAcc)
 			
 			// Cerramos la ventana actual
 			$.addAccessories.close();
-			
 			
 		},
 		// función de llamada cuando se produce un error, incluyendo un tiempo de espera
