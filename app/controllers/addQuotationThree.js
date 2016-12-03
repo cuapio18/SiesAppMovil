@@ -9,7 +9,7 @@ var idUsuarioSession = Alloy.Globals.PROPERTY_INFO_USER.userLogin.id;
 
 // ID DE LA COTIZACION
 var idQuo = Alloy.Globals.ID_GLOBAL_QUOTATION;
-
+Ti.API.info("idQuo:" + idQuo);
 Ti.API.info("ARGUMENTOS RECIBIDOS:" + JSON.stringify(args));
 Ti.API.info("ACCESORIOS DEL TRANSPORTADOR:" + JSON.stringify(args.accesories));
 
@@ -451,8 +451,28 @@ function generarCotizacionModeloAccesorios(objSaveQuotationJson)
 			// Respuesta del servicio
 			var objResponseWS = JSON.parse(this.responseText);
 			
-			// validamos la bandera
-			Alloy.Globals.ID_GLOBAL_QUOTATION = objResponseWS.quotation.id;
+			// ***************************************************************
+			// ASIGNAMOS VALORES A LAS VARIABLES GLOBALES
+			// **************************************************************
+			
+			// 1.- ASIGNAMOS UN VALOR A LA VARIABLE GLOBAL DE ID DE LA COTIZACION
+			Alloy.Globals.ID_GLOBAL_QUOTATION           = objResponseWS.quotation.id;
+			Ti.API.info("Alloy.Globals.ID_GLOBAL_QUOTATION: " + JSON.stringify(Alloy.Globals.ID_GLOBAL_QUOTATION));
+			
+			// 2.- ASIGNAMOS UN VALOR  A LA VARIABLE GLOBAL DE LISTA DE MODELOS
+			Alloy.Globals.ALL_LIST_MODEL_TEMP_QUOTATION  = objResponseWS.listTemp;
+			Ti.API.info("Alloy.Globals.ALL_LIST_MODEL_TEMP_QUOTATION: " + JSON.stringify(Alloy.Globals.ALL_LIST_MODEL_TEMP_QUOTATION));
+			
+			// 3.- ASIGNAMOS EL TOTAL Y FECHA ESTIMADA A LA VARIABLE GLOBAL
+			Alloy.Globals.DATE_ESTIMATED_TOTAL_QUOTATION = {
+				"totalPrice" : objResponseWS.totalPrice,
+				"estimated"  : objResponseWS.estimated
+			};
+			Ti.API.info("Alloy.Globals.DATE_ESTIMATED_TOTAL_QUOTATION: " + JSON.stringify(Alloy.Globals.DATE_ESTIMATED_TOTAL_QUOTATION));
+			
+			// 4.- ASIGNAMOS UN VALOR A LA VARIABLE GLOBAL ID DE CLIENTE
+			Alloy.Globals.ID_CLIENT_QUOTATION            = Alloy.Globals.PROPERTY_INFO_USER.userLogin.user.business.id;//objResponseWS.quotation.client.user.business.id;
+			Ti.API.info("Alloy.Globals.ID_CLIENT_QUOTATION: " + JSON.stringify(Alloy.Globals.ID_CLIENT_QUOTATION));
 			
 			// Ventana del paso numero 4 de la cotizacion
 			var winAddQuotationFour = Alloy.createController('addQuotationFour', objResponseWS).getView();

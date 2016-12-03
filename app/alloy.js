@@ -23,19 +23,19 @@ Alloy.Globals.PROPERTY_ENABLE_MOTION_ANIMATION = 'PROPERTY_ENABLE_MOTION_ANIMATI
 Alloy.Globals.PROPERTY_ENABLE_LIST_ANIMATION   = 'PROPERTY_ENABLE_LIST_ANIMATION'; // Propiedad para habilitar animación de lista
 
 // Variable global para almacenar la informacion del usuario logueado
-Alloy.Globals.PROPERTY_INFO_USER = 'PROPERTY_INFO_USER';
+Alloy.Globals.PROPERTY_INFO_USER             = 'PROPERTY_INFO_USER';
 
 // Variable global para guardar la url
-Alloy.Globals.URL_GLOBAL_SIES = '192.168.1.73:8080';
+Alloy.Globals.URL_GLOBAL_SIES                = '192.168.1.73:8080';
 
 // Variable Global del servidor
-Alloy.Globals.URL_GLOBAL_SERVER_SIES = '201.163.92.66:8080';
+Alloy.Globals.URL_GLOBAL_SERVER_SIES         = '201.163.92.66:8080';
 
 // Variable Global para guardar el id de la cotización
-Alloy.Globals.ID_GLOBAL_QUOTATION = 0;
+Alloy.Globals.ID_GLOBAL_QUOTATION            = 0;
 
 // TABS de cotizaciones y agregar cotizacion
-Alloy.Globals.TABGROUP_QUOTATIONS = "";
+Alloy.Globals.TABGROUP_QUOTATIONS            = "";
 
 // Variable global para almacenar los datos de la cotizacion
 Alloy.Globals.ALL_DATA_QUOTATION             = "";
@@ -43,6 +43,11 @@ Alloy.Globals.ALL_DATA_QUOTATION             = "";
 // Variable global para almacenar el total y fecha estimada
 Alloy.Globals.DATE_ESTIMATED_TOTAL_QUOTATION = "";
 
+// Variable global para almacenar la lista de modelo cuando se agrega o edita la cotizacion
+Alloy.Globals.ALL_LIST_MODEL_TEMP_QUOTATION  = '';
+
+// Variable global para almacenar el id del cliente cuando agrega o edita una cotización
+Alloy.Globals.ID_CLIENT_QUOTATION            = 0;
 
 // Conjunto de propiedades predeterminadas
 // Validamos si existen las propiedades almacenadas en la aplicacion

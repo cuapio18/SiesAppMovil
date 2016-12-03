@@ -22,61 +22,74 @@
 			<MenuItem id="edit_quotation" title="Editar"/>
 		</Menu>-->
 		
-		<View id="containerOne">
-		
-			<ScrollView id="scrollViewDetailQuotation">
-				
-				<ListView id="listViewModelConveyorQuotationDetail" defaultItemTemplate="template">
-				
-					<Templates>
-						
-						<ItemTemplate name="template">
-							
-							<View id="container_model_temp" onLongpress="longPressModelConveyor">
-								<Label bindId="modelConveyor" id="modelConveyor" />
-								<Label bindId="quantityConveyor" id="quantityConveyor" />
-								<Label bindId="priceConveyor" id="priceConveyor" />
-								<Label bindId="totalConveyor" id="totalConveyor" />
-							</View>
-							
-						</ItemTemplate>
-						
-					</Templates>
-		
-					<ListSection name="sectionModelConveyorsQuotationDetail"></ListSection>
-				
-	        	</ListView>
-	        	
-	        	<View id="viewSectionDataQuotation">
-	        		<Label id="labelDataQuotation" text="Datos de cotización"></Label>
-	        	</View>
-	        	
-	        	<View id="viewSectionClientPicker">
-					
-					<Label class="label_align_left" text="Indique un cliente:"></Label>
-					
-					<Picker id="pickerClientByIdSeller">
-						<PickerRow title="Seleccione" id=""></PickerRow>
-	        		</Picker>
-					
-				</View>
+		<View id="containerPrincipal">
 			
-				<View id="viewSectionCommentQuo">
+			<ScrollView id="scrollViewPrincipalQuotation">
+				
+				<View id="containerOne">
 					
-					<Label class="label_align_left" text="Agrega un comentario:"></Label>
-					<TextArea id="textAreaCommentQuo" />
+					<ScrollView id="scrollViewDetailQuotation">
+						
+						<ListView id="listViewModelConveyorQuotationDetail" defaultItemTemplate="template">
+						
+							<Templates>
+								
+								<ItemTemplate name="template">
+									
+									<View id="container_model_temp" onLongpress="longPressModelConveyor">
+										<Label bindId="modelConveyor" id="modelConveyor" />
+										<Label bindId="quantityConveyor" id="quantityConveyor" />
+										<Label bindId="priceConveyor" id="priceConveyor" />
+										<Label bindId="totalConveyor" id="totalConveyor" />
+									</View>
+									
+								</ItemTemplate>
+								
+							</Templates>
+					
+							<ListSection name="sectionModelConveyorsQuotationDetail"></ListSection>
+							
+				        </ListView>
+			        	
+			        </ScrollView>
+				
+				</View>
+				
+				<View id="containerThree">
+					
+					<View id="viewSectionDataQuotation">
+			        		<Label id="labelDataQuotation" text="Datos de cotización"></Label>
+			        </View>
+			        
+			      	<View id="viewSectionClientPicker">
+							
+						<Label class="label_align_left" text="Indique un cliente:"></Label>
+							
+						<Picker id="pickerClientByIdSeller">
+							<PickerRow title="Seleccione" id=""></PickerRow>
+						</Picker>
+							
+					</View>
+					
+					<View id="viewSectionCommentQuo">
+							
+						<Label class="label_align_left" text="Agrega un comentario:"></Label>
+						<TextArea id="textAreaCommentQuo" />
+							
+					</View>
+						
+					<View id="viewSectionPriceDateEstimated">
+							
+						<Label id="labelTotalQuotation"></Label>
+						<Label id="labelDateEstimatedQuotation"></Label>
+							
+					</View>
 					
 				</View>
 				
-				<View id="viewSectionPriceDateEstimated">
-					
-					<Label id="labelTotalQuotation"></Label>
-					<Label id="labelDateEstimatedQuotation"></Label>
-					
-				</View>
-				
+			
 			</ScrollView>
-		
+			
 		</View>
 		
 		<View id="containerTwo">

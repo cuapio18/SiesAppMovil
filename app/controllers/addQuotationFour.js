@@ -27,9 +27,13 @@ var activityIndicator = Ti.UI.createActivityIndicator({
 winAddActivityIndicator.add(activityIndicator);
 
 // ID DE LA COTIZACION
-var idQuotationCurrent = parseInt(args.quotation.id);
+var idQuotationCurrent = Alloy.Globals.ID_GLOBAL_QUOTATION;//parseInt(args.quotation.id);
 
 Ti.API.info("idQuotationCurrent:" + idQuotationCurrent);
+
+// ID DE LA COTIZACION
+//var idQuo = Alloy.Globals.ID_GLOBAL_QUOTATION;
+Ti.API.info("Alloy.Globals.ID_GLOBAL_QUOTATION:" + Alloy.Globals.ID_GLOBAL_QUOTATION);
 
 // ID DEL CLIENTE
 var idClientQuo = 0;
@@ -49,8 +53,11 @@ Ti.API.info("idProfileUserLogin:" + parseInt(idProfileUserLogin));
 // PICKER CLIENTE
 var pickerClientByIdSeller = $.pickerClientByIdSeller;
 
-// Modelos de la cotizacion
-var objModelsConveyorsQuotation = args.listTemp;
+// ********************************************
+// Lista con los modelos de la cotizacion
+// ********************************************
+
+var objModelsConveyorsQuotation = Alloy.Globals.ALL_LIST_MODEL_TEMP_QUOTATION;
 
 // ********************************************
 // EJECUTAMOS LA FUNCION
@@ -58,17 +65,17 @@ var objModelsConveyorsQuotation = args.listTemp;
 
 //getAllModelsConveyorsQuotation(objModelsConveyorsQuotation);
 
-// ********************************************
+// ***********************************************
 // FUNCION QUE GENERA LOS MODELOS DE LA COTIZACION
-// ********************************************
+// ***********************************************
 
-function getAllModelsConveyorsQuotation(modelsConvQuotaion) {
+function getAllModelsConveyorsQuotation(objModelsConveyorsQuotation) {
 	
 	// Array para guardar los datos
 	var items = [];
 	
 	// RECORREMOS EL OBJETO
-	modelsConvQuotaion.forEach(function(model, idx) {
+	objModelsConveyorsQuotation.forEach(function(model, idx) {
 		
 		// Subtotal
 		var subtotalMCT = parseInt(model.quantity) * parseFloat(model.price);
@@ -97,6 +104,9 @@ function getAllModelsConveyorsQuotation(modelsConvQuotaion) {
 		// Agregamos los datos a la lista
 		$.listViewModelConveyorQuotation.sections[0].setItems(items);
 		
+		// Modificamos la altura de la lista
+		$.listViewModelConveyorQuotation.sections[0].setHeight(Titanium.UI.SIZE);
+		
 	});
 	
 	// ***********************************************************
@@ -104,17 +114,17 @@ function getAllModelsConveyorsQuotation(modelsConvQuotaion) {
 	// ***********************************************************
 			
 	// limpiamos nuestra variable global de total y fecha estimada
-	Alloy.Globals.DATE_ESTIMATED_TOTAL_QUOTATION = "";
+	//Alloy.Globals.DATE_ESTIMATED_TOTAL_QUOTATION = "";
 			
-	Ti.API.info("DATE_ESTIMATED_TOTAL_QUOTATION: " + JSON.stringify(Alloy.Globals.DATE_ESTIMATED_TOTAL_QUOTATION));
+	//Ti.API.info("DATE_ESTIMATED_TOTAL_QUOTATION: " + JSON.stringify(Alloy.Globals.DATE_ESTIMATED_TOTAL_QUOTATION));
 			
 	// Asignamos el total y la fecha estimada a la variable global
-	Alloy.Globals.DATE_ESTIMATED_TOTAL_QUOTATION = {
-		"totalPrice" : args.totalPrice,
-		"estimated"  : args.estimated
-	};
+	//Alloy.Globals.DATE_ESTIMATED_TOTAL_QUOTATION = {
+	//	"totalPrice" : Alloy.Globals.DATE_ESTIMATED_TOTAL_QUOTATION.totalPrice,
+	//	"estimated"  : Alloy.Globals.DATE_ESTIMATED_TOTAL_QUOTATION.estimated
+	//};
 			
-	Ti.API.info("DATE_ESTIMATED_TOTAL_QUOTATION 2: " + JSON.stringify(Alloy.Globals.DATE_ESTIMATED_TOTAL_QUOTATION));
+	Ti.API.info("DATE_ESTIMATED_TOTAL_QUOTATION: " + JSON.stringify(Alloy.Globals.DATE_ESTIMATED_TOTAL_QUOTATION));
 		
 	// ***********************************************************
 	// EJECUTAMOS LA FUNCIÓN QUE CARGA TOTAL Y FECHA ESTIMADA
@@ -915,7 +925,7 @@ if (parseInt(idProfileUserLogin)  == 4) {
 	Ti.API.info("Eres cliente y vamos a asignar un id de cliente automatico." );
 	
 	// Asignamos un valor
-	idClientQuo = args.quotation.client.user.business.id;
+	idClientQuo = Alloy.Globals.ID_CLIENT_QUOTATION;//args.quotation.client.user.business.id;
 	
 	// Vista contenedora del picker cliente
 	var viewSectionClientPicker = $.viewSectionClientPicker;
@@ -933,7 +943,7 @@ if (parseInt(idProfileUserLogin)  == 4) {
 // ***********************************************************
 
 // Estatus cotizacion
-var statusQuotation  = args.quotation.status.id;
+var statusQuotation  = Alloy.Globals.ALL_DATA_QUOTATION.title_quotation.id;
 Ti.API.info("Estatus Cotización: " + statusQuotation);
 
 // Validamos el status 4 - Terminada
@@ -957,7 +967,7 @@ if (statusQuotation == 4 ) {
 };
 
 // Comentario Cotizacion
-var commentQuotation = args.quotation.comment;
+var commentQuotation = Alloy.Globals.ALL_DATA_QUOTATION.title_quotation.commentQuo;
 Ti.API.info("Comentario Cotización: " + commentQuotation);
 
 // Validamos si ya existe un comentario

@@ -455,8 +455,8 @@ $.addAccessories.addEventListener("open", function(evt) {
 							persistent : true,
 							cancel : 0,
 							buttonNames : ['Confirmar', 'Cancelar'],
-							message : '¿Seguro de realizar esta acción?',
-							title : 'Agregar o Eliminar Accesorios'
+							message     : '¿Seguro de realizar esta acción?',
+							title       : 'Agregar o Eliminar Accesorios'
 						});
 
 						dialogAddAccMT.addEventListener('click', function(e) {
@@ -662,7 +662,7 @@ function saveAddOrDelAccessories(jsonFullAddDelAcc)
 		onerror : function(e) {
 			//Ti.API.debug(e.error);
 		},
-		timeout : 6000 // en milisegundos
+		timeout : 8000 // en milisegundos
 	});
 	
 	// Preparar la conexión.

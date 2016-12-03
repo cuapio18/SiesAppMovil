@@ -408,9 +408,10 @@ function createAllAccessoriesModelsConveyorTemp(modelsAccessoriesModelTemp) {
 
 }
 
-//////////
+// *********************************************************************
+// Evento que se ejecuta ala abri la ventana
+// *********************************************************************
 
-	// Evento que se ejecuta ala abri la ventana
 $.addQuotationSix.addEventListener("open", function(evt) {
 
 	// Action Bar
@@ -454,8 +455,8 @@ $.addQuotationSix.addEventListener("open", function(evt) {
 							persistent : true,
 							cancel : 0,
 							buttonNames : ['Confirmar', 'Cancelar'],
-							message : '¿Seguro de realizar esta acción?',
-							title : 'Agregar o Eliminar Accesorios'
+							message     : '¿Seguro de realizar esta acción?',
+							title       : 'Agregar o Eliminar Accesorios'
 						});
 
 						dialogAddAccMT.addEventListener('click', function(e) {
@@ -601,7 +602,9 @@ function addOrDeleteAccessories()
 	
 }
 
+// *********************************************************************
 // FUNCION PARA GUARDAR O ELIMINAR ACCESORIOS
+// *********************************************************************
 
 function saveAddOrDelAccessories(jsonFullAddDelAcc) 
 {
@@ -617,7 +620,29 @@ function saveAddOrDelAccessories(jsonFullAddDelAcc)
 			Ti.API.info("Received text: " + this.responseText);
 			
 			// Respuesta del servicio
-			var objResponseWS = JSON.parse(this.responseText);
+			//var objResponseWS = JSON.parse(this.responseText);
+			
+			// Objeto con la respuesta del ws
+			var responseWSADAMT = JSON.parse(this.responseText);
+			
+			Ti.API.info("Response WSADAMT: " + JSON.stringify(responseWSADAMT));
+			
+			// ***********************************************************
+			// TOTAL Y FECHA ESTIMADA DE LA COTIZACION
+			// ***********************************************************
+			
+			// limpiamos nuestra variable global de total y fecha estimada
+			Alloy.Globals.DATE_ESTIMATED_TOTAL_QUOTATION = "";
+			
+			Ti.API.info("DATE_ESTIMATED_TOTAL_QUOTATION: " + JSON.stringify(Alloy.Globals.DATE_ESTIMATED_TOTAL_QUOTATION));
+			
+			// Asignamos el total y la fecha estimada a la variable global
+			Alloy.Globals.DATE_ESTIMATED_TOTAL_QUOTATION = {
+				"totalPrice" : responseWSADAMT.totalPrice,
+				"estimated"  : responseWSADAMT.estimated
+			};
+			
+			Ti.API.info("DATE_ESTIMATED_TOTAL_QUOTATION 2: " + JSON.stringify(Alloy.Globals.DATE_ESTIMATED_TOTAL_QUOTATION));
 			
 			// Model Coveyor Temp
 			var dataModelCoveyorTempQuo = args;
@@ -637,7 +662,7 @@ function saveAddOrDelAccessories(jsonFullAddDelAcc)
 		onerror : function(e) {
 			//Ti.API.debug(e.error);
 		},
-		timeout : 6000 // en milisegundos
+		timeout : 8000 // en milisegundos
 	});
 	
 	// Preparar la conexión.

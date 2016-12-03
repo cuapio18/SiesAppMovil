@@ -152,6 +152,9 @@ function createAllModelsConveyorsQuotation(modelsConvQuotaion) {
 
 	// RECORREMOS EL OBJETO
 	modelsConvQuotaion.forEach(function(model, idx) {
+		
+		// Subtotal
+		var subtotalMCT = parseInt(model.quantity) * parseFloat(model.price);
 
 		// Vamos agregando los datos al arreglo
 		items.push({
@@ -161,7 +164,7 @@ function createAllModelsConveyorsQuotation(modelsConvQuotaion) {
 				idx      : parseInt(idx),
 				quantity : model.quantity,
 				price    : model.price,
-				subtotal : model.subtotal
+				subtotal : subtotalMCT
 			},
 			quantityConveyor : {
 				text : "Cantidad: " + model.quantity
@@ -170,13 +173,16 @@ function createAllModelsConveyorsQuotation(modelsConvQuotaion) {
 				text : "Precio Unit.: $" + model.price
 			},
 			totalConveyor : {
-				text : "Subtotal: $" + model.subtotal
+				text : "Subtotal: $" + subtotalMCT
 			}
 		});
 
 		// Agregamos los datos a la lista
 		$.listViewModelConveyorQuotationDetail.sections[0].setItems(items);
-
+		
+		// Modificamos la altura de la lista
+		//$.listViewModelConveyorQuotationDetail.setHeight(Titanium.UI.SIZE);
+		
 	});
 
 }
