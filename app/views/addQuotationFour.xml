@@ -46,35 +46,43 @@
 		
 					<ListSection name="sectionModelConveyorsQuotation"></ListSection>
 					
-		        </ListView>
+					<FooterView>
+						
+						<View id="containerThree">
+							
+							<View id="viewSectionDataQuotation">
+	        					<Label id="labelDataQuotation" text="Datos de cotización"></Label>
+	        				</View>
 		        
-		       <View id="viewSectionDataQuotation">
-	        		<Label id="labelDataQuotation" text="Datos de cotización"></Label>
-	        	</View>
-		        
-		        <View id="viewSectionClientPicker">
+		        			<View id="viewSectionClientPicker">
 					
-					<Label class="label_align_left" text="Indique un cliente:"></Label>
+								<Label class="label_align_left" text="Indique un cliente:"></Label>
+								
+								<Picker id="pickerClientByIdSeller">
+									<PickerRow title="Seleccione" id=""></PickerRow>
+				        		</Picker>
 					
-					<Picker id="pickerClientByIdSeller">
-						<PickerRow title="Seleccione" id=""></PickerRow>
-	        		</Picker>
-					
-				</View>
+							</View>
 			
-				<View id="viewSectionCommentQuo">
-					
-					<Label class="label_align_left" text="Agrega un comentario:"></Label>
-					<TextArea id="textAreaCommentQuo" />
-					
-				</View>
+							<View id="viewSectionCommentQuo">
+								
+								<Label class="label_align_left" text="Agrega un comentario:"></Label>
+								<TextArea id="textAreaCommentQuo" />
+								
+							</View>
 				
-				<View id="viewSectionPriceDateEstimated">
+							<View id="viewSectionPriceDateEstimated">
+								
+								<Label id="labelTotalQuotation"></Label>
+								<Label id="labelDateEstimatedQuotation"></Label>
+								
+							</View>
+							
+						</View>
+						
+					</FooterView>
 					
-					<Label id="labelTotalQuotation"></Label>
-					<Label id="labelDateEstimatedQuotation"></Label>
-					
-				</View>
+		        </ListView>
 				
 			</ScrollView>
 			

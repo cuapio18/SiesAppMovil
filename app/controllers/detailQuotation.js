@@ -946,69 +946,90 @@ function getAllOptionsPickerClientsByIdSeller()
 
 function fillClientByIdSellerPicker(objOptionsClientByIdSellerPicker)
 {
+	Ti.API.info("*************** INICIA FUNCION GENERAR LISTA DE CLIENTES");
+	// Variable para guardar el index del cliente seleccionado
+	var indexItemSelectedPicker        = 0;
+	//Ti.API.info("indexItemSelectedPicker: " + indexItemSelectedPicker);
+	
+	// Variable que guarda el id del cliente
+	var idClientItemSelectedPicker     = 0;
+	
+	// Estatus cotizacion
+	var statusQuotationValidatePicker  = Alloy.Globals.ALL_DATA_QUOTATION.title_quotation.statusQuo;
+	Ti.API.info("statusQuotationValidatePicker: " + statusQuotationValidatePicker);
+		
 	//Ti.API.info("ID Cliente: " + JSON.stringify( objOptionsClientByIdSellerPicker[0].user.business) );
 	
+	if (statusQuotationValidatePicker == 2 || statusQuotationValidatePicker == 3) {
+			
+		// Variable para guardar el id del cliente seleccionado
+		idClientItemSelectedPicker     = Alloy.Globals.ALL_DATA_QUOTATION.title_quotation.idClientQuo;
+		//Ti.API.info("idClientItemSelectedPicker: " + idClientItemSelectedPicker);
+			
+	};
+	
 	// RECORREMOS EL OBJETO QUE LLEGA
-	objOptionsClientByIdSellerPicker.forEach(function(optClientByIdSeller) {
+	objOptionsClientByIdSellerPicker.forEach(function(optClientByIdSeller, idx) {
 		
-		//Ti.API.info("FOREACH: " + JSON.stringify(optClientByIdSeller.user.business) );
+		// VALIDAMOS SI YA HAY UN CLIENTE SELECCIONADO O NO
+		
+		//if (statusQuotationValidatePicker == 2 || statusQuotationValidatePicker == 3) {
+			
+			// Validamos el id del cliente
+			if (parseInt(idClientItemSelectedPicker) == parseInt(optClientByIdSeller.user.business.id)) {
+				
+				Ti.API.info("TE ENCONTRE");
+				
+				// Asignamos un valor a la variable item index
+				indexItemSelectedPicker        = parseInt(idx) + 1;
+				//Ti.API.info("indexItemSelectedPicker 2: " + idx);
+				
+				// Asignaamos un valor al id del cliente
+				//idClientQuo = parseInt(optClientByIdSeller.user.business.id);
+				
+			};
+			
+		//};
 		
 		var row = Ti.UI.createPickerRow({
 			id       : optClientByIdSeller.user.business.id,
 			title    : optClientByIdSeller.user.business.nameCompany
 		});
 		
+		// Asignamos el arreglo
 		pickerClientByIdSeller.add(row);
-		pickerClientByIdSeller.selectionIndicator = true;
-		pickerClientByIdSeller.setSelectedRow(0, 0, false);
 
 	});
+	
+	//Ti.API.info("indexItemSelectedPicker 3: " + indexItemSelectedPicker);
 	
 	// FUNCION AL APLICAR UN CAMBIO EN EL PICKER
 	
 	pickerClientByIdSeller.addEventListener("change", function(e) {
-	
+		Ti.API.info("HAY UN CAMBIO EN EL PICKER");
 		// Index del elemento seleccionado
 		var indexItem = parseInt(JSON.stringify(e.rowIndex));
-		Ti.API.info("indexItem: " + indexItem );
+		//Ti.API.info("indexItem: " + indexItem );
 		
 		// Datos del elemento seleccionado
 		var pickerDataSelected = e.source.children[0].rows[indexItem];
-		Ti.API.info("pickerDataSelected: " + JSON.stringify(pickerDataSelected) );
+		//Ti.API.info("pickerDataSelected: " + JSON.stringify(pickerDataSelected) );
 		
 		// Asignaamos un valor al id del cliente
 		idClientQuo = pickerDataSelected.id;
+		Ti.API.info("idClientQuo: " + idClientQuo);
 	
 	});
+	
+	// Mostramos el elemnto seleccionado
+	pickerClientByIdSeller.selectionIndicator = true;
+		
+	// Seleccionamos un elemento
+	pickerClientByIdSeller.setSelectedRow(0, indexItemSelectedPicker, false);
+	
+	Ti.API.info("*************** TERMINA FUNCION GENERAR LISTA DE CLIENTES");
+	
 }
-
-// ***********************************************************
-// Validamos el tipo de usuario que inicio sesion - 4 vendedor -3 cliente
-// ***********************************************************
-
-if (parseInt(idProfileUserLogin)  == 4) {
-	
-	Ti.API.info("Eres vendedor y vamos a cargar el combo de clientes." );
-	
-	// EJECUTAMOS FUNCION
-	getAllOptionsPickerClientsByIdSeller();
-	
-} else {
-	Ti.API.info("Eres cliente y vamos a asignar un id de cliente automatico." );
-	
-	// Asignamos un valor
-	idClientQuo = Alloy.Globals.PROPERTY_INFO_USER.userLogin.user.business.id;//args.quotation.client.user.business.id;
-	
-	// Vista contenedora del picker cliente
-	var viewSectionClientPicker = $.viewSectionClientPicker;
-	
-	// Ocultamos el contenedor
-	viewSectionClientPicker.hide();
-	
-	// Cambiamos el alto del contenedor
-	viewSectionClientPicker.height = 0;
-	
-};
 
 // ***********************************************************
 // VALIDAMOS EL STATUS Y COMENTARIO DE LA COTIZACION
@@ -1016,26 +1037,55 @@ if (parseInt(idProfileUserLogin)  == 4) {
 
 // Estatus cotizacion
 var statusQuotation  = args.title_quotation.statusQuo;
+
 Ti.API.info("Estatus Cotización: " + statusQuotation);
 
 // Validamos el status 4 - Terminada
 if (statusQuotation == 4 ) {
 	
 	// Contenedor de botones de guardar - comprar o autorizar
-	var containerTwo = $.containerTwo;
+	var containerTwo     = $.containerTwo;
 	
 	// Ocultamos contededor
 	containerTwo.hide();
 	
 	// Cambiar tamaño del contenedor
-	containerTwo.height = 0;
+	containerTwo.height  = 0;
 	
 	// Contenedor de la lista
-	var containerOne = $.containerOne;
+	var containerOne     = $.containerOne;
 	
 	// Cambiamos tamaño del contenedor
-	containerOne.height = '100%';	
+	containerOne.height  = '100%';	
 	
+};
+
+// ***********************************************************
+// Validamos el tipo de usuario que inicio sesion - 4 vendedor -3 cliente
+// ***********************************************************
+
+if (parseInt(idProfileUserLogin)  == 4) {
+		
+	Ti.API.info("Eres vendedor y vamos a cargar el combo de clientes." );
+		
+	// EJECUTAMOS FUNCION
+	getAllOptionsPickerClientsByIdSeller();
+		
+} else {
+	Ti.API.info("Eres cliente y vamos a asignar un id de cliente automatico." );
+		
+	// Asignamos un valor
+	idClientQuo = Alloy.Globals.PROPERTY_INFO_USER.userLogin.user.business.id;//args.quotation.client.user.business.id;
+		
+	// Vista contenedora del picker cliente
+	var viewSectionClientPicker = $.viewSectionClientPicker;
+		
+	// Ocultamos el contenedor
+	viewSectionClientPicker.hide();
+		
+	// Cambiamos el alto del contenedor
+	viewSectionClientPicker.height = 0;
+		
 };
 
 // Comentario Cotizacion

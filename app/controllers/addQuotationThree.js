@@ -474,6 +474,10 @@ function generarCotizacionModeloAccesorios(objSaveQuotationJson)
 			Alloy.Globals.ID_CLIENT_QUOTATION            = Alloy.Globals.PROPERTY_INFO_USER.userLogin.user.business.id;//objResponseWS.quotation.client.user.business.id;
 			Ti.API.info("Alloy.Globals.ID_CLIENT_QUOTATION: " + JSON.stringify(Alloy.Globals.ID_CLIENT_QUOTATION));
 			
+			// 5.- Asignamos un valor a la propiedad Alloy.Globals.ALL_DATA_QUOTATION
+			Alloy.Globals.ALL_DATA_QUOTATION = objResponseWS.quotation;
+			Ti.API.info("Alloy.Globals.ID_CLIENT_QUOTATION: " + JSON.stringify(Alloy.Globals.ID_CLIENT_QUOTATION));
+			
 			// Ventana del paso numero 4 de la cotizacion
 			var winAddQuotationFour = Alloy.createController('addQuotationFour', objResponseWS).getView();
 			
@@ -485,7 +489,7 @@ function generarCotizacionModeloAccesorios(objSaveQuotationJson)
 		onerror : function(e) {
 			//Ti.API.debug(e.error);
 		},
-		timeout : 5000 // en milisegundos
+		timeout : 15000 // en milisegundos
 	});
 	
 	// Preparar la conexión.

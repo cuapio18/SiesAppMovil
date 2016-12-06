@@ -95,11 +95,12 @@ function createListAllQuotations(quotations)
 		items.push({
 			img_quotation    : {image: 'https://www.logismarket.com.ar/ip/quintino-sistemas-transportadores-para-envios-y-correos-sistemas-transportadores-para-envios-y-correos-688836-FGR.jpg'},
 			title_quotation  : {
-				text       : 'Cotización ' + quotation.id,
-				id         : quotation.id,
-				idx        : parseInt(idx),
-				statusQuo  : quotation.status.id,
-				commentQuo : quotation.comment
+				text        : 'Cotización ' + quotation.id,
+				id          : quotation.id,
+				idx         : parseInt(idx),
+				statusQuo   : quotation.status.id,
+				commentQuo  : quotation.comment,
+				idClientQuo : quotation.client.id
 			},
 			date_quotation   : {text: dateFormatQuo},
 			status_quotation : {text: quotation.status.nameStatus},

@@ -943,7 +943,7 @@ if (parseInt(idProfileUserLogin)  == 4) {
 // ***********************************************************
 
 // Estatus cotizacion
-var statusQuotation  = Alloy.Globals.ALL_DATA_QUOTATION.title_quotation.id;
+var statusQuotation  = Alloy.Globals.ALL_DATA_QUOTATION.status.id;
 Ti.API.info("Estatus Cotización: " + statusQuotation);
 
 // Validamos el status 4 - Terminada
@@ -967,7 +967,7 @@ if (statusQuotation == 4 ) {
 };
 
 // Comentario Cotizacion
-var commentQuotation = Alloy.Globals.ALL_DATA_QUOTATION.title_quotation.commentQuo;
+var commentQuotation = Alloy.Globals.ALL_DATA_QUOTATION.comment;
 Ti.API.info("Comentario Cotización: " + commentQuotation);
 
 // Validamos si ya existe un comentario
