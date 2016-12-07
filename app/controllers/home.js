@@ -136,6 +136,7 @@ tabGroupQuotations.addEventListener('open', function(e)
 					// Menu
 					var menu = ev.menu;
 					
+					/*
 					// Item Menu Settings
 					var menuItemSettings = menu.add({
 						title        : 'Ajustes',
@@ -148,6 +149,7 @@ tabGroupQuotations.addEventListener('open', function(e)
 						Ti.API.info("I was clicked: " + JSON.stringify(e));
 						showSettings(e);
 					});
+					*/
 					
 					// Item Menu Logout
 					var menuItemLogout = menu.add({

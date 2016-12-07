@@ -131,7 +131,7 @@
 	hintText : 'Comentario...',
 	//borderColor : '#000',
 	bottom : '6dp',
-	focusable : false
+	//focusable : false
 },
 "#viewSectionPriceDateEstimated" : {
 	layout : 'vertical',

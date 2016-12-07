@@ -89,11 +89,15 @@ function createListAllQuotations(quotations)
 		
 		// Formato fecha
 		var dateFormatQuo = dateQuo.getDate() + "/" + (dateQuo.getMonth() + 1) + "/" + dateQuo.getFullYear();
+		var urlImgCon     = "http://" + Alloy.Globals.URL_GLOBAL_SERVER_SIES + "/sies-admin" + '/resources/images/TSC.png';
 		
 		
 		// GENERAMOS OBJETO CON DE COTIZACIONES
 		items.push({
-			img_quotation    : {image: 'https://www.logismarket.com.ar/ip/quintino-sistemas-transportadores-para-envios-y-correos-sistemas-transportadores-para-envios-y-correos-688836-FGR.jpg'},
+			img_quotation    : {
+				image : urlImgCon
+				//image: 'https://www.logismarket.com.ar/ip/quintino-sistemas-transportadores-para-envios-y-correos-sistemas-transportadores-para-envios-y-correos-688836-FGR.jpg'
+			},
 			title_quotation  : {
 				text        : 'Cotización ' + quotation.id,
 				id          : quotation.id,
@@ -356,9 +360,9 @@ function seeCommentsQuotation(dataItemSelected)
 			
 			if (objResponseWS.commet != null) {
 				//alert(objResponseWS.commet);
-				Ti.UI.createAlertDialog({ message: objResponseWS.commet, title: 'Comentario de Cotización', ok: 'Ok', }).show();
+				Ti.UI.createAlertDialog({ message: objResponseWS.commet, title: 'Comentario de Cotización', ok: 'Aceptar', }).show();
 			} else {
-				Ti.UI.createAlertDialog({ message: 'No hay comentario!', title: 'Comentario de Cotización', ok: 'Ok', }).show();
+				Ti.UI.createAlertDialog({ message: 'No hay comentario!', title: 'Comentario de Cotización', ok: 'Aceptar', }).show();
 				//alert("No hay comentario.");
 			};
 			

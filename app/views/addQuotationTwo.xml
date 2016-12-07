@@ -12,7 +12,9 @@
 			<Label id="labelTitlePrice"></Label>
 			
 			<View id="viewContainerImg">
-				<ImageView id="imgConveyor" image="http://img.mecalux.com.mx/external/products/es-MX/transportadores-para-cajas-183047.jpg"></ImageView>
+				<ImageView id="imgConveyor"></ImageView>
+				<!--<VideoPlayer id="imgConveyor" />-->
+				<!--<WebView id="imgConveyor"></WebView>-->
 			</View>
 			
 			<View class="viewContainer">

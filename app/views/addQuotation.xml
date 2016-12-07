@@ -28,7 +28,7 @@
 					</View> <!--/.viewGeneral-->
 					
 					<View class="viewGeneral">
-						<ImageView id="imgTransportador" image="http://cdn2.hubspot.net/hub/190295/file-469091524-jpg/Improve_Manufacturing_Maintenance_Management.jpg?t=1464211488457"></ImageView>
+						<ImageView id="imgConveyor"></ImageView>
 					</View> <!--/.viewGeneral-->
 
 				</View> <!--/.viewSection-->

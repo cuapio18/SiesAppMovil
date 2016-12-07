@@ -129,9 +129,13 @@
 	width  : Ti.UI.FILL,
 	height : Ti.UI.SIZE,
 	hintText : 'Comentario...',
+	//value : 'Cotización',
 	//borderColor : '#000',
 	bottom : '6dp',
-	focusable : false
+	bubbleParent : false,
+	//focusable : false
+	//softKeyboardOnFocus : Titanium.UI.Android.SOFT_KEYBOARD_HIDE_ON_FOCUS
+	//keyboardType : Titanium.UI.KEYBOARD_TYPE_NUMBER_PAD,
 },
 "#viewSectionPriceDateEstimated" : {
 	layout : 'vertical',

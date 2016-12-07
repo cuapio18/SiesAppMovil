@@ -740,6 +740,8 @@ function autorizarCotizacion()
 				var client = Ti.Network.createHTTPClient({
 					onload : function(e) {
 						
+						Ti.API.info("Received text: " + this.responseText);
+						
 						setTimeout(function() {
 							
 							// Cerramos la ventana del Indicador
@@ -750,8 +752,6 @@ function autorizarCotizacion()
 						
 							// Limpiamos el valor del id de la cotizacion
 							Alloy.Globals.ID_GLOBAL_QUOTATION = 0;
-							
-							Ti.API.info("Received text: " + this.responseText);
 							
 							// Venta principal de cotizaciones
 							var winHomeQuotations = Alloy.createController('home').getView();
@@ -793,7 +793,8 @@ function autorizarCotizacion()
 		dialogAuthorizeQuotation.show();
 		
 	} else {
-		alert("Debes seleccionar un cliente!");
+		//alert("Debes seleccionar un cliente!");
+		Ti.UI.createAlertDialog({ message: 'Debes seleccionar un cliente!', title: 'Cliente', ok: 'Aceptar', }).show();
 	};
 	
 }
@@ -871,12 +872,42 @@ function getAllOptionsPickerClientsByIdSeller()
 
 function fillClientByIdSellerPicker(objOptionsClientByIdSellerPicker)
 {
+	Ti.API.info("*************** INICIA FUNCION GENERAR LISTA DE CLIENTES");
 	
+	// Variable para guardar el index del cliente seleccionado
+	var indexItemSelectedPicker    = 0;
+	
+	// Variable para guardar el id del cliente seleccioonado
+	var idClientItemSelectedPicker = 0;
+	
+	// Variable para guardar el estatus de la cotizacion
+	var statusQuotationValidatePicker = Alloy.Globals.ALL_DATA_QUOTATION.status.id;
+	
+	// VALIDAMOS EL STATUS DE LA COTIZACION
+	if (statusQuotationValidatePicker == 2 || statusQuotationValidatePicker == 3) {
+		
+		// Asignamos el id del cliente a la variable
+		idClientItemSelectedPicker = Alloy.Globals.ALL_DATA_QUOTATION.client.business.id;
+		
+	};
 	
 	//Ti.API.info("ID Cliente: " + JSON.stringify( objOptionsClientByIdSellerPicker[0].user.business) );
 	
 	// RECORREMOS EL OBJETO QUE LLEGA
-	objOptionsClientByIdSellerPicker.forEach(function(optClientByIdSeller) {
+	objOptionsClientByIdSellerPicker.forEach(function(optClientByIdSeller, idx) {
+		
+		// VALIDAMOS SI HAY UN CLIENTE SELECCIONADO
+		if (parseInt(idClientItemSelectedPicker) == parseInt(optClientByIdSeller.user.business.id)) {
+			
+			Ti.API.info("TE ENCONTRE");
+			
+			// Asignamos el index a la variable
+			indexItemSelectedPicker = parseInt(idx);
+			
+			// Asignaamos un valor al id del cliente
+			idClientQuo             = parseInt(optClientByIdSeller.user.business.id);
+			
+		};
 		
 		//Ti.API.info("FOREACH: " + JSON.stringify(optClientByIdSeller.user.business) );
 		
@@ -885,28 +916,43 @@ function fillClientByIdSellerPicker(objOptionsClientByIdSellerPicker)
 			title    : optClientByIdSeller.user.business.nameCompany
 		});
 		
+		// Agregamos el objeto al picker
 		pickerClientByIdSeller.add(row);
+		
+		// Mostramos el elemento seleccionado
 		pickerClientByIdSeller.selectionIndicator = true;
-		pickerClientByIdSeller.setSelectedRow(0, 0, false);
+	
+		// Seleccionamos un elemento del piccker
+		pickerClientByIdSeller.setSelectedRow(0, parseInt(indexItemSelectedPicker), false);
 
 	});
 	
 	// FUNCION AL APLICAR UN CAMBIO EN EL PICKER
 	
 	pickerClientByIdSeller.addEventListener("change", function(e) {
+		
+		Ti.API.info("HAY UN CAMBIO EN EL PICKER");
 	
 		// Index del elemento seleccionado
 		var indexItem = parseInt(JSON.stringify(e.rowIndex));
-		Ti.API.info("indexItem: " + indexItem );
+		//Ti.API.info("indexItem: " + indexItem );
 		
 		// Datos del elemento seleccionado
 		var pickerDataSelected = e.source.children[0].rows[indexItem];
-		Ti.API.info("pickerDataSelected: " + JSON.stringify(pickerDataSelected) );
+		//Ti.API.info("pickerDataSelected: " + JSON.stringify(pickerDataSelected) );
 		
 		// Asignaamos un valor al id del cliente
 		idClientQuo = pickerDataSelected.id;
 	
-	});
+	});	
+	
+	Ti.API.info("statusQuotationValidatePicker : " + statusQuotationValidatePicker );
+	
+	Ti.API.info("idClientItemSelectedPicker : " + idClientItemSelectedPicker );
+	
+	Ti.API.info("indexItemSelectedPicker    : " + indexItemSelectedPicker );
+	
+	Ti.API.info("*************** TERMINA FUNCION GENERAR LISTA DE CLIENTES");
 
 }
 
@@ -942,6 +988,9 @@ if (parseInt(idProfileUserLogin)  == 4) {
 // VALIDAMOS EL STATUS Y COMENTARIO DE LA COTIZACION
 // ***********************************************************
 
+// Vista contenedora del picker cliente
+var viewSectionClientPicker = $.viewSectionClientPicker;
+
 // Estatus cotizacion
 var statusQuotation  = Alloy.Globals.ALL_DATA_QUOTATION.status.id;
 Ti.API.info("Estatus Cotización: " + statusQuotation);
@@ -957,6 +1006,12 @@ if (statusQuotation == 4 ) {
 	
 	// Cambiar tamaño del contenedor
 	containerTwo.height = 0;
+	
+	// Ocultamos el contenedor
+	viewSectionClientPicker.hide();
+		
+	// Cambiamos el alto del contenedor
+	viewSectionClientPicker.height = 0;
 	
 	// Contenedor de la lista
 	var containerOne = $.containerOne;

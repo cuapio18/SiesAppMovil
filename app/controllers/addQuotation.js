@@ -5,7 +5,30 @@
 // Arguments passed into this controller can be accessed via the `$.args` object directly or:
 var args = $.args;
 
-//Ti.API.info("Argumentos pasados:" + JSON.stringify(args));
+Ti.API.info("Argumentos pasados:" + JSON.stringify(args));
+
+// CREAMOS UN INDICADOR
+
+// Ventana para mostrar el indicador
+var winAddActivityIndicator = Ti.UI.createWindow({
+	theme: "Theme.AppCompat.Light.NoActionBar",
+	backgroundColor : "#000",
+	opacity: .9,
+	fullscreen : true
+});
+
+// Creamos activity Indicator
+var activityIndicator = Ti.UI.createActivityIndicator({
+	color   : '#ccc',
+	font    : {fontFamily:'Helvetica Neue', fontSize:26, fontWeight:'bold'},
+	message : 'Espere...',
+	style   : Ti.UI.ActivityIndicatorStyle.BIG_DARK,
+	height  : Ti.UI.SIZE,
+	width   : Ti.UI.SIZE
+});
+
+// Agregamos el indicador a la ventana
+winAddActivityIndicator.add(activityIndicator);
 
 // ID del transportador
 var idConveyorArg    = parseInt(args.idConveyor);
@@ -15,6 +38,12 @@ var keyShortConveyor = args.keyShort;
 
 // Tipo de transportador
 var typeConveyor     = args.typeConveyor;
+
+// Variable para almacenar los accesorios
+var objAccesoriesWS;
+
+// Variable para almacenar el modelo
+var objModelWS;
 
 //Ti.API.info("KEY SHORT: " + keyShortConveyor);
 
@@ -29,6 +58,12 @@ var valueTypeSupport = "";
 var valueInputOutputHeight = "";
 var valueDriveUnit = "";
 var valueSpeed = "";*/
+
+// IMAGEVIEW CONVEYOR
+var imgConveyor = $.imgConveyor;
+
+// ASIGNAMOS UNA IMAGEN A NUESTRO IMAGEVIEW
+imgConveyor.image = args.imgConveyor;
 
 // **************************************************
 // Click en el boton siguiente paso de la cotizacion
@@ -96,44 +131,152 @@ $.btnSearchConveyor.addEventListener('click', function() {
 	//var modelConvey    = keyShortConveyor + valPickerLongGrade + valPickerBandSerie + valBandMaterial + valUtilWidth + valTypeSupport + valInputOutputHeight + valDriveUnit + valSpeed;
 	//var modelConveyor = "TMR900FTACA4018SW2-5SP1212";
 	
-	Ti.API.info("LARGO: " + valPickerLongGrade);
-	Ti.API.info("SERIE DE LA BANDA: " + valPickerBandSerie);
-	Ti.API.info("MATERIAL DE LA BANDA: " + valBandMaterial);
-	Ti.API.info("ANCHO UTIL: " + valUtilWidth);
-	Ti.API.info("TIPO DE SOPORTE: " + valTypeSupport);
-	Ti.API.info("ALTURA DE ENTRADA Y SALIDA: " + valInputOutputHeight);
-	Ti.API.info("UNIDAD MOTRIZ: " + valDriveUnit);
-	Ti.API.info("VELOCIDAD: " + valSpeed);
+	//Ti.API.info("LARGO: " + valPickerLongGrade);
+	//Ti.API.info("SERIE DE LA BANDA: " + valPickerBandSerie);
+	//Ti.API.info("MATERIAL DE LA BANDA: " + valBandMaterial);
+	//Ti.API.info("ANCHO UTIL: " + valUtilWidth);
+	//Ti.API.info("TIPO DE SOPORTE: " + valTypeSupport);
+	//Ti.API.info("ALTURA DE ENTRADA Y SALIDA: " + valInputOutputHeight);
+	//Ti.API.info("UNIDAD MOTRIZ: " + valDriveUnit);
+	//Ti.API.info("VELOCIDAD: " + valSpeed);
 	
 	Ti.API.info("MODELO: " + modelConvey);
 	
 	// OBJ DEL MODELO DEL TRANSPORTADOR 
 	var objModelConveyor = {
-		"model" : modelConvey
+		"model" : (modelConvey != "") ? modelConvey : "default"
 	};
 	
-	// Ventana del paso numero 2 de la cotizacion
-	var winAddQuotationTwo = Alloy.createController('addQuotationTwo', objModelConveyor).getView();
-	
-	// Contenedor de campos
-	var containerInput = $.scrollviewConveyorDetails;
-	
-	//alert(containerInput.getChildren());
-	
-	// Abrir ventana
-	winAddQuotationTwo.open();
-	
-	// CLICK EN EL BOTON REGRESAR
-	winAddQuotationTwo.addEventListener("open", function(evt) {
-		var actionBar = winAddQuotationTwo.activity.actionBar;
-		actionBar.displayHomeAsUp = true;
-		actionBar.onHomeIconItemSelected = function(e) {
-			Ti.API.info(evt);
-			winAddQuotationTwo.close();
-		};
-	});
+	//Ti.API.info("objModelConveyor: " + objModelConveyor);
+	Ti.API.info("objModelConveyor: " + JSON.stringify(objModelConveyor));
+	// EJECUTAMOS LA FUNCION PARA OBTENER EL MODELO Y SUS ACCESORIOS
+	getModelAndAccesoriesOfConveyor(objModelConveyor);
 	
 });
+
+
+// **************************************************
+// FUNCION PARA OBTENER EL MODELO Y LOS ACCESORIOS DEL TRANSPORTADOR
+// **************************************************
+
+function getModelAndAccesoriesOfConveyor(objModelConveyor)
+{	
+	// OBJ DEL MODELO DEL TRANSPORTADOR 
+	/*var objModelConveyor = {
+		"model" : modelConveyor
+	};*/
+	
+	Ti.API.info("OBJETO MODELO TRASNPORTADOR: " + JSON.stringify(objModelConveyor));
+	
+	// Abrimos ventana del Indicador
+	winAddActivityIndicator.open();
+	
+	// Mostramos el indicador
+	activityIndicator.show();
+	
+	// URL del servicio
+	var url = "http://" + Alloy.Globals.URL_GLOBAL_SIES + "/sies-rest/quotation/searchModel";
+	
+	var client = Ti.Network.createHTTPClient({
+		
+		onload : function(e) {
+			
+			Ti.API.info("ResponseWS: " + this.responseText);
+			
+			// Convertimos en obj la respuesta del ws
+			var objResponseWS = JSON.parse(this.responseText);
+			
+			setTimeout(function() {
+				
+				// Validamos la respuesta del ws
+				if (objResponseWS.flag != false && objResponseWS.model != null) {
+					
+					objAccesoriesWS   = objResponseWS.acccesorie;
+			
+					objModelWS        = objResponseWS.model;
+				
+					Ti.API.info("ACCESORIOS : " + JSON.stringify(objAccesoriesWS));
+					Ti.API.info("MODELO     : " + JSON.stringify(objModelWS));
+					
+					// FUNCION PARA MOSTRAR LOS DATOS DEL TRANSPORTADOR
+					//dataModelConveyor(objModelWS);
+					
+					// OBJ a enviar a la vista siguiente
+					var objModelAndAccessories = {
+						model       : objModelWS,
+						accessories : objAccesoriesWS
+					};
+					
+					// Ventana del paso numero 2 de la cotizacion
+					var winAddQuotationTwo = Alloy.createController('addQuotationTwo', objModelAndAccessories).getView();
+					
+					// Contenedor de campos
+					//var containerInput = $.scrollviewConveyorDetails;
+	
+					//alert(containerInput.getChildren());
+					
+					// Abrir ventana
+					winAddQuotationTwo.open();
+					
+					// CLICK EN EL BOTON REGRESAR
+					winAddQuotationTwo.addEventListener("open", function(evt) {
+						
+						// Cerramos la ventana del Indicador
+						winAddActivityIndicator.close();
+									
+						// Cerramos el indicador
+						activityIndicator.hide();
+					
+						var actionBar = winAddQuotationTwo.activity.actionBar;
+						
+						actionBar.displayHomeAsUp = true;
+						
+						actionBar.onHomeIconItemSelected = function(e) {
+							Ti.API.info(evt);
+							winAddQuotationTwo.close();
+						};
+						
+					});
+	
+					
+				} else {
+					
+					// Cerramos la ventana del Indicador
+					winAddActivityIndicator.close();
+								
+					// Cerramos el indicador
+					activityIndicator.hide();
+				
+					Ti.UI.createAlertDialog({ message: '¡El modelo no existe!. Intentalo de nuevo.', title: 'Modelo', ok: 'Aceptar', }).show();
+				};
+				
+			}, 3000);
+			
+		},
+		onerror : function(e) {
+			Ti.API.debug(e.error);
+			
+			// Cerramos la ventana del Indicador
+			winAddActivityIndicator.close();
+							
+			// Cerramos el indicador
+			activityIndicator.hide();
+						
+			//alert("Ocurrio un error.\nIntentalo nuevamente.");
+			Ti.UI.createAlertDialog({ message: 'Ocurrio un error.\nIntentalo nuevamente.', title: 'Error', ok: 'Aceptar', }).show();
+						
+		},
+		timeout: 35000
+		
+	});
+	
+	client.open("POST", url);
+	
+	client.setRequestHeader("Content-Type", "application/json; charset=utf-8");
+	
+	client.send(JSON.stringify(objModelConveyor));
+	
+}
 
 // **************************************************
 // FUNCIONES AL HACER UN CAMBIO EN LOS PICKERS
@@ -271,7 +414,7 @@ function getAllOptionsPickerGlobal(idConveyor)
 		onerror : function(e) {
 			//Ti.API.debug(e.error);
 		},
-		timeout : 5000 // en milisegundos
+		timeout : 20000 // en milisegundos
 	});
 	
 	// Preparar la conexión.
@@ -318,7 +461,7 @@ function getAllOptPickerBandMaterialUtilWidth(idBandSerie)
 		onerror : function(e) {
 			//Ti.API.debug(e.error);
 		},
-		timeout : 5000 // en milisegundos
+		timeout : 20000 // en milisegundos
 	});
 	
 	// Preparar la conexión.

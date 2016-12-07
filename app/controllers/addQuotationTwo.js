@@ -1,16 +1,48 @@
 // Arguments passed into this controller can be accessed via the `$.args` object directly or:
 var args = $.args;
 
-Ti.API.info("MODELO DEL TRANSPORTADOR:" + JSON.stringify(args));
+Ti.API.info("Argumentos pasados:" + JSON.stringify(args));
+
+// IMAGEVIEW CONVEYOR
+var imgConveyor = $.imgConveyor;
+
+var urlImgCon = "http://" + Alloy.Globals.URL_GLOBAL_SERVER_SIES + "/sies-admin" + args.model.conveyor.pic;
+
+// ASIGNAMOS UNA IMAGEN A NUESTRO IMAGEVIEW
+imgConveyor.image = urlImgCon;
+//imgConveyor.html = '<html><head></head><body><video width="100%" height="100%" autoplay="autoplay"><source src="http://201.163.92.66:8080/sies-admin/resources/videoConveyor/TSR1476305395501.mp4" type="video/mp4">Tu navegador no soporta HTML5 video.</video></body></html>';
+
+//Ti.API.info("urlImgCon: " + urlImgCon);
+//f = Ti.Filesystem.getFile(Ti.Filesystem.resourcesDirectory, urlImgCon);
+
+/*var videoPlayer = Titanium.Media.createVideoPlayer({
+	url : urlImgCon,
+    top : 2,
+    autoplay : true,
+    backgroundColor : 'blue',
+    height : 300,
+    width : 300,
+    mediaControlStyle : Titanium.Media.VIDEO_CONTROL_HIDDEN,
+    scalingMode : Titanium.Media.VIDEO_SCALING_ASPECT_FIT
+});
+
+$.viewContainerImg.add(videoPlayer);*/
+
+
+//Ti.API.info("MODELO DEL TRANSPORTADOR:" + JSON.stringify(args));
 
 // Modelo
-var modelConveyor = args.model;
-var objAccesoriesWS;
-var objModelWS;
+//var modelConveyor   = args.model;
+
+// MODELO
+var objModelWS      = args.model;
+
+// ACCESORIOS DEL MODELO
+var objAccesoriesWS = args.accessories;
 
 // FUNCION PARA OBTENER EL MODELO Y LOS ACCESORIOS DEL TRANSPORTADOR
 
-function getModelAndAccesoriesOfConveyor() {
+/*function getModelAndAccesoriesOfConveyor() {
 	
 	// OBJ DEL MODELO DEL TRANSPORTADOR 
 	var objModelConveyor = {
@@ -50,50 +82,98 @@ function getModelAndAccesoriesOfConveyor() {
 	
 	client.send(JSON.stringify(objModelConveyor));
 	
-}
+}*/
 
 // EJECUTAMOS LA FUNCION PARA OBTENER EL MODELO Y ACCESORIOS
-getModelAndAccesoriesOfConveyor();
+//getModelAndAccesoriesOfConveyor();
 
-function dataModelConveyor(objModelWS)
+dataModelConveyor();
+
+function dataModelConveyor()
 {
 	Ti.API.info("MODELO: " + JSON.stringify(objModelWS));
 	
+	var titleConveyor = objModelWS.conveyor.conveyor + " - " + objModelWS.conveyor.keyShort;
+	
 	// Titulo
-	$.labelTitleConveyor.setText(objModelWS.conveyor.conveyor + " - " + objModelWS.conveyor.keyShort);
+	$.labelTitleConveyor.setText(titleConveyor);
+	
+	var titleModel    = objModelWS.model;
 	
 	// Modelo del transportador
-	$.labelTitleModel.setText(objModelWS.model);
+	$.labelTitleModel.setText(titleModel);
+	
+	var priceModel    = objModelWS.priceModel;
 	
 	// Precio
-	$.labelTitlePrice.setText("$" + objModelWS.priceModel);
+	$.labelTitlePrice.setText("$" + priceModel);
+	
+	// VALIDAMOS SI ES LARGO O GRADO
+	
+	var longOrGrade = "";
+	
+	if (objModelWS.longs != null) {
+		
+		Ti.API.info("ES LARGO");
+		
+		// Asignamos un valor a nuestra variable
+		longOrGrade = objModelWS.longs.measure;
+		
+	}else if (objModelWS.grade != null){
+		
+		Ti.API.info("ES GRADO");
+		
+		// Asignamos un valor a nuestra variable
+		longOrGrade = objModelWS.grade.measure;
+		
+	};
 	
 	// Largo o Grado
-	$.labelValueLongGrade.setText(objModelWS.longs.measure);
+	$.labelValueLongGrade.setText(longOrGrade);
+	
+	var bandSerie = objModelWS.serieBand.serieBand;
 	
 	// Serie de la banda
-	$.labelValueBandSerie.setText(objModelWS.serieBand.serieBand);
+	$.labelValueBandSerie.setText(bandSerie);
+	
+	var bandMaterial = objModelWS.materialBand.materialBand;
 	
 	// Material de la banda
-	$.labelValueBandMaterial.setText(objModelWS.materialBand.materialBand);
+	$.labelValueBandMaterial.setText(bandMaterial);
 	
+	var usefulWidth = objModelWS.width.measure;
 	// Ancho util
-	$.labelValueUsefulWidth.setText(objModelWS.width.measure + " PLG");
+	$.labelValueUsefulWidth.setText(usefulWidth + " PLG");
+	
+	var typeSupport = objModelWS.support.support;
 	
 	// Tipo de soporte
-	$.labelValueTypeSupport.setText(objModelWS.support.support);
+	$.labelValueTypeSupport.setText(typeSupport);
 	
-	// Altura de entrada y alida
-	$.labelValueInputOutputHeight.setText(objModelWS.heightInput.height);
+	var inputOutputHeight = '';
+	
+	// VALIDAMOS EL TIPO DE SOPORTE
+	if (objModelWS.support.id == 1) {
+		inputOutputHeight = objModelWS.heightInput.height;
+	};
+	
+	// Altura de entrada y salida
+	$.labelValueInputOutputHeight.setText(inputOutputHeight);
+	
+	var driveUnit = objModelWS.driveUnit.name;
 	
 	// Unidad motriz
-	$.labelValueDriveUnit.setText(objModelWS.driveUnit.name);
+	$.labelValueDriveUnit.setText(driveUnit);
+	
+	var speedModel = objModelWS.speed.speed;
 	
 	// Velocidad
-	$.labelValueSpeed.setText(objModelWS.speed.speed);
+	$.labelValueSpeed.setText(speedModel);
+	
+	var descriptionModel = objModelWS.description;
 	
 	// Descripcion
-	$.labelValueDescription.setText("Descripción: " + objModelWS.description);
+	$.labelValueDescription.setText("Descripción: " + descriptionModel);
 	
 }
 

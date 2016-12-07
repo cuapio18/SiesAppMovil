@@ -55,7 +55,7 @@
 			        		</View>
 			        
 			      			<View id="viewSectionClientPicker">
-							
+								
 								<Label class="label_align_left" text="Indique un cliente:"></Label>
 							
 								<Picker id="pickerClientByIdSeller">
@@ -67,7 +67,7 @@
 							<View id="viewSectionCommentQuo">
 									
 								<Label class="label_align_left" text="Agrega un comentario:"></Label>
-								<TextArea id="textAreaCommentQuo"/>
+								<TextArea id="textAreaCommentQuo"></TextArea>
 									
 							</View>
 						

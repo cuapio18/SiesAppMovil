@@ -1,6 +1,29 @@
 // Arguments passed into this controller can be accessed via the `$.args` object directly or:
 var args = $.args;
 
+// CREAMOS UN INDICADOR
+
+// Ventana para mostrar el indicador
+var winAddActivityIndicator = Ti.UI.createWindow({
+	theme: "Theme.AppCompat.Light.NoActionBar",
+	backgroundColor : "#000",
+	opacity: .9,
+	fullscreen : true
+});
+
+// Creamos activity Indicator
+var activityIndicator = Ti.UI.createActivityIndicator({
+	color   : '#ccc',
+	font    : {fontFamily:'Helvetica Neue', fontSize:26, fontWeight:'bold'},
+	message : 'Espere...',
+	style   : Ti.UI.ActivityIndicatorStyle.BIG_DARK,
+	height  : Ti.UI.SIZE,
+	width   : Ti.UI.SIZE
+});
+
+// Agregamos el indicador a la ventana
+winAddActivityIndicator.add(activityIndicator);
+
 // Bandera Home
 //var flagHomeStatus = 0;
 
@@ -45,7 +68,10 @@ var dataFullModelAccesories = {
 
 fillAccessoriePicker(objAccesoriesConveyor);
 
+// ****************************************************
 // Click en el boton siguiente paso de la cotizacion
+// ****************************************************
+
 $.btnAddConveyor.addEventListener('click', function() {
 	
 	//Ti.API.info("Contenedor de accesorios: " + JSON.stringify($.containerAccesorios.children));
@@ -203,14 +229,18 @@ $.btnAddConveyor.addEventListener('click', function() {
 }*/
 
 // FUNCION PARA GENERAR LA VISTA DE ACCESORIOS
+
 function fillAccessoriePicker(objOptionsAccessoriePicker) {
-	//console.log(objOptionsAccessoriePicker);
+	
+	Ti.API.info("JSON DE ACCESORIOS: " + JSON.stringify(objOptionsAccessoriePicker));
 	
 	// Contenedor para agregar los accesorios
 	var containerAccessories = $.containerAccesorios;
 	
 	// Recoorremos el objeto json que recibimos
 	objOptionsAccessoriePicker.forEach(function (optAcce, idx) {
+		
+		var urlImgAcc = "http://" + Alloy.Globals.URL_GLOBAL_SERVER_SIES + "/sies-admin" + optAcce.pic;
 		
 		// Vista estatica
 		var cell = Alloy.createController("list_static_cell");
@@ -228,7 +258,7 @@ function fillAccessoriePicker(objOptionsAccessoriePicker) {
 				text : '$ ' + optAcce.price
 			},
 			"#imageview" : {
-				image : 'http://image.made-in-china.com/2f0j10pvjtGEnMaqba/-Cinta-transportadora-con-el-accesorio-.jpg'
+				image : urlImgAcc//'http://image.made-in-china.com/2f0j10pvjtGEnMaqba/-Cinta-transportadora-con-el-accesorio-.jpg'
 			},
 			"#quantity_accesory" : {
 				value : 1,
@@ -437,7 +467,12 @@ function fillAccessoriePicker(objOptionsAccessoriePicker) {
 
 function generarCotizacionModeloAccesorios(objSaveQuotationJson) 
 {
-
+	// Abrimos ventana del Indicador
+	winAddActivityIndicator.open();
+	
+	// Mostramos el indicador
+	activityIndicator.show();
+	
 	// Url del servicio rest
 	var url    = "http://" + Alloy.Globals.URL_GLOBAL_SIES + "/sies-rest/quotation/saveQuotationTemp";
 	
@@ -451,45 +486,63 @@ function generarCotizacionModeloAccesorios(objSaveQuotationJson)
 			// Respuesta del servicio
 			var objResponseWS = JSON.parse(this.responseText);
 			
-			// ***************************************************************
-			// ASIGNAMOS VALORES A LAS VARIABLES GLOBALES
-			// **************************************************************
+			setTimeout(function() {
+				
+				// Validamos la bandera
+				if (objResponseWS.flag == true) {
+				
+					// ***************************************************************
+					// ASIGNAMOS VALORES A LAS VARIABLES GLOBALES
+					// **************************************************************
+					
+					// 1.- ASIGNAMOS UN VALOR A LA VARIABLE GLOBAL DE ID DE LA COTIZACION
+					Alloy.Globals.ID_GLOBAL_QUOTATION           = objResponseWS.quotation.id;
+					Ti.API.info("Alloy.Globals.ID_GLOBAL_QUOTATION: " + JSON.stringify(Alloy.Globals.ID_GLOBAL_QUOTATION));
+					
+					// 2.- ASIGNAMOS UN VALOR  A LA VARIABLE GLOBAL DE LISTA DE MODELOS
+					Alloy.Globals.ALL_LIST_MODEL_TEMP_QUOTATION  = objResponseWS.listTemp;
+					Ti.API.info("Alloy.Globals.ALL_LIST_MODEL_TEMP_QUOTATION: " + JSON.stringify(Alloy.Globals.ALL_LIST_MODEL_TEMP_QUOTATION));
+					
+					// 3.- ASIGNAMOS EL TOTAL Y FECHA ESTIMADA A LA VARIABLE GLOBAL
+					Alloy.Globals.DATE_ESTIMATED_TOTAL_QUOTATION = {
+						"totalPrice" : objResponseWS.totalPrice,
+						"estimated"  : objResponseWS.estimated
+					};
+					Ti.API.info("Alloy.Globals.DATE_ESTIMATED_TOTAL_QUOTATION: " + JSON.stringify(Alloy.Globals.DATE_ESTIMATED_TOTAL_QUOTATION));
+					
+					// 4.- ASIGNAMOS UN VALOR A LA VARIABLE GLOBAL ID DE CLIENTE
+					Alloy.Globals.ID_CLIENT_QUOTATION            = Alloy.Globals.PROPERTY_INFO_USER.userLogin.user.business.id;//objResponseWS.quotation.client.user.business.id;
+					Ti.API.info("Alloy.Globals.ID_CLIENT_QUOTATION: " + JSON.stringify(Alloy.Globals.ID_CLIENT_QUOTATION));
+					
+					// 5.- Asignamos un valor a la propiedad Alloy.Globals.ALL_DATA_QUOTATION
+					Alloy.Globals.ALL_DATA_QUOTATION = objResponseWS.quotation;
+					Ti.API.info("Alloy.Globals.ID_CLIENT_QUOTATION: " + JSON.stringify(Alloy.Globals.ID_CLIENT_QUOTATION));
+					
+					// Ventana del paso numero 4 de la cotizacion
+					var winAddQuotationFour = Alloy.createController('addQuotationFour', objResponseWS).getView();
+					
+					// Abrir ventana
+					winAddQuotationFour.open();
+				
+				};
 			
-			// 1.- ASIGNAMOS UN VALOR A LA VARIABLE GLOBAL DE ID DE LA COTIZACION
-			Alloy.Globals.ID_GLOBAL_QUOTATION           = objResponseWS.quotation.id;
-			Ti.API.info("Alloy.Globals.ID_GLOBAL_QUOTATION: " + JSON.stringify(Alloy.Globals.ID_GLOBAL_QUOTATION));
-			
-			// 2.- ASIGNAMOS UN VALOR  A LA VARIABLE GLOBAL DE LISTA DE MODELOS
-			Alloy.Globals.ALL_LIST_MODEL_TEMP_QUOTATION  = objResponseWS.listTemp;
-			Ti.API.info("Alloy.Globals.ALL_LIST_MODEL_TEMP_QUOTATION: " + JSON.stringify(Alloy.Globals.ALL_LIST_MODEL_TEMP_QUOTATION));
-			
-			// 3.- ASIGNAMOS EL TOTAL Y FECHA ESTIMADA A LA VARIABLE GLOBAL
-			Alloy.Globals.DATE_ESTIMATED_TOTAL_QUOTATION = {
-				"totalPrice" : objResponseWS.totalPrice,
-				"estimated"  : objResponseWS.estimated
-			};
-			Ti.API.info("Alloy.Globals.DATE_ESTIMATED_TOTAL_QUOTATION: " + JSON.stringify(Alloy.Globals.DATE_ESTIMATED_TOTAL_QUOTATION));
-			
-			// 4.- ASIGNAMOS UN VALOR A LA VARIABLE GLOBAL ID DE CLIENTE
-			Alloy.Globals.ID_CLIENT_QUOTATION            = Alloy.Globals.PROPERTY_INFO_USER.userLogin.user.business.id;//objResponseWS.quotation.client.user.business.id;
-			Ti.API.info("Alloy.Globals.ID_CLIENT_QUOTATION: " + JSON.stringify(Alloy.Globals.ID_CLIENT_QUOTATION));
-			
-			// 5.- Asignamos un valor a la propiedad Alloy.Globals.ALL_DATA_QUOTATION
-			Alloy.Globals.ALL_DATA_QUOTATION = objResponseWS.quotation;
-			Ti.API.info("Alloy.Globals.ID_CLIENT_QUOTATION: " + JSON.stringify(Alloy.Globals.ID_CLIENT_QUOTATION));
-			
-			// Ventana del paso numero 4 de la cotizacion
-			var winAddQuotationFour = Alloy.createController('addQuotationFour', objResponseWS).getView();
-			
-			// Abrir ventana
-			winAddQuotationFour.open();
+			}, 3000);
 			
 		},
 		// función de llamada cuando se produce un error, incluyendo un tiempo de espera
 		onerror : function(e) {
 			//Ti.API.debug(e.error);
+			// Cerramos la ventana del Indicador
+			winAddActivityIndicator.close();
+							
+			// Cerramos el indicador
+			activityIndicator.hide();
+						
+			//alert("Ocurrio un error.\nIntentalo nuevamente.");
+			Ti.UI.createAlertDialog({ message: 'Ocurrio un error.\nIntentalo nuevamente.', title: 'Error', ok: 'Aceptar', }).show();
+			
 		},
-		timeout : 15000 // en milisegundos
+		timeout : 35000 // en milisegundos
 	});
 	
 	// Preparar la conexión.

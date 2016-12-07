@@ -975,29 +975,38 @@ function fillClientByIdSellerPicker(objOptionsClientByIdSellerPicker)
 		
 		//if (statusQuotationValidatePicker == 2 || statusQuotationValidatePicker == 3) {
 			
-			// Validamos el id del cliente
-			if (parseInt(idClientItemSelectedPicker) == parseInt(optClientByIdSeller.user.business.id)) {
+		// Validamos el id del cliente
+		if (parseInt(idClientItemSelectedPicker) == parseInt(optClientByIdSeller.user.business.id)) {
 				
-				Ti.API.info("TE ENCONTRE");
+			Ti.API.info("TE ENCONTRE");
 				
-				// Asignamos un valor a la variable item index
-				indexItemSelectedPicker        = parseInt(idx) + 1;
-				//Ti.API.info("indexItemSelectedPicker 2: " + idx);
+			// Asignamos un valor a la variable item index
+			indexItemSelectedPicker = parseInt(idx) + 1;
+			//Ti.API.info("indexItemSelectedPicker 2: " + idx);
 				
-				// Asignaamos un valor al id del cliente
-				//idClientQuo = parseInt(optClientByIdSeller.user.business.id);
+			// Asignaamos un valor al id del cliente
+			idClientQuo             = parseInt(optClientByIdSeller.user.business.id);
 				
-			};
+		};
 			
 		//};
 		
+		// Variable con el nombre del cliente y usuario asignado
+		var nameCompanyAndClient = optClientByIdSeller.user.business.nameCompany + " - " + optClientByIdSeller.name + " " + optClientByIdSeller.lastName;
+		
 		var row = Ti.UI.createPickerRow({
 			id       : optClientByIdSeller.user.business.id,
-			title    : optClientByIdSeller.user.business.nameCompany
+			title    : nameCompanyAndClient
 		});
 		
 		// Asignamos el arreglo
 		pickerClientByIdSeller.add(row);
+		
+		// Mostramos el elemento seleccionado
+		pickerClientByIdSeller.selectionIndicator = true;
+		
+		// Seleccionamos un elemento
+		pickerClientByIdSeller.setSelectedRow(0, parseInt(indexItemSelectedPicker), false);
 
 	});
 	
@@ -1021,12 +1030,6 @@ function fillClientByIdSellerPicker(objOptionsClientByIdSellerPicker)
 	
 	});
 	
-	// Mostramos el elemnto seleccionado
-	pickerClientByIdSeller.selectionIndicator = true;
-		
-	// Seleccionamos un elemento
-	pickerClientByIdSeller.setSelectedRow(0, indexItemSelectedPicker, false);
-	
 	Ti.API.info("*************** TERMINA FUNCION GENERAR LISTA DE CLIENTES");
 	
 }
@@ -1034,6 +1037,9 @@ function fillClientByIdSellerPicker(objOptionsClientByIdSellerPicker)
 // ***********************************************************
 // VALIDAMOS EL STATUS Y COMENTARIO DE LA COTIZACION
 // ***********************************************************
+
+// Vista contenedora del picker cliente
+var viewSectionClientPicker = $.viewSectionClientPicker;
 
 // Estatus cotizacion
 var statusQuotation  = args.title_quotation.statusQuo;
@@ -1052,11 +1058,17 @@ if (statusQuotation == 4 ) {
 	// Cambiar tamaño del contenedor
 	containerTwo.height  = 0;
 	
+	// Ocultamos el contenedor
+	viewSectionClientPicker.hide();
+		
+	// Cambiamos el alto del contenedor
+	viewSectionClientPicker.height = 0;
+	
 	// Contenedor de la lista
 	var containerOne     = $.containerOne;
 	
 	// Cambiamos tamaño del contenedor
-	containerOne.height  = '100%';	
+	containerOne.height  = '100%';
 	
 };
 
@@ -1077,9 +1089,6 @@ if (parseInt(idProfileUserLogin)  == 4) {
 	// Asignamos un valor
 	idClientQuo = Alloy.Globals.PROPERTY_INFO_USER.userLogin.user.business.id;//args.quotation.client.user.business.id;
 		
-	// Vista contenedora del picker cliente
-	var viewSectionClientPicker = $.viewSectionClientPicker;
-		
 	// Ocultamos el contenedor
 	viewSectionClientPicker.hide();
 		
@@ -1097,6 +1106,15 @@ if(commentQuotation != null) {
 	// Asignamos valor al textArea comentario
 	$.textAreaCommentQuo.value = commentQuotation;
 }
+
+/*$.detailQuotation.addEventListener('focus', function(e){
+	Ti.API.info('Click en el textArea comentario');
+	Ti.API.info('e: ' + JSON.stringify(e));
+	
+	// Habilitamos el foco
+	//e.source.focusable = true;
+	$.textAreaCommentQuo.blur();
+});*/
 
 // ***********************************************************
 // FUNCION PARA MOSTRAR TOTAL Y FECHA ESTIMADA

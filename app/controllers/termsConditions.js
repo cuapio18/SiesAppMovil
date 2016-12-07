@@ -162,7 +162,7 @@ $.alertDialogTermsCond.addEventListener('click', function(e) {
 					Ti.UI.createAlertDialog({ message: 'Ocurrio un error.\nIntentalo nuevamente.', title: 'Error', ok: 'Aceptar', }).show();
 					//alert("Ocurrio un error.\nIntentalo nuevamente.");
 				},
-				timeout : 350000
+				timeout : 550000
 				
 			});
 					

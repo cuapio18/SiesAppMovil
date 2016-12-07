@@ -63,6 +63,7 @@
 }
 
 "#labelforgetpassword": {
-	bottom: 10
+	bottom: 10,
+	visible : false
 }
 

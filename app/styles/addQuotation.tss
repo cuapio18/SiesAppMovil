@@ -98,11 +98,13 @@
 	right: 20
 },
 
-'#imgTransportador': {
-	width: Titanium.UI.FILL,
-	height: Titanium.UI.FILL,
+'#imgConveyor': {
+	width       : Titanium.UI.FILL,
+	height      : '100dp',//Titanium.UI.FILL,
 	//top: 15,
 	//bottom: 15,
-	left: 10,
-	right:20
+	left        : 10,
+	right       : 20,
+	backgroundColor : "#ccc",
+	//borderColor : "#teal"
 }
