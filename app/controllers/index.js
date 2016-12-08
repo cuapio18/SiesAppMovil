@@ -72,7 +72,8 @@ $.btnlogin.addEventListener('click', function() {
 		*/
 				
 	} else {
-		alert("Se requiere nombre de usuario / contraseña");
+		//alert("Se requiere nombre de usuario / contraseña");
+		Ti.UI.createAlertDialog({ message: 'Se requiere nombre de usuario / contraseña', title: 'Alerta', ok: 'Aceptar', }).show();
 	}
 
 	//activityIndicator.show();
@@ -110,6 +111,8 @@ function logIn(userName, password) {
 			// Respuest del servicio web
 			var response = JSON.parse(this.responseText);
 			
+			Ti.API.info("Respuesta del servicio: " + JSON.stringify(response));
+			
 			// Llamamos a la funcion recordar usuario
 			rememberUser();
 			
@@ -119,22 +122,10 @@ function logIn(userName, password) {
 			// Esperamos algunos segundos
 			setTimeout(function(){
 				
-				// Ocultamos activity indicator
-				// activityIndicator.hide();
-				
-				// Respuest del servicio web
-				//var responseWS = JSON.parse(this.responseText);
-			
-				Ti.API.info("Respuesta del servicio: " + JSON.stringify(response));
-				//Ti.API.info(JSON.stringify(response));
-				
 				Ti.API.info("Propiedad global de usuarios: " + JSON.stringify(Alloy.Globals.PROPERTY_INFO_USER));
 				Ti.API.info("ID Usuario: " + response.userLogin.id);
 				Ti.API.info("Nombre Usuario: " + response.userLogin.name);
 				Ti.API.info("Estatus: " + response.logeado);
-				
-				// Cerramos la ventana del activity indicator
-				winActivityIndicator.close();
 				
 				// VALIDAMOS LA RESPUESTA DEL SERVICIO
 				if(response.logeado == true) {
@@ -143,10 +134,23 @@ function logIn(userName, password) {
 					var winHome = Alloy.createController('home').getView();
 					winHome.open();
 					
+								// Cerramos la ventana del activity indicator
+					winActivityIndicator.close();
+				
+					// Ocultamos activity indicator
+					activityIndicator.hide();
 					//Quitamos la ventana de login
 					//$.index.remove();
 				} else {
-					alert("Usuario o Contraseña incorrectos.");
+					
+					// Cerramos la ventana del activity indicator
+					winActivityIndicator.close();
+				
+					// Ocultamos activity indicator
+					activityIndicator.hide();
+					
+					//alert("Usuario o Contraseña incorrectos.");
+					Ti.UI.createAlertDialog({ message: 'Usuario o Contraseña incorrectos.', title: 'Alerta', ok: 'Aceptar', }).show();
 				}
 				
 				
@@ -158,16 +162,24 @@ function logIn(userName, password) {
 			
 			// Cerramos la ventana del activity indicator
 			winActivityIndicator.close();
+				
+			// Ocultamos activity indicator
+			activityIndicator.hide();
+			
+			Ti.UI.createAlertDialog({ message: 'Ocurrio un error. Intentalo de nuevo.', title: 'Error', ok: 'Aceptar', }).show();
+			
+			// Cerramos la ventana del activity indicator
+			//winActivityIndicator.close();
 			
 			// Ocultamos activity indicator
 			//activityIndicator.hide();
 			
-			alert(e.error);
+			//alert(e.error);
 			
-			Ti.API.debug(e);
+			//Ti.API.debug(e);
 			//Ti.API.info(e.error);
 		},
-		timeout : 5000 // Milisegundos
+		timeout : 15000 // Milisegundos
 		
 	});
 	
@@ -289,10 +301,45 @@ function validateRememberUser()
 	
 }
 
-// ABRIR VENTANA DE INICIO
-$.index.open();
-
 // EJECUTAMOS FUNCION QUE VALIDA SI EL USUARIO ESTA GUARDADO
 validateRememberUser();
+
+// ***************************************
+// CLICK EN EL BOTON FISICO VOLVER
+// ***************************************
+
+if(Ti.Platform.osname === "android") {
+	
+	$.index.addEventListener('android:back', function(e){
+		
+		Ti.API.info("Click en el boton volver");
+		
+		// Cerramos la ventana
+		$.index.close();
+		
+		// Obtenemos el activity actual
+		var activity = Titanium.Android.currentActivity;
+		
+		// Terminamos el activity
+		activity.finish();
+		
+		//return false;
+		
+	});
+	
+}
+
+// ***************************************
+// SE EJECUTA CUANDO SE AABRE UNA VENTANA
+// ***************************************
+
+$.index.addEventListener("open",function() {
+	// OS_ANDROID
+	// Escondemos el actionBar
+	if(Ti.Platform.osname === "android") $.index.activity.actionBar.hide();
+});
+
+// ABRIR VENTANA DE INICIO
+$.index.open();
 
 //$.activityIndicator.show();

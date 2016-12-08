@@ -63,12 +63,39 @@ function showSettings(e)
 // *****************************
 // CLICK EN EL BOTON FISICO VOLVER
 // *****************************
-/*$.tabGroupQuotations.addEventListener('android:back', function(e){
+$.tabGroupQuotations.addEventListener('android:back', function(e) {
 	//alert(e);
-	e.cancelBubble = true;
-	var winLogin = Alloy.createController('index').getView();
-	winLogin.open();
-});*/
+	//e.cancelBubble = true;
+	//var winLogin = Alloy.createController('index').getView();
+	//winLogin.open();
+	//Ti.API.info(JSON.stringify(e));
+	
+	// CREAMOS UN DIALOGO
+	var dialogLogout = Ti.UI.createAlertDialog({
+		cancel      : 1,
+		buttonNames : ['Confirmar', 'Cancelar'],
+		message     : '¿Cerrar la sesión de sies?',
+		title       : 'Cerrar sesión',
+		persistent:true,
+		canceledOnTouchOutside: true
+	});
+	
+	// AL PRESIONAR SOBRE UN BOTON DEL DIALOGO
+	dialogLogout.addEventListener('click', function(e) {
+		
+		if(e.index === 0) {
+			// abrimos ventana de login
+			var winLogin = Alloy.createController('index').getView();
+			winLogin.open();
+		};
+		
+	});
+	
+	// MOSTRAR EL DIALOGO
+	dialogLogout.show();
+	
+	return false;
+});
 
 /*$.tabgroupsies.addEventListener('open', function(e) {
 	$.tabgroupsies.setActiveTab(1);
