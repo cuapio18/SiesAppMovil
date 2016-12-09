@@ -1,60 +1,59 @@
-/*".container" : {
-  
-}*/
-
-/*"#botonVolver": {
-	bottom: 0
-}*/
-
-/*"#activityIndicator": {
-	top: 220
-},*/
 "#listViewQuotations": {
-	width  : Titanium.UI.FILL,
-	height : Titanium.UI.FILL
+	width: Titanium.UI.FILL,
+	height: Titanium.UI.FILL
 	/*separatorColor: 'red',
 	separatorInsets: {
-		left: 70,
-		right: 0
+	left: 70,
+	right: 0
 	}*/
 	//separatorColor:'red',separatorInsets:{left:0,right:0}
 },
 "#container_conveyor": {
-	width  : Ti.UI.FILL,
-	height : Ti.UI.SIZE,
-	top    : '6dp',
-	bottom : '6dp',
-	left   : '15dp',
-	right  : '15dp',
-	//backgroundColor : "blue"
+	width: Ti.UI.FILL,
+	height: Ti.UI.SIZE,
+	top: '6dp',
+	bottom: '6dp',
+	left: '15dp',
+	right: '15dp'
 },
-"#img_quotation" : {
-    width  : '50dp',
-    height : '50dp',
-    //height: '50dp', left: 10, borderRadius: 5
-    left   : 0,
-    top    : 0,
-    borderRadius : 5
+"#img_quotation": {
+	defaultImage: '/img/loading_1.gif',
+	width: '50dp',
+	height: '50dp',
+	//height: '50dp', left: 10, borderRadius: 5
+	left: 0,
+	top: 0,
+	borderRadius: 5
 },
-"#title_quotation" : {
-    color: '#31353D',
-    font: { fontFamily:'Arial', fontSize: '20dp', fontWeight:'bold' },
-    //left: '70dp', top: 0
-    left : '60dp',
-    top  : 0
+"#title_quotation": {
+	color: '#31353D',
+	font: {
+		fontFamily: 'Arial',
+		fontSize: '20dp',
+		fontWeight: 'bold'
+	},
+	//left: '70dp', top: 0
+	left: '60dp',
+	top: 0
 },
-"#date_quotation" : {
-    color: 'gray',
-    font: { fontFamily:'Arial', fontSize: '14dp' },
-    //left: '70dp', top: '35dp'
-    left : '60dp',
-    top  : '30dp'
+"#date_quotation": {
+	color: 'gray',
+	font: {
+		fontFamily: 'Arial',
+		fontSize: '14dp'
+	},
+	//left: '70dp', top: '35dp'
+	left: '60dp',
+	top: '30dp'
 },
 "#status_quotation": {
 	color: '#228765',
-	font: { fontFamily:'Arial', fontSize: '14dp' },
+	font: {
+		fontFamily: 'Arial',
+		fontSize: '14dp'
+	},
 	//right: 10, top: 0
-	right : 0,
-	top   : 0
+	right: 0,
+	top: 0
 }
 

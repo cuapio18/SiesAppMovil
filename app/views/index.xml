@@ -1,6 +1,5 @@
 <Alloy>
 	<Window class="container">
-		<!--<Label id="miLabel">Sies App!</Label>-->
 		<ImageView id="imglogotipo"></ImageView>
 		<TextField id="tfuser"></TextField>
 		<TextField id="tfpass"></TextField>

@@ -10,8 +10,9 @@
 			</ButtonNames>
 			
 			<View layout="vertical">
-				<Label id="labelAccesoryQuantity" />
-				<Slider id="sliderlabelAccesoryQuantity" min="1" max="50" value="1" onChange="updateLabel"/>
+				<Label id="labelAccesoryQuantity" text="Cantidad:" />
+				<!--<Slider id="sliderlabelAccesoryQuantity" min="1" max="50" value="1" onChange="updateLabel"/>-->
+				<TextField id="sliderlabelAccesoryQuantity"></TextField>
 			</View>
 			
 		</AlertDialog>

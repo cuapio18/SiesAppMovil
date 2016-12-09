@@ -1,109 +1,85 @@
 <Alloy>
-	
 	<Window class="container">
-		
+
 		<AlertDialog id="alertDialogModelTemp" title="Cantidad del modelo" message="Elige la cantidad de modelos." persistent="true" cancel="1">
-	
+
 			<ButtonNames>
 				<ButtonName>Confirmar</ButtonName>
 				<ButtonName>Cancelar</ButtonName>
 			</ButtonNames>
-			
 			<View layout="vertical">
 				<Label id="labelQuantityModelTemp"></Label>
 				<Slider id="sliderQuantityModelTemp" min="1" max="50" value="1" onChange="updateValueLabelMT"></Slider>
 			</View>
-	
+
 		</AlertDialog>
-		
+
 		<!--<ActionBar id="actionbarAddQuotFour" title="Arma tu Cotización"></ActionBar>
-		
+
 		<Menu>
-			<MenuItem title="Adjuntar archivo" showAsAction="Ti.Android.SHOW_AS_ACTION_ALWAYS" icon="Ti.Android.R.drawable.ic_menu_upload"></MenuItem>
-			<MenuItem title="Agregar" showAsAction="Ti.Android.SHOW_AS_ACTION_ALWAYS" icon="Ti.Android.R.drawable.ic_menu_add"></MenuItem>
+		<MenuItem title="Adjuntar archivo" showAsAction="Ti.Android.SHOW_AS_ACTION_ALWAYS" icon="Ti.Android.R.drawable.ic_menu_upload"></MenuItem>
+		<MenuItem title="Agregar" showAsAction="Ti.Android.SHOW_AS_ACTION_ALWAYS" icon="Ti.Android.R.drawable.ic_menu_add"></MenuItem>
 		</Menu>-->
-		
 		<View id="containerOne">
-			
 			<ScrollView id="scrollviewFullQuotation">
-				
 				<ListView id="listViewModelConveyorQuotation" defaultItemTemplate="template">
-			
+
 					<Templates>
-						
 						<ItemTemplate name="template">
-							
 							<View id="container_model_conv" onLongpress="longModelConv">
 								<Label bindId="modelConveyor" id="modelConveyor" />
 								<Label bindId="quantityConveyor" id="quantityConveyor" />
 								<Label bindId="priceConveyor" id="priceConveyor" />
-								<Label bindId="totalConveyor" id="totalConveyor" />	
+								<Label bindId="totalConveyor" id="totalConveyor" />
 							</View>
-							
 						</ItemTemplate>
-						
 					</Templates>
-		
 					<ListSection name="sectionModelConveyorsQuotation"></ListSection>
-					
 					<FooterView>
-						
 						<View id="containerThree">
-							
+
 							<View id="viewSectionDataQuotation">
-	        					<Label id="labelDataQuotation" text="Datos de cotización"></Label>
-	        				</View>
-		        
-		        			<View id="viewSectionClientPicker">
-					
+								<Label id="labelDataQuotation" text="Datos de cotización"></Label>
+							</View>
+							<View id="viewSectionClientPicker">
+
 								<Label class="label_align_left" text="Indique un cliente:"></Label>
-								
 								<Picker id="pickerClientByIdSeller">
 									<PickerRow title="Seleccione" id=""></PickerRow>
-				        		</Picker>
-					
+								</Picker>
+
 							</View>
-			
 							<View id="viewSectionCommentQuo">
-								
+
 								<Label class="label_align_left" text="Agrega un comentario:"></Label>
 								<TextArea id="textAreaCommentQuo" />
-								
+
 							</View>
-				
 							<View id="viewSectionPriceDateEstimated">
-								
+
 								<Label id="labelTotalQuotation"></Label>
 								<Label id="labelDateEstimatedQuotation"></Label>
-								
+
 							</View>
-							
+
 						</View>
-						
 					</FooterView>
-					
-		        </ListView>
-				
+
+				</ListView>
 			</ScrollView>
-			
 		</View>
-		
 		<View id="containerTwo">
-			
 			<View class="viewSection">
-				
+
 				<View class="viewGeneral">
 					<Button id="buttonAuthorizeBuy"></Button>
 				</View>
-				
 				<View class="viewGeneral">
 					<Button id="btnSaveQuot" onClick="saveQuotation">Guardar</Button>
 				</View>
-				
+
 			</View>
-			
 		</View>
-		
+
 	</Window>
-	
 </Alloy>

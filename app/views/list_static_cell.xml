@@ -1,11 +1,12 @@
 <Alloy>
-	<!--<Window id="winAddQuot"></Window>>-->
-	<View id="cell" onLongpress="longAcce">
+	<!--<Window id="winAddQuot"></Window>> onLongpress="longAcce"-->
+	<View id="cell">
 		<ImageView id="imageview" />
 		<View class="gradient_view" />
 		<View id="overlay_view">
 			<Label id="title_label" attributedString="" />
 			<Label id="price_accessory"></Label>
+			<Label id="label_quantity_accessory"></Label>
 			<TextField id="quantity_accesory"></TextField>
 		</View>
 	</View>

@@ -103,7 +103,7 @@ for (var i = 1; i < 16; i++) {
 //$.winAddQuotation.add(scrollView);
 
 // FUNCION AGREGAR COTIZACION
-function addQuotation() {
+/*function addQuotation() {
 	
 	// VENTANA AGREGAR COTIZACION
 	var winAddQuotation = Alloy.createController('addQuotation').getView();
@@ -125,7 +125,7 @@ function addQuotation() {
 		};
 	});
 
-}
+}*/
 
 /*var tableView_data = [];
 
@@ -174,9 +174,9 @@ function populateMovies(movies) {
 
 }*/
 
-function longAcce(e) {
+/*function longAcce(e) {
 	alert(e);
-}
+}*/
 
 /*function ActivarFoco(e) {
 	Ti.API.info(JSON.stringify(e));

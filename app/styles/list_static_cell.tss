@@ -8,6 +8,7 @@
 	clipMode: true
 },
 "#imageview": {
+	defaultImage: '/img/no-disponible.jpg',
 	width: Ti.UI.FILL,
 	height: Ti.UI.FILL,
 	preventDefaultImage: true,
@@ -19,16 +20,30 @@
 	width: Ti.UI.FILL,
 	height: Ti.UI.FILL,
 	backgroundGradient: {
-        type: 'linear',
-        startPoint: { x: '0%', y: '0%' },
-        endPoint: { x: '0%', y: '100%' },
-        colors: [ { color: '#33000000', offset: 0 },
-        		  { color: '#aa000000', offset: 1 } ]
-   },
-   touchEnabled: false
+		type: 'linear',
+		startPoint: {
+			x: '0%',
+			y: '0%'
+		},
+		endPoint: {
+			x: '0%',
+			y: '100%'
+		},
+		colors: [
+			{
+				color: '#33000000',
+				offset: 0
+			},
+			{
+				color: '#aa000000',
+				offset: 1
+			}
+		]
+	},
+	touchEnabled: false
 },
 "#title_label": {
-	top:5,
+	top: 5,
 	bottom: 5,
 	left: 5,
 	right: 5,
@@ -43,7 +58,7 @@
 	touchEnabled: false
 },
 "#price_accessory": {
-	top:0,
+	top: 0,
 	bottom: 5,
 	left: 5,
 	right: 5,
@@ -53,23 +68,39 @@
 	color: '#ffffff',
 	touchEnabled: false
 },
-"#quantity_accesory" : {
-	inputType    : Titanium.UI.INPUT_TYPE_CLASS_NUMBER,
-	width        : 0,
-	height       : 0,
+"#label_quantity_accessory": {
+	top: 0,
+	bottom: 0,
+	left: 0,
+	right: 0,
+	width: 0,
+	height: 0,
+	textAlign: 'center',
+	color: '#ffffff',
+	touchEnabled: false,
+	text : 'Cantidad:',
+	visible : false
+},
+"#quantity_accesory": {
+	inputType: Titanium.UI.INPUT_TYPE_CLASS_NUMBER,
+	width: 0,
+	height: 0,
 	//top          : "100%",
 	//right        : 0,
-	color        : "#FFFFFF",
-	textAlign    : Titanium.UI.TEXT_ALIGNMENT_CENTER,
-	//focusable    : false,
+	color: "#FFFFFF",
+	textAlign: Titanium.UI.TEXT_ALIGNMENT_CENTER,
+	focusable    : true,
 	//touchEnabled : true,
-	bubbleParent : false,
-	keyboardType : Titanium.UI.KEYBOARD_TYPE_NUMBER_PAD,
+	bubbleParent: false,
+	keyboardType: Titanium.UI.KEYBOARD_TYPE_NUMBER_PAD,
 	//borderStyle  : Titanium.UI.INPUT_BORDERSTYLE_ROUNDED,
-	//softKeyboardOnFocus : Titanium.UI.Android.SOFT_KEYBOARD_HIDE_ON_FOCUS
+	//softKeyboardOnFocus : Titanium.UI.Android.SOFT_KEYBOARD_HIDE_ON_FOCUS,
 	visible: false,
-	//borderColor : "yellow"
-	
+	//borderColor : 'teal',
+	//top: 0,
+	//bottom: 5,
+	left: 0,
+	right: 0,
 },
 "#overlay_view": {
 	layout: 'vertical',

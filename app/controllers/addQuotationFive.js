@@ -507,3 +507,19 @@ $.addQuotationFive.addEventListener("open", function(ev) {
 		};
 
 });
+
+// ***************************************
+// CLICK EN EL BOTON FISICO VOLVER
+// ***************************************
+
+if (Ti.Platform.osname === "android") {
+
+	$.addQuotationFive.addEventListener('android:back', function(e) {
+
+		//Ti.API.info("Click en el boton volver");
+
+		return false;
+
+	});
+
+}

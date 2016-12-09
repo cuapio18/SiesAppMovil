@@ -38,7 +38,7 @@ function getAllAccessoriesModelConveyorTemp(idModelConTemp) {
 		onerror : function(e) {
 			Ti.API.info(e.error);
 		},
-		timeout : 5000
+		timeout : 55000
 	});
 	
 	// Preparamos conexion.
@@ -75,13 +75,16 @@ function createAllAccessoriesModelsConveyorTemp(modelsAccessoriesModelTemp) {
 			clipMode: true
         });
         
+        var urlImgAcc = "http://" + Alloy.Globals.URL_GLOBAL_SERVER_SIES + "/sies-admin" + accessory.accessorie.pic;
+        
         // Imagen de accesorio
 		var imageViewAccessory = Ti.UI.createImageView({
 			width: Ti.UI.FILL,
 			height: Ti.UI.FILL,
 			preventDefaultImage: true,
 			touchEnabled: false,
-			image : 'http://image.made-in-china.com/2f0j10pvjtGEnMaqba/-Cinta-transportadora-con-el-accesorio-.jpg'
+			defaultImage : '/img/no-disponible.jpg',
+			image : urlImgAcc//'http://image.made-in-china.com/2f0j10pvjtGEnMaqba/-Cinta-transportadora-con-el-accesorio-.jpg'
         });
         
         // Vista de degradado
@@ -151,7 +154,7 @@ function createAllAccessoriesModelsConveyorTemp(modelsAccessoriesModelTemp) {
         });
         
         // Cantidad de accesorio
-        var sliderQuantityAccessory = Titanium.UI.createSlider({
+        /*var sliderQuantityAccessory = Titanium.UI.createSlider({
 		    top          :0,
 			bottom       : 5,
 			left         : 5,
@@ -161,26 +164,66 @@ function createAllAccessoriesModelsConveyorTemp(modelsAccessoriesModelTemp) {
 		    min          : 1,
 		    max          : 50,
 		    value        : quantityAccessory
-    	});
+    	});*/
+    	
+    	// Atributo para saber si se puede o no elegir mas de un accesorio
+		var verifyAccessory = accessory.accessorie.verify;
+		;
+
+		// Variable para deshabilitar el campo
+		var disabledQuantityAcc = false;
+
+		// validamos si se puede cambiar la cantidad
+		if (verifyAccessory == 2) {
+			// Asignamos un valor a la variable
+			disabledQuantityAcc = true;
+		};
+		
+		//Cantidad del accesorio
+		var quantityAccReal = 1;
+		
+		// Validamos la cantidad que hay en el campo
+		if (quantityAccessory != 0) {
+			quantityAccReal = quantityAccessory;
+		};
+
+		var sliderQuantityAccessory = Titanium.UI.createTextField({
+			inputType : Titanium.UI.INPUT_TYPE_CLASS_NUMBER,
+			width : 0,
+			height : 0,
+			color : "#FFFFFF",
+			textAlign : Titanium.UI.TEXT_ALIGNMENT_CENTER,
+			focusable : true,
+			bubbleParent : false,
+			keyboardType : Titanium.UI.KEYBOARD_TYPE_NUMBER_PAD,
+			visible : false,
+			left : 0,
+			right : 0,
+			value : quantityAccReal,
+			editable : disabledQuantityAcc,
+			touchEnabled : disabledQuantityAcc
+		});
 		
 		// Label slider value
 		var labelSliderQuantityAccessory = Ti.UI.createLabel({
-		    top          :0,
-			bottom       : 5,
-			left         : 5,
-			right        : 5,
-			width        : Ti.UI.FILL,
-			height       : Ti.UI.SIZE,
-			textAlign    : Ti.UI.TEXT_ALIGNMENT_CENTER,
-			color        : '#ffffff',
+			top : 0,
+			bottom : 0,
+			left : 0,
+			right : 0,
+			width : 0,
+			height : 0,
+			textAlign : 'center',
+			color : '#ffffff',
 			touchEnabled : false,
-		    text         : 'Cantidad: ' + sliderQuantityAccessory.value,
+			//text : 'Cantidad:',
+			visible : false,
+			text : 'Cantidad:' //+ sliderQuantityAccessory.value,
 		});
 		
 
-		sliderQuantityAccessory.addEventListener('change', function(e) {
+		/*sliderQuantityAccessory.addEventListener('change', function(e) {
 		    labelSliderQuantityAccessory.text = 'Cantidad: ' + parseInt(e.value);
-		});
+		});*/
 		
 		var viewContainerAccessories = $.viewContainerAccessories;
         
@@ -226,6 +269,57 @@ function createAllAccessoriesModelsConveyorTemp(modelsAccessoriesModelTemp) {
 			// Cambiamos el color al label precio
 			labelPriceAccessory.color = "#ECAE73";
 			
+			// Mostramos el label cantidad de accesorio ***
+			labelSliderQuantityAccessory.show();
+
+			// Cambiamos el color del label cantidad de accesorio ***
+			labelSliderQuantityAccessory.color = "#ECAE73";
+
+			// Mostramos label slider
+			//labelSliderQuantityAccessory.visible = true;
+
+			// Cambiamos el ancho del label cantidad de accesorio ***
+			labelSliderQuantityAccessory.width = Ti.UI.FILL;
+
+			// Cambiamos el alto del label cantidad de accesorio ***
+			labelSliderQuantityAccessory.height = Ti.UI.SIZE;
+
+			// Cambiamos el espacio a la izquierda del label cantidad de accesorio ***
+			labelSliderQuantityAccessory.setLeft(5);
+
+			// Cambiamos el espacio a la derecha del label cantidad de accesorio ***
+			labelSliderQuantityAccessory.setRight(5);
+
+			// Cambiamos el espacio de abajo del label cantidad de accesorio ***
+			labelSliderQuantityAccessory.setBottom(5);
+
+			// Activamos el foco del label cantidad de accesorio ***
+			labelSliderQuantityAccessory.setFocusable(true);
+
+			// Cambiamos el color del campo de texto
+			sliderQuantityAccessory.setColor("#ECAE73");
+
+			// Mostramos el campo de texto
+			sliderQuantityAccessory.show();
+
+			// Cambiamos el ancho del campo de texto
+			sliderQuantityAccessory.setWidth(Titanium.UI.FILL);
+
+			// Cambiamos la altura del campo de texto
+			sliderQuantityAccessory.setHeight(Titanium.UI.SIZE);
+
+			// Cambiamos el espacio a la izquierda
+			sliderQuantityAccessory.setLeft(15);
+
+			// Cambiamos el espacio a la derecha
+			sliderQuantityAccessory.setRight(15);
+
+			// Aplicamos blur al campo de texto
+			sliderQuantityAccessory.setValue(quantityAccReal);
+
+			
+			/*
+			
 			// Cambiamos el color del label slider
 			labelSliderQuantityAccessory.color = "#ECAE73";
 			
@@ -260,6 +354,7 @@ function createAllAccessoriesModelsConveyorTemp(modelsAccessoriesModelTemp) {
 			
 			// Cambiamos ancho del slider
 			sliderQuantityAccessory.width   = '100%';
+			*/
          	
          } else {
          	
@@ -274,6 +369,56 @@ function createAllAccessoriesModelsConveyorTemp(modelsAccessoriesModelTemp) {
 					
 			// Cambiamos el color al label precio
 			labelPriceAccessory.color = "#fff";
+			
+			// Ocultamos el label cantidad de accesorio ***
+			labelSliderQuantityAccessory.hide();
+
+			// Cambiamos el color del label cantidad de accesorio ***
+			labelSliderQuantityAccessory.setColor("#fff");
+
+			// Cambiamos el ancho del label cantidad de accesorio ***
+			labelSliderQuantityAccessory.setWidth(0);
+
+			// Cambiamos el alto del label cantidad de accesorio ***
+			labelSliderQuantityAccessory.setHeight(0);
+
+			// Cambiamos el espacio a la izquierda del label cantidad de accesorio ***
+			labelSliderQuantityAccessory.setLeft(0);
+
+			// Cambiamos el espacio a la derecha del label cantidad de accesorio ***
+			labelSliderQuantityAccessory.setRight(0);
+
+			// Cambiamos el espacio de abajo del label cantidad de accesorio ***
+			labelSliderQuantityAccessory.setBottom(0);
+
+			// Desactivamos el foco del label cantidad de accesorio ***
+			labelSliderQuantityAccessory.setFocusable(false);
+
+			// Cambiamos el color del campo de texto
+			sliderQuantityAccessory.setColor("#fff");
+
+			// Ocultamos el campo de texto
+			sliderQuantityAccessory.hide();
+
+			// Cambiamos el ancho del campo de texto
+			sliderQuantityAccessory.setWidth(0);
+
+			// Cambiamos la altura del campo de texto
+			sliderQuantityAccessory.setHeight(0);
+
+			// Cambiamos el espacio a la izquierda
+			sliderQuantityAccessory.setLeft(0);
+
+			// Cambiamos el espacio a la derecha
+			sliderQuantityAccessory.setRight(0);
+
+			// Aplicamos blur al campo de texto
+			sliderQuantityAccessory.blur();
+
+			// Aplicamos blur al campo de texto
+			sliderQuantityAccessory.setValue(quantityAccReal);
+			
+			/*
 			
 			// Cambiamos el color del label slider
 			labelSliderQuantityAccessory.color = "#fff";
@@ -302,6 +447,8 @@ function createAllAccessoriesModelsConveyorTemp(modelsAccessoriesModelTemp) {
 			// Cambiamos ancho del slider
 			sliderQuantityAccessory.width   = 0;
 			
+			*/
+			
          };
          
          // Atributo para saber si se puede o no elegir mas de un accesorio
@@ -329,6 +476,55 @@ function createAllAccessoriesModelsConveyorTemp(modelsAccessoriesModelTemp) {
 				// Cambiamos el color al label precio
 				e.source.getChildren()[2].getChildren()[1].setColor("#fff");
 				
+				// Ocultamos el label cantidad de accesorio ***
+				e.source.getChildren()[2].getChildren()[2].hide();
+
+				// Cambiamos el color del label cantidad de accesorio ***
+				e.source.getChildren()[2].getChildren()[2].setColor("#fff");
+
+				// Cambiamos el ancho del label cantidad de accesorio ***
+				e.source.getChildren()[2].getChildren()[2].setWidth(0);
+
+				// Cambiamos el alto del label cantidad de accesorio ***
+				e.source.getChildren()[2].getChildren()[2].setHeight(0);
+
+				// Cambiamos el espacio a la izquierda del label cantidad de accesorio ***
+				e.source.getChildren()[2].getChildren()[2].setLeft(0);
+
+				// Cambiamos el espacio a la derecha del label cantidad de accesorio ***
+				e.source.getChildren()[2].getChildren()[2].setRight(0);
+
+				// Cambiamos el espacio de abajo del label cantidad de accesorio ***
+				e.source.getChildren()[2].getChildren()[2].setBottom(0);
+
+				// Desactivamos el foco del label cantidad de accesorio ***
+				e.source.getChildren()[2].getChildren()[2].setFocusable(false);
+
+				// Cambiamos el color del campo de texto
+				e.source.getChildren()[2].getChildren()[3].setColor("#fff");
+
+				// Ocultamos el campo de texto
+				e.source.getChildren()[2].getChildren()[3].hide();
+
+				// Cambiamos el ancho del campo de texto
+				e.source.getChildren()[2].getChildren()[3].setWidth(0);
+
+				// Cambiamos la altura del campo de texto
+				e.source.getChildren()[2].getChildren()[3].setHeight(0);
+
+				// Cambiamos el espacio a la izquierda
+				e.source.getChildren()[2].getChildren()[3].setLeft(0);
+
+				// Cambiamos el espacio a la derecha
+				e.source.getChildren()[2].getChildren()[3].setRight(0);
+
+				// Aplicamos blur al campo de texto
+				e.source.getChildren()[2].getChildren()[3].blur();
+
+				// Aplicamos blur al campo de texto
+				e.source.getChildren()[2].getChildren()[3].setValue(quantityAccReal);
+				
+				/*
 				// Cambiamos el color del label slider
 				e.source.getChildren()[2].getChildren()[2].setColor("#fff");
 				
@@ -355,6 +551,7 @@ function createAllAccessoriesModelsConveyorTemp(modelsAccessoriesModelTemp) {
 				
 				// Cambiamos ancho del slider
 				e.source.getChildren()[2].getChildren()[3].setWidth(0);
+				*/
 					
 			} else {
 					
@@ -370,6 +567,55 @@ function createAllAccessoriesModelsConveyorTemp(modelsAccessoriesModelTemp) {
 				// Cambiamos el color al label precio
 				e.source.getChildren()[2].getChildren()[1].setColor("#ECAE73");//0DD1BE - ECAE73
 				
+				// Mostramos el label cantidad de accesorio ***
+				e.source.getChildren()[2].getChildren()[2].show();
+
+				// Cambiamos el color del label cantidad de accesorio ***
+				e.source.getChildren()[2].getChildren()[2].setColor("#ECAE73");
+
+				// Cambiamos el ancho del label cantidad de accesorio ***
+				e.source.getChildren()[2].getChildren()[2].setWidth(Titanium.UI.FILL);
+
+				// Cambiamos el alto del label cantidad de accesorio ***
+				e.source.getChildren()[2].getChildren()[2].setHeight(Titanium.UI.SIZE);
+
+				// Cambiamos el espacio a la izquierda del label cantidad de accesorio ***
+				e.source.getChildren()[2].getChildren()[2].setLeft(5);
+
+				// Cambiamos el espacio a la derecha del label cantidad de accesorio ***
+				e.source.getChildren()[2].getChildren()[2].setRight(5);
+
+				// Cambiamos el espacio de abajo del label cantidad de accesorio ***
+				e.source.getChildren()[2].getChildren()[2].setBottom(5);
+
+				// Activamos el foco del label cantidad de accesorio ***
+				e.source.getChildren()[2].getChildren()[2].setFocusable(true);
+
+				// Cambiamos el color del campo de texto
+				e.source.getChildren()[2].getChildren()[3].setColor("#ECAE73");
+
+				// Mostramos el campo de texto
+				e.source.getChildren()[2].getChildren()[3].show();
+
+				// Cambiamos el ancho del campo de texto
+				e.source.getChildren()[2].getChildren()[3].setWidth(Titanium.UI.FILL);
+
+				// Cambiamos la altura del campo de texto
+				e.source.getChildren()[2].getChildren()[3].setHeight(Titanium.UI.SIZE);
+
+				// Cambiamos el espacio a la izquierda
+				e.source.getChildren()[2].getChildren()[3].setLeft(15);
+
+				// Cambiamos el espacio a la derecha
+				e.source.getChildren()[2].getChildren()[3].setRight(15);
+
+				// Aplicamos blur al campo de texto
+				//e.source.getChildren()[2].getChildren()[3].blur();
+
+				// Aplicamos blur al campo de texto
+				e.source.getChildren()[2].getChildren()[3].setValue(quantityAccReal);
+
+				/*
 				// Cambiamos el color del label slider
 				e.source.getChildren()[2].getChildren()[2].setColor("#ECAE73");
 				
@@ -396,6 +642,7 @@ function createAllAccessoriesModelsConveyorTemp(modelsAccessoriesModelTemp) {
 				
 				// Cambiamos ancho del slider
 				e.source.getChildren()[2].getChildren()[3].setWidth('100%');
+				*/
 					
 			}
 				
@@ -417,11 +664,11 @@ $.addQuotationSix.addEventListener("open", function(evt) {
 	// Action Bar
 	var actionBar;
 
-	// Activity
-	var activityAddAccessories = $.addQuotationSix.activity;
-
 	// Validamos el sistema operativo
 	if (Ti.Platform.osname === "android") {
+		
+		// Activity
+		var activityAddAccessories = $.addQuotationSix.activity;
 
 		if (!activityAddAccessories) {
 			Ti.API.info("No se puede acceder a la barra de acción en una ventana ligera.");
@@ -441,7 +688,7 @@ $.addQuotationSix.addEventListener("open", function(evt) {
 					// Item Menu Agregar o quitar accesorios
 					var menuItemAddAcc = menuAddAcc.add({
 						title : 'Agregar o Eliminar Accesorios',
-						icon : Ti.Android.R.drawable.ic_menu_add,
+						icon : Ti.Android.R.drawable.ic_menu_save,
 						showAsAction : Ti.Android.SHOW_AS_ACTION_ALWAYS
 					});
 
@@ -662,7 +909,7 @@ function saveAddOrDelAccessories(jsonFullAddDelAcc)
 		onerror : function(e) {
 			//Ti.API.debug(e.error);
 		},
-		timeout : 8000 // en milisegundos
+		timeout : 55000 // en milisegundos
 	});
 	
 	// Preparar la conexión.
@@ -674,4 +921,20 @@ function saveAddOrDelAccessories(jsonFullAddDelAcc)
 	// Enviar la solicitud.
 	client.send(JSON.stringify(jsonFullAddDelAcc)); 
 	
+}
+
+// ***************************************
+// CLICK EN EL BOTON FISICO VOLVER
+// ***************************************
+
+if (Ti.Platform.osname === "android") {
+
+	$.addQuotationSix.addEventListener('android:back', function(e) {
+
+		//Ti.API.info("Click en el boton volver");
+
+		return false;
+
+	});
+
 }

@@ -1,102 +1,82 @@
 <Alloy>
 	<Window class="container">
 
-		<ActionBar id="actionbarAddQuot" title="Detalles" displayHomeAsUp="true"></ActionBar>
-		
 		<View id="containerOne">
-			
-			<ScrollView id="scrollviewConveyorDetails">
 
-				<!--<Label id="labelTitleAddQuo">Detalles</Label>-->
+			<ScrollView id="scrollviewConveyorDetails">
 
 				<View class="viewSection">
 
 					<View class="viewGeneral">
 
 						<Label class="label_align_left" id="labelLongGrade">Largo (Pulg):</Label>
-						
 						<Picker class="picker_align_left" id="pickerLongGrade">
 							<PickerRow title="Seleccione" id="" keyshort=""></PickerRow>
 						</Picker>
-						
 						<Label class="label_align_left" id="labelBandSerie">Serie de la banda:</Label>
-						
 						<Picker class="picker_align_left" id="pickerBandSerie">
 							<PickerRow title="Seleccione" id="" keyshort=""></PickerRow>
 						</Picker>
 
-					</View> <!--/.viewGeneral-->
-					
+					</View><!--/.viewGeneral-->
 					<View class="viewGeneral">
 						<ImageView id="imgConveyor"></ImageView>
 					</View> <!--/.viewGeneral-->
 
-				</View> <!--/.viewSection-->
-				
+				</View><!--/.viewSection-->
 				<View class="viewSection">
 
 					<View class="viewGeneral">
 
 						<Label class="label_align_left" id="labelBandMaterial">Material de la banda:</Label>
-						
 						<Picker class="picker_align_left" id="pickerBandMaterial">
 							<PickerRow title="Seleccione" id="" keyshort=""></PickerRow>
 						</Picker>
 
 					</View>
-					
 					<View class="viewGeneral">
 
 						<Label class="label_align_right" id="labelUsefulWidth">Ancho útil (Pulg):</Label>
-						
 						<Picker class="picker_align_right" id="pickerUsefulWidth">
 							<PickerRow title="Seleccione" id="" keyshort=""></PickerRow>
 						</Picker>
 
 					</View>
 
-				</View> <!--/.viewSection-->
-				
+				</View><!--/.viewSection-->
 				<View class="viewSection">
 
 					<View class="viewGeneral">
 
 						<Label class="label_align_left" id="labelTypeSupport">Tipo de soporte:</Label>
-						
 						<Picker class="picker_align_left" id="pickerTypeSupport">
 							<PickerRow title="Seleccione" id="" keyshort=""></PickerRow>
 						</Picker>
 
 					</View>
-					
 					<View class="viewGeneral">
 
 						<Label class="label_align_right" id="labelInputOutputHeight">Altura de entrada y salida (Pulg):</Label>
-						
 						<Picker class="picker_align_right" id="pickerInputOutputHeight">
 							<PickerRow title="Seleccione" id="" keyshort=""></PickerRow>
 						</Picker>
 
 					</View>
 
-				</View> <!--/.viewSection-->
-				
+				</View><!--/.viewSection-->
 				<View class="viewSection">
 
 					<View class="viewGeneral">
 
 						<Label class="label_align_left" id="labelDriveUnit">Unidad motriz:</Label>
-						
 						<Picker class="picker_align_left" id="pickerDriveUnit">
 							<PickerRow title="Seleccione" id="" keyshort=""></PickerRow>
 						</Picker>
 
-					</View> <!--/.viewGeneral-->
-					
+					</View><!--/.viewGeneral-->
 					<View class="viewGeneral">
 
 						<Label class="label_align_right" id="labelSpeed">Velocidad(m/min):</Label>
-						
 						<Picker class="picker_align_right" id="pickerSpeed">
 							<PickerRow title="Seleccione" id="" keyshort=""></PickerRow>
 						</Picker>
@@ -106,9 +86,8 @@
 				</View> <!--/.viewSection-->
 
 			</ScrollView> <!--/#scrollviewConveyorDetails-->
-			
-		</View> <!--/#containerOne-->
-		
+
+		</View><!--/#containerOne-->
 		<View id="containerTwo">
 			<Button id="btnSearchConveyor">Buscar</Button>
 		</View> <!--/#containerTwo-->

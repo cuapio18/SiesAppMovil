@@ -544,7 +544,7 @@ $.seeAccessories.addEventListener("open", function(ev) {
 });
 
 // FUNCION QUE SE EJECUTA CUANDO SE CIERRA LA VENTANA
-$.seeAccessories.addEventListener('close', function(e){
+/*$.seeAccessories.addEventListener('close', function(e){
 	
 	Ti.API.info("Se cerro la ventana de Ver Accesorios");
 	
@@ -552,4 +552,20 @@ $.seeAccessories.addEventListener('close', function(e){
 	
 	//vista.labelTotalQuotation.text = "Te modifique desde Ver Accesorios";
 	
-});
+});*/
+
+// ***************************************
+// CLICK EN EL BOTON FISICO VOLVER
+// ***************************************
+
+if (Ti.Platform.osname === "android") {
+
+	$.seeAccessories.addEventListener('android:back', function(e) {
+
+		//Ti.API.info("Click en el boton volver");
+
+		return false;
+
+	});
+
+}

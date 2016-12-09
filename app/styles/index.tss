@@ -3,75 +3,62 @@
 	//theme: "Theme.AppCompat.Light.NoActionBar"
 	//theme : "@style/materialTheme",
 	//theme : 'Theme.NoActionBar',
-	navBarHidden : true,
-	tabBarHidden : true,
-	exitOnClose  : true
+	navBarHidden: true,
+	tabBarHidden: true,
+	exitOnClose: true
 	//theme : "Theme.NoActionBar"
 	//barColor : '#ccc'
-}
+},
 
 "Label": {
 	width: Ti.UI.SIZE,
-	height: Ti.UI.SIZE,
-	//color: "#000"
-}
-
-/*"#miLabel": {
-	top: 20,
-	font: {
-		fontSize: 22
-	}
-}*/
+	height: Ti.UI.SIZE
+},
 
 "#imglogotipo": {
 	//image: "https://pbs.twimg.com/profile_images/508424177015996416/9gJqmicn_400x400.png"
 	top: 20,
 	width: "280dp",
 	height: "250dp",
-	image: "/img/logoSIES2.png",
-	//borderColor: "red"
-}
+	defaultImage: '/img/loading_1.gif',
+	image: "/img/logoSIES2.png"
+},
 
 "TextField": {
 	width: "80%",
-	height: Ti.UI.SIZE,
-}
+	height: Ti.UI.SIZE
+},
 
-"#tfuser" : {
+"#tfuser": {
 	top: 280,
-	hintText: "Usuario",
-}
+	hintText: "Usuario"
+},
 
 "#tfpass": {
 	top: 340,
 	hintText: "Contraseña",
-	passwordMask: true,
-}
+	passwordMask: true
+},
 
 "#btnlogin": {
 	//left: 220,
 	top: 400,
 	width: "80%",
 	height: Ti.UI.SIZE,
-	color : "#fff",
-	//backgroundColor: '#006e65'
-	//backgroundColor: '#333', 
-    //backgroundSelectedColor: '#fff', 
-    //backgroundFocusedColor: '#fff', 
-    //touchEnabled: true, 
-}
+	color: "#fff"
+},
 
 "#labelrememberuser": {
 	top: 460,
 	left: 45
-}
+},
 
 "#basicSwitch": {
-	top: 460,
-}
+	top: 460
+},
 
 "#labelforgetpassword": {
 	bottom: 10,
-	visible : false
+	visible: false
 }
 

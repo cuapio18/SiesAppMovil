@@ -29,26 +29,26 @@ winAddActivityIndicator.add(activityIndicator);
 // ID DE LA COTIZACION
 var idQuotationCurrent = Alloy.Globals.ID_GLOBAL_QUOTATION;//parseInt(args.quotation.id);
 
-Ti.API.info("idQuotationCurrent:" + idQuotationCurrent);
+//Ti.API.info("idQuotationCurrent:" + idQuotationCurrent);
 
 // ID DE LA COTIZACION
 //var idQuo = Alloy.Globals.ID_GLOBAL_QUOTATION;
-Ti.API.info("Alloy.Globals.ID_GLOBAL_QUOTATION:" + Alloy.Globals.ID_GLOBAL_QUOTATION);
+//Ti.API.info("Alloy.Globals.ID_GLOBAL_QUOTATION:" + Alloy.Globals.ID_GLOBAL_QUOTATION);
 
 // ID DEL CLIENTE
 var idClientQuo = 0;
 
-Ti.API.info("idClientQuo:" + idClientQuo);
+//Ti.API.info("idClientQuo:" + idClientQuo);
 
 // ID DEL USUARIO
 var idUsuarioSession   = Alloy.Globals.PROPERTY_INFO_USER.userLogin.id;
 
-Ti.API.info("idUsuarioSession:" + parseInt(idUsuarioSession));
+//Ti.API.info("idUsuarioSession:" + parseInt(idUsuarioSession));
 
 // PERFIL DEL USUARIO LOGUEADO
 var idProfileUserLogin = Alloy.Globals.PROPERTY_INFO_USER.userLogin.user.profile.id;
 
-Ti.API.info("idProfileUserLogin:" + parseInt(idProfileUserLogin));
+//Ti.API.info("idProfileUserLogin:" + parseInt(idProfileUserLogin));
 
 // PICKER CLIENTE
 var pickerClientByIdSeller = $.pickerClientByIdSeller;
@@ -124,7 +124,7 @@ function getAllModelsConveyorsQuotation(objModelsConveyorsQuotation) {
 	//	"estimated"  : Alloy.Globals.DATE_ESTIMATED_TOTAL_QUOTATION.estimated
 	//};
 			
-	Ti.API.info("DATE_ESTIMATED_TOTAL_QUOTATION: " + JSON.stringify(Alloy.Globals.DATE_ESTIMATED_TOTAL_QUOTATION));
+	//Ti.API.info("DATE_ESTIMATED_TOTAL_QUOTATION: " + JSON.stringify(Alloy.Globals.DATE_ESTIMATED_TOTAL_QUOTATION));
 		
 	// ***********************************************************
 	// EJECUTAMOS LA FUNCIÓN QUE CARGA TOTAL Y FECHA ESTIMADA
@@ -143,7 +143,7 @@ $.listViewModelConveyorQuotation.addEventListener('itemclick', function(e) {
 	// Elemento seleccionado
 	var itemClickModelTemp  = e.section.getItemAt(e.itemIndex);
 	
-	Ti.API.info("ITEM:" + JSON.stringify(itemClickModelTemp));
+	//Ti.API.info("ITEM:" + JSON.stringify(itemClickModelTemp));
 	
 	// Ventana
 	var winAddQuotationFive = Alloy.createController('addQuotationFive', itemClickModelTemp).getView();
@@ -161,12 +161,12 @@ $.listViewModelConveyorQuotation.addEventListener('itemclick', function(e) {
 function saveQuotation(e)
 {
 	// Picker Cliente
-	Ti.API.info("idClientQuo: " + idClientQuo);
+	//Ti.API.info("idClientQuo: " + idClientQuo);
 	
 	// TextArea Comntario
 	var textAreaCommentQuo = $.textAreaCommentQuo.value;
 	
-	Ti.API.info("textAreaCommentQuo: " + JSON.stringify(textAreaCommentQuo));
+	//Ti.API.info("textAreaCommentQuo: " + JSON.stringify(textAreaCommentQuo));
 	
 	// Validamos si existe un cliente
 	if ( idClientQuo != "" && idClientQuo > 0 ) {
@@ -180,7 +180,7 @@ function saveQuotation(e)
 		
 		// Validamos el tipo de usuario que inicio sesion - 4 vendedor -3 cliente
 		if (parseInt(idProfileUserLogin)  == 4) {
-			Ti.API.info("Eres vendedor");
+			//Ti.API.info("Eres vendedor");
 			
 			// Atributo validate
 			objJSONSaveQuotation['validate'] = 1;
@@ -189,7 +189,7 @@ function saveQuotation(e)
 			objJSONSaveQuotation['idSeller'] = parseInt(idUsuarioSession);
 			
 		} else {
-			Ti.API.info("Eres cliente");
+			//Ti.API.info("Eres cliente");
 			
 			// Atributo validate
 			objJSONSaveQuotation['validate'] = 0;
@@ -210,7 +210,7 @@ function saveQuotation(e)
 		// Click sobre el dialogo
 		dialogSaveQuotation.addEventListener('click', function(e) {
 			
-			Ti.API.info("Item Index: " + e.index);
+			//Ti.API.info("Item Index: " + e.index);
 			
 			if (e.index == 0) {
 				
@@ -219,7 +219,7 @@ function saveQuotation(e)
 				// Mostramos el indicador
 				activityIndicator.show();
 				
-				Ti.API.info('Presionaste guardar la cotización.');
+				//Ti.API.info('Presionaste guardar la cotización.');
 				
 				// Url del servicio rest
 				var url    = "http://" + Alloy.Globals.URL_GLOBAL_SIES + "/sies-rest/quotation/saveQuotationEdit";
@@ -267,7 +267,7 @@ function saveQuotation(e)
 						
 						alert("Ocurrio un error.\nIntentalo nuevamente.");
 					},
-					timeout : 5000 // en milisegundos
+					timeout : 55000 // en milisegundos
 				});
 				
 				// Preparar la conexión.
@@ -322,8 +322,8 @@ function longModelConv(e)
 	// Datos del elemento presionado
 	dataItemSelected = e.section.items[parseInt(itemIndexModelTemp)];
 	
-	Ti.API.info("ITEM INDEX: " + itemIndexModelTemp);
-	Ti.API.info("ITEM SELECTED: " + JSON.stringify(dataItemSelected));
+	//Ti.API.info("ITEM INDEX: " + itemIndexModelTemp);
+	//Ti.API.info("ITEM SELECTED: " + JSON.stringify(dataItemSelected));
 	
 	dialogModelTemp = Ti.UI.createOptionDialog(optsDialogModelConv);
 	dialogModelTemp.show();
@@ -343,12 +343,12 @@ var dialogQuantityModelTemp = $.alertDialogModelTemp;
 
 function onSelectDialogModelTemp(event)
 {
-	Ti.API.info("Modelo Temp seleccionado: " + JSON.stringify(dataItemSelected));
+	//Ti.API.info("Modelo Temp seleccionado: " + JSON.stringify(dataItemSelected));
 
 	// Indice del elemento seleccionado del dialogo
 	var selectedIndexDialModelTemp = event.source.selectedIndex;
 	
-	Ti.API.info("Index del elemento seleccionado: " + parseInt(selectedIndexDialModelTemp));
+	//Ti.API.info("Index del elemento seleccionado: " + parseInt(selectedIndexDialModelTemp));
 	
 	// Realizamos una accion dependiendo lo que fue seleccionado
 	switch(parseInt(selectedIndexDialModelTemp))
@@ -370,7 +370,7 @@ function onSelectDialogModelTemp(event)
 			deleteModelTemp(dataItemSelected);
 			break;
 		default :
-			Ti.API.info("Opcion no encontrada.");
+			//Ti.API.info("Opcion no encontrada.");
 			break;
 	}
 }
@@ -396,13 +396,13 @@ dialogQuantityModelTemp.addEventListener('click', function(e)
 
 function changeQuantityModelTemp()
 {
-	Ti.API.info("ITEM SELECCIONADO: " + JSON.stringify(dataItemSelected));
-	Ti.API.info("Cantidad model temp. " +  dataItemSelected.modelConveyor.text + " # " + dataItemSelected.modelConveyor.id);
+	//Ti.API.info("ITEM SELECCIONADO: " + JSON.stringify(dataItemSelected));
+	//Ti.API.info("Cantidad model temp. " +  dataItemSelected.modelConveyor.text + " # " + dataItemSelected.modelConveyor.id);
 	
 	var valueSliderQMT = $.sliderQuantityModelTemp;
 	
 	Ti.API.info("VALOR DE SLIDER: " + parseInt(valueSliderQMT.value));
-	Ti.API.info("Aumentar o disminuir cantidad de modelo!");
+	//Ti.API.info("Aumentar o disminuir cantidad de modelo!");
 	
 	// Objeto a enviar en la peticion
 	var objJSONQuantityMT = {
@@ -441,7 +441,7 @@ function changeQuantityModelTemp()
 				"estimated"  : responseWSQMT.estimated
 			};
 			
-			Ti.API.info("DATE_ESTIMATED_TOTAL_QUOTATION 2: " + JSON.stringify(Alloy.Globals.DATE_ESTIMATED_TOTAL_QUOTATION));
+			//Ti.API.info("DATE_ESTIMATED_TOTAL_QUOTATION 2: " + JSON.stringify(Alloy.Globals.DATE_ESTIMATED_TOTAL_QUOTATION));
 			
 			// ***********************************************************
 			// EJECUTAMOS LA FUNCIÓN QUE CARGA TOTAL Y FECHA ESTIMADA
@@ -452,7 +452,7 @@ function changeQuantityModelTemp()
 			// Item seleccionado
 			var row = $.listViewModelConveyorQuotation.sections[0].getItemAt(parseInt(itemIndexModelTemp));
 			
-			Ti.API.info("ROW: " + JSON.stringify(row));
+			//Ti.API.info("ROW: " + JSON.stringify(row));
 			
 			// Modificamos el atributo cantidad del item list seleccionado
 			row.quantityConveyor.text = "Cantidad: " + parseInt(valueSliderQMT.value);
@@ -462,7 +462,7 @@ function changeQuantityModelTemp()
 			
 			// Subtotal del Modelo Temp
 			var subtotalModelTemp      = (parseInt(valueSliderQMT.value) * parseFloat(dataItemSelected.modelConveyor.price)) ;
-			Ti.API.info("subtotalModelTemp: " + subtotalModelTemp);
+			//Ti.API.info("subtotalModelTemp: " + subtotalModelTemp);
 			
 			// Modificamos el valor de subtotal del atributo modelConveyor
 			row.modelConveyor.subtotal = subtotalModelTemp;
@@ -470,7 +470,7 @@ function changeQuantityModelTemp()
 			// Modificamos el atributo subtotal del item list seleccionado
 			row.totalConveyor.text     = "Subtotal: $" + subtotalModelTemp;
 			
-			Ti.API.info("ROW 2: " + JSON.stringify(row));
+			//Ti.API.info("ROW 2: " + JSON.stringify(row));
 			
 			// Modificamos el item de la lista con los nuevos datos
 			$.listViewModelConveyorQuotation.sections[0].updateItemAt(parseInt(itemIndexModelTemp), row, { animated:true });
@@ -478,7 +478,7 @@ function changeQuantityModelTemp()
 		onerror : function(e) {
 			Ti.API.info(e.error);
 		},
-		timeout : 5000
+		timeout : 15000
 	});
 	
 	// Preparamos conexion
@@ -508,8 +508,8 @@ function updateValueLabelMT(e)
 
 function deleteModelTemp(dataItemSelected)
 {
-	Ti.API.info("ITEM SELECCIONADO: " + JSON.stringify(dataItemSelected));
-	Ti.API.info("Eliminar model temp. " +  dataItemSelected.modelConveyor.text + " # " + dataItemSelected.modelConveyor.id);
+	//Ti.API.info("ITEM SELECCIONADO: " + JSON.stringify(dataItemSelected));
+	//Ti.API.info("Eliminar model temp. " +  dataItemSelected.modelConveyor.text + " # " + dataItemSelected.modelConveyor.id);
 	
 	// Objeto con el ID del modelo temp
 	var objIdModelTemp = {
@@ -527,7 +527,7 @@ function deleteModelTemp(dataItemSelected)
 	
 	// Click sobre el dialogo
 	dialogDeleteModelTemp.addEventListener('click', function(e){
-		Ti.API.info("Item Index: " + e.index);
+		//Ti.API.info("Item Index: " + e.index);
 		// Si presionamos confirmar
 		if (e.index == 0) {
 			
@@ -550,7 +550,7 @@ function deleteModelTemp(dataItemSelected)
 					// limpiamos nuestra variable global de total y fecha estimada
 					Alloy.Globals.DATE_ESTIMATED_TOTAL_QUOTATION = "";
 					
-					Ti.API.info("DATE_ESTIMATED_TOTAL_QUOTATION: " + JSON.stringify(Alloy.Globals.DATE_ESTIMATED_TOTAL_QUOTATION));
+					//Ti.API.info("DATE_ESTIMATED_TOTAL_QUOTATION: " + JSON.stringify(Alloy.Globals.DATE_ESTIMATED_TOTAL_QUOTATION));
 					
 					// Asignamos el total y la fecha estimada a la variable global
 					Alloy.Globals.DATE_ESTIMATED_TOTAL_QUOTATION = {
@@ -558,7 +558,7 @@ function deleteModelTemp(dataItemSelected)
 						"estimated"  : responseWSDMT.estimated
 					};
 					
-					Ti.API.info("DATE_ESTIMATED_TOTAL_QUOTATION 2: " + JSON.stringify(Alloy.Globals.DATE_ESTIMATED_TOTAL_QUOTATION));
+					//Ti.API.info("DATE_ESTIMATED_TOTAL_QUOTATION 2: " + JSON.stringify(Alloy.Globals.DATE_ESTIMATED_TOTAL_QUOTATION));
 					
 					// ***********************************************************
 					// EJECUTAMOS LA FUNCIÓN QUE CARGA TOTAL Y FECHA ESTIMADA
@@ -595,9 +595,9 @@ function deleteModelTemp(dataItemSelected)
 					
 				},
 				onerror : function(e) {
-					Ti.API.info("ERROR: " + e.error);
+					//Ti.API.info("ERROR: " + e.error);
 				},
-				timeout : 5000
+				timeout : 15000
 			});
 			
 			// Preparamos conexion
@@ -654,7 +654,7 @@ function validarBotonComprarAutorizarCotizacion() {
 	// CLICK SOBRE EL BOTON COMPRAR O AUTORIZAR
 	buttonAuthorizeBuy.addEventListener('click', function(e) {
 		
-		Ti.API.info("Click Boton Comprar o autorizar: " + JSON.stringify(e));
+		//Ti.API.info("Click Boton Comprar o autorizar: " + JSON.stringify(e));
 		
 		// Titulo del boton
 		var getTitleButtonAB = e.source.title;
@@ -687,14 +687,14 @@ validarBotonComprarAutorizarCotizacion();
 
 function autorizarCotizacion()
 {
-	Ti.API.info("Vamos a autorizar la cotizacion");
+	//Ti.API.info("Vamos a autorizar la cotizacion");
 	
-	Ti.API.info("idClientQuo: " + idClientQuo);
+	//Ti.API.info("idClientQuo: " + idClientQuo);
 	
 	// TextArea Comntario
 	var textAreaCommentQuo = $.textAreaCommentQuo.value;
 	
-	Ti.API.info("textAreaCommentQuo: " + JSON.stringify(textAreaCommentQuo));
+	//Ti.API.info("textAreaCommentQuo: " + JSON.stringify(textAreaCommentQuo));
 	
 	// Validamos si existe un cliente
 	if ( idClientQuo != "" && idClientQuo > 0 ) {
@@ -731,7 +731,7 @@ function autorizarCotizacion()
 				// Mostramos el indicador
 				activityIndicator.show();
 				
-				Ti.API.info('Se va a autorizar la cotización.');
+				//Ti.API.info('Se va a autorizar la cotización.');
 				
 				// URL del servicio rest
 				var url = "http://" + Alloy.Globals.URL_GLOBAL_SIES + "/sies-rest/quotation/setAut";
@@ -773,7 +773,7 @@ function autorizarCotizacion()
 						
 						alert("Ocurrio un error.\nIntentalo nuevamente.");
 					},
-					timeout : 15000
+					timeout : 55000
 				});
 				
 				// Preparamos conexion
@@ -803,9 +803,9 @@ function autorizarCotizacion()
 
 function comprarCotizacion()
 {
-	Ti.API.info("Vamos a comprar la cotizacion");
+	//Ti.API.info("Vamos a comprar la cotizacion");
 	
-	Ti.API.info("idClientQuo: " + idClientQuo);
+	//Ti.API.info("idClientQuo: " + idClientQuo);
 	
 	// TextArea Comntario
 	var textAreaCommentQuo = $.textAreaCommentQuo.value;
@@ -855,7 +855,7 @@ function getAllOptionsPickerClientsByIdSeller()
 		onerror : function(e) {
 			Ti.API.debug(e.error);
 		},
-		timeout : 5000 // en milisegundos
+		timeout : 15000 // en milisegundos
 	});
 	
 	// Preparar la conexión.
@@ -1031,6 +1031,15 @@ if(commentQuotation != null) {
 	$.textAreaCommentQuo.value = commentQuotation;
 }
 
+$.addQuotationFour.addEventListener('focus', function(e){
+//Ti.API.info('Click en el textArea comentario');
+//Ti.API.info('e: ' + JSON.stringify(e));
+
+// Habilitamos el foco
+//e.source.focusable = true;
+$.textAreaCommentQuo.blur();
+});
+
 // ***********************************************************
 // FUNCION PARA MOSTRAR TOTAL Y FECHA ESTIMADA
 // ***********************************************************
@@ -1074,7 +1083,7 @@ var winAddQuotationFour = $.addQuotationFour;
 // Evento que se ejecuta al abrir la ventana
 winAddQuotationFour.addEventListener("open", function(evt) {
 	
-	Ti.API.info("Se esta abriendo la ventana!");
+	//Ti.API.info("Se esta abriendo la ventana!");
 	
 	// ********************************************
 	// EJECUTAMOS FUNCION QUE OBTIENE LOS MODELOS DE LA COTIZACION
@@ -1085,11 +1094,11 @@ winAddQuotationFour.addEventListener("open", function(evt) {
 	// Action Bar
 	var actionBar;
 				
-	// Activity
-	var activityQuoFour = winAddQuotationFour.activity;
-				
 	// Validamos el sistema operativo
 	if (Ti.Platform.osname === "android") {
+		
+		// Activity
+		var activityQuoFour = winAddQuotationFour.activity;
 					
 		if (! activityQuoFour) {
 			Ti.API.error("No se puede acceder a la barra de acción en una ventana ligera.");
@@ -1216,3 +1225,19 @@ winAddQuotationFour.addEventListener("open", function(evt) {
 	};
 				
 });
+
+// ***************************************
+// CLICK EN EL BOTON FISICO VOLVER
+// ***************************************
+
+if (Ti.Platform.osname === "android") {
+
+	$.addQuotationFour.addEventListener('android:back', function(e) {
+
+		//Ti.API.info("Click en el boton volver");
+
+		return false;
+
+	});
+
+}

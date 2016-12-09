@@ -18,6 +18,7 @@
 }
 
 "#thumbnail_imageview": {
+	defaultImage: '/img/no-disponible.jpg',
 	top: 0,
 	bottom: 0,
 	left: 0,
@@ -33,12 +34,26 @@
 	width: Ti.UI.FILL,
 	height: Ti.UI.FILL,
 	backgroundGradient: {
-        type: 'linear',
-        startPoint: { x: '0%', y: '0%' },
-        endPoint: { x: '0%', y: '100%' },
-        colors: [ { color: '#00000000', offset: 0 },
-        		  { color: '#99000000', offset: 1.0} ]
-   }
+		type: 'linear',
+		startPoint: {
+			x: '0%',
+			y: '0%'
+		},
+		endPoint: {
+			x: '0%',
+			y: '100%'
+		},
+		colors: [
+			{
+				color: '#00000000',
+				offset: 0
+			},
+			{
+				color: '#99000000',
+				offset: 1.0
+			}
+		]
+	}
 }
 
 "#title_label": {
@@ -49,7 +64,7 @@
 	// height: Titanium.UI.FILL,
 	font: {
 		fontSize: 22,
-    	fontFamily: 'HelveticaNeue-Bold'
+		fontFamily: 'HelveticaNeue-Bold'
 	},
 	color: '#ffffff'
 }
@@ -61,10 +76,9 @@
 	// height: Titanium.UI.FILL,
 	font: {
 		fontSize: 12,
-    	fontFamily: 'HelveticaNeue-Bold'
+		fontFamily: 'HelveticaNeue-Bold'
 	},
-	color: '#ffffff',
-	//visible: false
+	color: '#ffffff'
 }
 "#title_label[platform=android]": {
 	font: {
