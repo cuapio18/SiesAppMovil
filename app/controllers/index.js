@@ -154,7 +154,7 @@ function logIn(userName, password) {
 			//Ti.API.debug(e);
 			//Ti.API.info(e.error);
 		},
-		timeout : 15000 // Milisegundos
+		timeout : 55000 // Milisegundos
 
 	});
 

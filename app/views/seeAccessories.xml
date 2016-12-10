@@ -1,46 +1,33 @@
 <Alloy>
-	
 	<Window class="container">
-		
 		<AlertDialog id="alertDialogAccesoryQuantity" title="Cantidad de accesorio" message="Selecciona la cantidad de accesorios." cancel="1">
-			
 			<ButtonNames>
-				<ButtonName>Confirmar</ButtonName>
-				<ButtonName>Cancelar</ButtonName>
+				<ButtonName>
+					Confirmar
+				</ButtonName>
+				<ButtonName>
+					Cancelar
+				</ButtonName>
 			</ButtonNames>
-			
 			<View layout="vertical">
 				<Label id="labelAccesoryQuantity" text="Cantidad:" />
 				<!--<Slider id="sliderlabelAccesoryQuantity" min="1" max="50" value="1" onChange="updateLabel"/>-->
-				<TextField id="sliderlabelAccesoryQuantity"></TextField>
+				<TextField id="sliderlabelAccesoryQuantity">
+				</TextField>
 			</View>
-			
 		</AlertDialog>
-		
 		<ListView id="listViewSeeAccessories" defaultItemTemplate="templateSeeAccessories">
-			
 			<Templates>
-				
 				<ItemTemplate name="templateSeeAccessories">
-					
 					<View id="container_accessory" onLongpress="longPressAccessory" >
-						
 						<Label bindId="name_accessory" id="name_accessory" />
-						
-                    	<Label bindId="quantity_accessory" id="quantity_accessory" />
-                    	
-                    	<Label bindId="price_accessory" id="price_accessory" />
-                    	
-                    </View>
-                    
+						<Label bindId="quantity_accessory" id="quantity_accessory" />
+						<Label bindId="price_accessory" id="price_accessory" />
+					</View>
 				</ItemTemplate>
-				
 			</Templates>
-			
-			<ListSection name="sectionSeeAccessories"></ListSection>
-			
+			<ListSection name="sectionSeeAccessories">
+			</ListSection>
 		</ListView>
-		
 	</Window>
-	
 </Alloy>

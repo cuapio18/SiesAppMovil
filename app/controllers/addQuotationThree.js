@@ -417,6 +417,9 @@ function fillAccessoriePicker(objOptionsAccessoriePicker) {
 					e.source.getChildren()[2].getChildren()[3].setRight(15);
 					
 					// Aplicamos blur al campo de texto
+					e.source.getChildren()[2].getChildren()[3].blur();
+					
+					// Aplicamos blur al campo de texto
 					e.source.getChildren()[2].getChildren()[3].setValue(1);
 
 				}

@@ -20,7 +20,7 @@
 	top: 20,
 	width: "280dp",
 	height: "250dp",
-	defaultImage: '/img/loading_1.gif',
+	defaultImage: '/img/no-disponible.jpg',
 	image: "/img/logoSIES2.png"
 },
 

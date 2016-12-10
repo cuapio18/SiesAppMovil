@@ -1,6 +1,33 @@
 // Arguments passed into this controller can be accessed via the `$.args` object directly or:
 var args = $.args;
 
+// CREAMOS UN INDICADOR
+
+// Ventana para mostrar el indicador
+var winAddActivityIndicator = Ti.UI.createWindow({
+	theme : "Theme.AppCompat.Light.NoActionBar",
+	backgroundColor : "#000",
+	opacity : .9,
+	fullscreen : true
+});
+
+// Creamos activity Indicator
+var activityIndicator = Ti.UI.createActivityIndicator({
+	color : '#ccc',
+	font : {
+		fontFamily : 'Helvetica Neue',
+		fontSize : 26,
+		fontWeight : 'bold'
+	},
+	message : 'Espere...',
+	style : Ti.UI.ActivityIndicatorStyle.BIG_DARK,
+	height : Ti.UI.SIZE,
+	width : Ti.UI.SIZE
+});
+
+// Agregamos el indicador a la ventana
+winAddActivityIndicator.add(activityIndicator);
+
 // ID del model conveyor temp
 var idModelConTemp = args.modelConveyor.id;
 
@@ -31,14 +58,26 @@ function getAllAccessoriesModelConveyorTemp(idModelConTemp) {
 
 			var responseWS = JSON.parse(this.responseText);
 			Ti.API.info("ResponseWSQuotations: " + this.responseText);
+			
+			try {
+				
+				// FUNCION QUE GENERA LA LISTA DE LOS ACCESORIOS DE LA COTIZACION
+				createAllAccessoriesModelsConveyorTemp(responseWS.accessories);
 
-			// FUNCION QUE GENERA LA LISTA DE LOS ACCESORIOS DE LA COTIZACION
-			createAllAccessoriesModelsConveyorTemp(responseWS.accessories);
+			} catch(err) {
+				Ti.API.info("CATCH: " + err);
+			}
+
 		},
 		onerror : function(e) {
 			Ti.API.info(e.error);
+			Ti.UI.createAlertDialog({
+				message : 'Ocurrio un error.\nIntentalo nuevamente.',
+				title : 'Error',
+				ok : 'Aceptar',
+			}).show();
 		},
-		timeout : 55000
+		timeout : 59000
 	});
 
 	// Preparamos conexion.
@@ -179,7 +218,6 @@ function createAllAccessoriesModelsConveyorTemp(modelsAccessoriesModelTemp) {
 
 		// Atributo para saber si se puede o no elegir mas de un accesorio
 		var verifyAccessory = accessory.accessorie.verify;
-		;
 
 		// Variable para deshabilitar el campo
 		var disabledQuantityAcc = false;
@@ -594,7 +632,7 @@ function createAllAccessoriesModelsConveyorTemp(modelsAccessoriesModelTemp) {
 				e.source.getChildren()[2].getChildren()[3].setRight(15);
 
 				// Aplicamos blur al campo de texto
-				//e.source.getChildren()[2].getChildren()[3].blur();
+				e.source.getChildren()[2].getChildren()[3].blur();
 
 				// Aplicamos blur al campo de texto
 				e.source.getChildren()[2].getChildren()[3].setValue(quantityAccReal);
@@ -839,6 +877,12 @@ function addOrDeleteAccessories() {
 // *********************************************************************
 
 function saveAddOrDelAccessories(jsonFullAddDelAcc) {
+	
+	// Abrimos ventana del Indicador
+	winAddActivityIndicator.open();
+
+	// Mostramos el indicador
+	activityIndicator.show();
 
 	// Url del servicio rest
 	var url = "http://" + Alloy.Globals.URL_GLOBAL_SIES + "/sies-rest/quotation/setAccessoriesToQuotationTemp";
@@ -857,42 +901,67 @@ function saveAddOrDelAccessories(jsonFullAddDelAcc) {
 			var responseWSADAMT = JSON.parse(this.responseText);
 
 			Ti.API.info("Response WSADAMT: " + JSON.stringify(responseWSADAMT));
-
-			// ***********************************************************
-			// TOTAL Y FECHA ESTIMADA DE LA COTIZACION
-			// ***********************************************************
-
-			// limpiamos nuestra variable global de total y fecha estimada
-			Alloy.Globals.DATE_ESTIMATED_TOTAL_QUOTATION = "";
-
-			Ti.API.info("DATE_ESTIMATED_TOTAL_QUOTATION: " + JSON.stringify(Alloy.Globals.DATE_ESTIMATED_TOTAL_QUOTATION));
-
-			// Asignamos el total y la fecha estimada a la variable global
-			Alloy.Globals.DATE_ESTIMATED_TOTAL_QUOTATION = {
-				"totalPrice" : responseWSADAMT.totalPrice,
-				"estimated" : responseWSADAMT.estimated
-			};
-
-			Ti.API.info("DATE_ESTIMATED_TOTAL_QUOTATION 2: " + JSON.stringify(Alloy.Globals.DATE_ESTIMATED_TOTAL_QUOTATION));
-
-			// Model Coveyor Temp
-			var dataModelCoveyorTempQuo = args;
-
-			// Ventana
-			var winSeeAccesories = Alloy.createController('seeAccessories', dataModelCoveyorTempQuo).getView();
-
-			// Abrimos la ventana
-			winSeeAccesories.open();
-
-			// Cerramos la ventana actual
-			$.addAccessories.close();
+			
+			setTimeout(function() {
+			
+				// ***********************************************************
+				// TOTAL Y FECHA ESTIMADA DE LA COTIZACION
+				// ***********************************************************
+	
+				// limpiamos nuestra variable global de total y fecha estimada
+				Alloy.Globals.DATE_ESTIMATED_TOTAL_QUOTATION = "";
+	
+				Ti.API.info("DATE_ESTIMATED_TOTAL_QUOTATION: " + JSON.stringify(Alloy.Globals.DATE_ESTIMATED_TOTAL_QUOTATION));
+	
+				// Asignamos el total y la fecha estimada a la variable global
+				Alloy.Globals.DATE_ESTIMATED_TOTAL_QUOTATION = {
+					"totalPrice" : responseWSADAMT.totalPrice,
+					"estimated" : responseWSADAMT.estimated
+				};
+	
+				Ti.API.info("DATE_ESTIMATED_TOTAL_QUOTATION 2: " + JSON.stringify(Alloy.Globals.DATE_ESTIMATED_TOTAL_QUOTATION));
+	
+				// Model Coveyor Temp
+				var dataModelCoveyorTempQuo = args;
+	
+				// Ventana
+				var winSeeAccesories = Alloy.createController('seeAccessories', dataModelCoveyorTempQuo).getView();
+	
+				// Abrimos la ventana
+				winSeeAccesories.open();
+				
+				// Cerramos la ventana del Indicador
+				winAddActivityIndicator.close();
+	
+				// Cerramos el indicador
+				activityIndicator.hide();
+	
+				// Cerramos la ventana actual
+				$.addAccessories.close();
+			
+			}, 3000);
 
 		},
 		// función de llamada cuando se produce un error, incluyendo un tiempo de espera
 		onerror : function(e) {
-			//Ti.API.debug(e.error);
+			
+			Ti.API.info(e.error);
+			
+			// Cerramos la ventana del Indicador
+			winAddActivityIndicator.close();
+
+			// Cerramos el indicador
+			activityIndicator.hide();
+
+			//alert("Ocurrio un error.\nIntentalo nuevamente.");
+			Ti.UI.createAlertDialog({
+				message : 'Ocurrio un error.\nIntentalo nuevamente.',
+				title : 'Error',
+				ok : 'Aceptar',
+			}).show();
+			
 		},
-		timeout : 55000 // en milisegundos
+		timeout : 59000 // en milisegundos
 	});
 
 	// Preparar la conexión.

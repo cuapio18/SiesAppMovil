@@ -26,7 +26,7 @@ Alloy.Globals.PROPERTY_ENABLE_LIST_ANIMATION   = 'PROPERTY_ENABLE_LIST_ANIMATION
 Alloy.Globals.PROPERTY_INFO_USER             = 'PROPERTY_INFO_USER';
 
 // Variable global para guardar la url
-Alloy.Globals.URL_GLOBAL_SIES                = '192.168.100.16:8080';
+Alloy.Globals.URL_GLOBAL_SIES                = '192.168.1.73:8080';
 
 // Variable Global del servidor
 Alloy.Globals.URL_GLOBAL_SERVER_SIES         = '201.163.92.66:8080';

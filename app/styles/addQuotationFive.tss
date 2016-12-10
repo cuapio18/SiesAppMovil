@@ -1,7 +1,7 @@
 ".container": {
 	layout: 'vertical',
-	backgroundImage : "/img/IMAGOTIPO_opt.png",
-	backgroundRepeat : false
+	backgroundImage: "/img/IMAGOTIPO_opt.png",
+	backgroundRepeat: false
 },
 "#name_accessory": {
 	color: 'black',
@@ -10,9 +10,9 @@
 		fontSize: '20dp',
 		fontWeight: 'bold'
 	},
-	left  : 0,
-	right : 0,
-	top   : 0
+	left: 0,
+	right: 0,
+	top: 0
 },
 "#quantity_accessory": {
 	color: 'gray',
@@ -20,9 +20,9 @@
 		fontFamily: 'Arial',
 		fontSize: '14dp'
 	},
-	left  : 0,
-	right : 0,
-	top   : '30dp'
+	left: 0,
+	right: 0,
+	top: '30dp'
 },
 "#price_accessory": {
 	color: 'gray',
@@ -30,15 +30,25 @@
 		fontFamily: 'Arial',
 		fontSize: '14dp'
 	},
-	left  : 0,
-	right : 0,
-	top   : '55dp'
+	left: 0,
+	right: 0,
+	top: '55dp'
 },
 "#container_accessory": {
-	width  : Titanium.UI.FILL,
-	height : Titanium.UI.SIZE,
-	left   : '15dp',
-	right  : '15dp',
-	top    : '6dp',
-	bottom : '6dp'
+	width: Titanium.UI.FILL,
+	height: Titanium.UI.SIZE,
+	left: '15dp',
+	right: '15dp',
+	top: '6dp',
+	bottom: '6dp'
+},
+"#sliderlabelAccesoryQuantity": {
+	width: Titanium.UI.FILL,
+	height: Titanium.UI.SIZE,
+	left: '15dp',
+	right: '15dp',
+	inputType: Titanium.UI.INPUT_TYPE_CLASS_NUMBER,
+	textAlign: Titanium.UI.TEXT_ALIGNMENT_CENTER,
+	bubbleParent: false,
+	keyboardType: Titanium.UI.KEYBOARD_TYPE_NUMBER_PAD
 }
