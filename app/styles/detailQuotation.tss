@@ -22,15 +22,15 @@
 },
 "#scrollViewDetailQuotation" : {
 	layout        : 'vertical',
-	width         : Titanium.UI.FILL,
-	height        : Titanium.UI.FILL,
+	//width         : Titanium.UI.FILL,
+	//height        : Titanium.UI.FILL,
 	contentWidth  : 'auto',
 	contentHeight : 'auto',
 	scrollType    : 'vertical'
 },
 "#listViewModelConveyorQuotationDetail": {
-	width  : Titanium.UI.FILL,
-	height : Titanium.UI.FILL,
+	//width  : Titanium.UI.FILL,
+	//height : Titanium.UI.FILL,
 	showVerticalScrollIndicator : false
 },
 "#container_model_temp" : {
@@ -132,10 +132,10 @@
 	//value : 'Cotización',
 	//borderColor : '#000',
 	bottom : '6dp',
-	bubbleParent : false,
 	//focusable : false
 	//softKeyboardOnFocus : Titanium.UI.Android.SOFT_KEYBOARD_HIDE_ON_FOCUS
 	//keyboardType : Titanium.UI.KEYBOARD_TYPE_NUMBER_PAD,
+	softKeyboardOnFocus : Titanium.UI.Android.SOFT_KEYBOARD_HIDE_ON_FOCUS
 },
 "#viewSectionPriceDateEstimated" : {
 	layout : 'vertical',

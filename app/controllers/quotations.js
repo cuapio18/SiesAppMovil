@@ -61,7 +61,7 @@ function getAllQuotations(idUser) {
 				ok : 'Aceptar',
 			}).show();
 		},
-		timeout : 5000 // in milliseconds
+		timeout : 55000 // in milliseconds
 	});
 	// Prepare the connection.
 	client.open("POST", url);
@@ -94,8 +94,15 @@ function createListAllQuotations(quotations) {
 		var dateFormatQuo = dateQuo.getDate() + "/" + (dateQuo.getMonth() + 1) + "/" + dateQuo.getFullYear();
 		var urlImgCon = "http://" + Alloy.Globals.URL_GLOBAL_SERVER_SIES + "/sies-admin" + '/resources/images/TSC.png';
 
+		// **************** Thumbnail Image ********************
+
+		// ************************************
+
 		// GENERAMOS OBJETO CON DE COTIZACIONES
 		items.push({
+			properties : {
+				searchableText : 'Cotización ' + quotation.id + ' ' + dateFormatQuo + ' ' + quotation.status.nameStatus
+			},
 			img_quotation : {
 				image : urlImgCon
 				//image: 'https://www.logismarket.com.ar/ip/quintino-sistemas-transportadores-para-envios-y-correos-sistemas-transportadores-para-envios-y-correos-688836-FGR.jpg'

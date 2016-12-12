@@ -1,6 +1,8 @@
 <Alloy>
 	<ListView id="listViewQuotations" defaultItemTemplate="templateQuotation" >
-
+		
+		<SearchBar id="searBarQuotations" />
+					
 		<Templates>
 			<ItemTemplate name="templateQuotation">
 				<View id="container_conveyor" onLongpress="longCB">

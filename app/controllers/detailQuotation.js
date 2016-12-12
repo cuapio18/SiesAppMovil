@@ -1207,14 +1207,14 @@ if (commentQuotation != null) {
 	$.textAreaCommentQuo.value = commentQuotation;
 }
 
-$.detailQuotation.addEventListener('focus', function(e) {
+/*$.detailQuotation.addEventListener('focus', function(e) {
 	//Ti.API.info('Click en el textArea comentario');
 	//Ti.API.info('e: ' + JSON.stringify(e));
 
 	// Habilitamos el foco
 	//e.source.focusable = true;
 	$.textAreaCommentQuo.blur();
-});
+});*/
 
 // ***********************************************************
 // FUNCION PARA MOSTRAR TOTAL Y FECHA ESTIMADA
