@@ -13,60 +13,53 @@
 			</View>
 
 		</AlertDialog>
-
-		<!--<ActionBar id="actionbarAddQuotFour" title="Arma tu Cotización"></ActionBar>
-
-		<Menu>
-		<MenuItem title="Adjuntar archivo" showAsAction="Ti.Android.SHOW_AS_ACTION_ALWAYS" icon="Ti.Android.R.drawable.ic_menu_upload"></MenuItem>
-		<MenuItem title="Agregar" showAsAction="Ti.Android.SHOW_AS_ACTION_ALWAYS" icon="Ti.Android.R.drawable.ic_menu_add"></MenuItem>
-		</Menu>-->
 		<View id="containerOne">
-			<ScrollView id="scrollviewFullQuotation">
-				<ListView id="listViewModelConveyorQuotation" defaultItemTemplate="template">
+			<ListView id="listViewModelConveyorQuotationDetail" defaultItemTemplate="template">
 
-					<Templates>
-						<ItemTemplate name="template">
-							<View id="container_model_conv" onLongpress="longModelConv">
-								<Label bindId="modelConveyor" id="modelConveyor" />
-								<Label bindId="quantityConveyor" id="quantityConveyor" />
-								<Label bindId="priceConveyor" id="priceConveyor" />
-								<Label bindId="totalConveyor" id="totalConveyor" />
-							</View>
-						</ItemTemplate>
-					</Templates>
-					<ListSection name="sectionModelConveyorsQuotation"></ListSection>
-					<FooterView>
-						<View id="containerThree">
+				<Templates>
+					<ItemTemplate name="template">
+						<View id="container_model_temp" onLongpress="longPressModelConveyor">
+							<Label bindId="modelConveyor" id="modelConveyor" />
+							<Label bindId="quantityConveyor" id="quantityConveyor" />
+							<Label bindId="priceConveyor" id="priceConveyor" />
+							<Label bindId="totalConveyor" id="totalConveyor" />
+						</View>
+					</ItemTemplate>
+				</Templates>
+				<ListSection name="sectionModelConveyorsQuotationDetail"></ListSection>
+				<FooterView>
+					<View id="containerThree">
 
-							<View id="viewSectionDataQuotation">
-								<Label id="labelDataQuotation" text="Datos de cotización"></Label>
-							</View>
-							<View id="viewSectionClientPicker">
+						<View id="viewSectionDataQuotation">
+							<Label id="labelDataQuotation" text="Datos de cotización"></Label>
+						</View>
+						<View id="viewSectionClientPicker">
 
-								<Label class="label_align_left" text="Indique un cliente:"></Label>
-								<Picker id="pickerClientByIdSeller">
+							<Label class="label_align_left" text="Indique un cliente:"></Label>
+							<Picker id="pickerClientByIdSeller" bubbleParent="false">
+								<PickerColumn id="pickerColumnClientByIdSeller">
 									<PickerRow title="Seleccione" id=""></PickerRow>
-								</Picker>
-
-							</View>
-							<View id="viewSectionCommentQuo">
-
-								<Label class="label_align_left" text="Agrega un comentario:"></Label>
-								<TextArea id="textAreaCommentQuo" />
-
-							</View>
-							<View id="viewSectionPriceDateEstimated">
-
-								<Label id="labelTotalQuotation"></Label>
-								<Label id="labelDateEstimatedQuotation"></Label>
-
-							</View>
+								</PickerColumn>
+							</Picker>
 
 						</View>
-					</FooterView>
+						<View id="viewSectionCommentQuo">
 
-				</ListView>
-			</ScrollView>
+							<Label class="label_align_left" text="Agrega un comentario:"></Label>
+							<TextField id="textAreaCommentQuo" ></TextField>
+
+						</View>
+						<View id="viewSectionPriceDateEstimated">
+
+							<Label id="labelTotalQuotation"></Label>
+							<Label id="labelDateEstimatedQuotation"></Label>
+
+						</View>
+
+					</View>
+				</FooterView>
+
+			</ListView>
 		</View>
 		<View id="containerTwo">
 			<View class="viewSection">

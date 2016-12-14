@@ -1,214 +1,181 @@
-".container" : {
-	layout           : 'vertical',
-  	backgroundImage  : "/img/IMAGOTIPO_opt.png",
-	backgroundRepeat : false
-}
+".container": {
+	layout: 'vertical',
+	backgroundImage: "/img/IMAGOTIPO_opt.png",
+	backgroundRepeat: false,
+	//windowSoftInputMode : Titanium.UI.Android.SOFT_INPUT_ADJUST_PAN,
+},
 "#containerOne": {
-	layout : 'vertical',
-	//backgroundColor: 'teal',
-	width  : Titanium.UI.FILL,
-	height : '85%'
+	layout: 'vertical',
+	width: Titanium.UI.FILL,
+	height: '85%'
 },
 "#containerTwo": {
-	//backgroundColor: 'yellow',
-	width  : Titanium.UI.FILL,
-	height : '15%'
+	width: Titanium.UI.FILL,
+	height: '15%'
 },
 "#containerThree": {
-	layout : 'vertical',
-	//backgroundColor: 'pink',
-	width  : Titanium.UI.FILL,
-	height : Titanium.UI.SIZE
+	layout: 'vertical',
+	width: Titanium.UI.FILL,
+	height: Titanium.UI.SIZE
 },
-"#scrollViewDetailQuotation" : {
-	layout        : 'vertical',
-	//width         : Titanium.UI.FILL,
-	//height        : Titanium.UI.FILL,
-	contentWidth  : 'auto',
-	contentHeight : 'auto',
-	scrollType    : 'vertical'
+".viewSection": {
+	layout: "horizontal",
+	width: Ti.UI.FILL,
+	height: Ti.UI.SIZE,
+	left: '15dp',
+	right: '15dp'
+},
+'.viewGeneral': {
+	layout: 'vertical',
+	width: "50%",
+	height: Ti.UI.SIZE,
+	left: 0,
+	right: 0
+},
+"Button": {
+	width: Titanium.UI.FILL,
+	height: Titanium.UI.SIZE,
+	color: '#fff'
 },
 "#listViewModelConveyorQuotationDetail": {
-	//width  : Titanium.UI.FILL,
-	//height : Titanium.UI.FILL,
-	showVerticalScrollIndicator : false
+	//width: Titanium.UI.FILL,
+	//height: Titanium.UI.FILL
 },
-"#container_model_temp" : {
-	width  : Ti.UI.FILL,
-	height : Ti.UI.SIZE,
-	top    : '7dp',
-	bottom : '7dp',
-	left   : '15dp',
-	right  : '15dp',
-	//backgroundColor : "blue"
-	//borderColor : 'yellow'
+"#container_model_temp": {
+	width: Ti.UI.FILL,
+	height: Ti.UI.SIZE,
+	top: '7dp',
+	bottom: '7dp',
+	left: '15dp',
+	right: '15dp'
 },
-"#modelConveyor" : {
-    color : 'black',
-    font  : { fontFamily:'Arial', fontSize: '20dp', fontWeight:'bold' },
-    left  : 0,
-    right : 0,
-    top   : 0,
-    //borderColor : 'blue'
+"#modelConveyor": {
+	color: 'black',
+	font: {
+		fontFamily: 'Arial',
+		fontSize: '20dp',
+		fontWeight: 'bold'
+	},
+	left: 0,
+	right: 0,
+	top: 0
 },
-"#quantityConveyor" : {
-    color : 'gray',
-    font  : { fontFamily:'Arial', fontSize: '14dp' },
-    left  : 0,
-    right : 0,
-    top   : '30dp',
-    //borderColor : 'red'
+"#quantityConveyor": {
+	color: 'gray',
+	font: {
+		fontFamily: 'Arial',
+		fontSize: '14dp'
+	},
+	left: 0,
+	right: 0,
+	top: '30dp'
 },
-"#priceConveyor" : {
-	color : 'gray',
-    font  : { fontFamily:'Arial', fontSize: '14dp' },
-   	left  : 0,
-   	//right : 0,
-    top   : '55dp',
-    //borderColor : 'red'
+"#priceConveyor": {
+	color: 'gray',
+	font: {
+		fontFamily: 'Arial',
+		fontSize: '14dp'
+	},
+	left: 0,
+	top: '55dp'
 },
 "#totalConveyor": {
-	color : 'gray',
-    font  : { fontFamily:'Arial', fontSize: '14dp' },
-    //left  : '60dp',
-    right : 0,
-    top   : '55dp',
-    //borderColor : 'red'
-    //bottom : '10dp'
+	color: 'gray',
+	font: {
+		fontFamily: 'Arial',
+		fontSize: '14dp'
+	},
+	right: 0,
+	top: '55dp'
 },
-"#viewSectionDataQuotation" : {
-	layout : 'vertical',
-	width  : Ti.UI.FILL,
-	height : Ti.UI.SIZE,
-	top    : '6dp',
-	bottom : 0,
-	left   : '15dp',
-	right  : '15dp',
-	//borderColor: 'gray'
+"#viewSectionDataQuotation": {
+	layout: 'vertical',
+	width: Ti.UI.FILL,
+	height: Ti.UI.SIZE,
+	top: '6dp',
+	bottom: 0,
+	left: '15dp',
+	right: '15dp'
 },
-"#labelDataQuotation" : {
-	color : '#FF6A36',
-    font: {
+"#labelDataQuotation": {
+	color: '#FF6A36',
+	font: {
 		fontFamily: 'Arial',
 		fontSize: '24dp',
 		fontWeight: 'bold'
 	},
-	//top    : '6dp',
-	//bottom : '6dp',
-    left   : 0,
-    right  : 0,
+	left: 0,
+	right: 0
 },
-"#viewSectionClientPicker" : {
-	layout : 'vertical',
-	width  : Ti.UI.FILL,
-	height : Ti.UI.SIZE,
-	top    : '6dp',
-	bottom : 0,
-	left   : '15dp',
-	right  : '15dp',
-	//borderColor: 'gray'
-},
-"#pickerClientByIdSeller" : {
-	selectionIndicator : true,
-	width  : Ti.UI.FILL,
-	height : Ti.UI.SIZE,
-	//borderColor : '#000',
-	bottom : '6dp'
-},
-"#viewSectionCommentQuo" : {
-	layout : 'vertical',
-	width  : Ti.UI.FILL,
-	height : Ti.UI.SIZE,
-	top    : '6dp',
-	bottom : 0,
-	left   : '15dp',
-	right  : '15dp',
-	//borderColor: 'gray'
-},
-"#textAreaCommentQuo" : {
-	width  : Ti.UI.FILL,
-	height : Ti.UI.SIZE,
-	hintText : 'Comentario...',
-	//value : 'Cotización',
-	//borderColor : '#000',
-	bottom : '6dp',
-	//focusable : false
-	//softKeyboardOnFocus : Titanium.UI.Android.SOFT_KEYBOARD_HIDE_ON_FOCUS
-	//keyboardType : Titanium.UI.KEYBOARD_TYPE_NUMBER_PAD,
-	softKeyboardOnFocus : Titanium.UI.Android.SOFT_KEYBOARD_HIDE_ON_FOCUS
-},
-"#viewSectionPriceDateEstimated" : {
-	layout : 'vertical',
-	width  : Ti.UI.FILL,
-	height : Ti.UI.SIZE,
-	top    : '6dp',
-	bottom : 0,
-	left   : '15dp',
-	right  : '15dp',
-	//borderColor: 'gray'
-},
-"#labelTotalQuotation" : {
-	color : '#000',
-    font: {
-		fontFamily: 'Arial',
-		fontSize: '18dp',
-		fontWeight: 'bold'
-	},
-	//top    : '6dp',
-	bottom : '6dp',
-    left   : 0,
-    right  : 0,
-},
-"#labelDateEstimatedQuotation" : {
-	color : '#000',
-    font: {
-		fontFamily: 'Arial',
-		fontSize: '18dp',
-		fontWeight: 'bold'
-	},
-	//top    : '6dp',
-	bottom : '6dp',
-    left   : 0,
-    right  : 0,
-},
-".viewSection": {
-	layout : "horizontal",
-	width  : Ti.UI.FILL,
-	height : Ti.UI.SIZE,
-	left   : '15dp',
-	right  : '15dp',
-	//backgroundColor: 'pink'
-},
-'.viewGeneral': {
+"#viewSectionClientPicker": {
 	layout: 'vertical',
-	width : "50%",
+	width: Ti.UI.FILL,
 	height: Ti.UI.SIZE,
-	left  : 0,
-	right : 0,
-	//backgroundColor: 'blue'
+	top: '6dp',
+	bottom: 0,
+	left: '15dp',
+	right: '15dp'
 },
-
-/*"ListItem": {
-	top:10,
-	bottom: 10,
-	backgroundColor : "red"
-},*/
-/*"MenuItem": {
-    showAsAction: Ti.Android.SHOW_AS_ACTION_ALWAYS
+".label_align_left": {
+	left: 0,
+	bottom: '6dp'
 },
-"#edit_quotation": {
-	//showAsAction: Ti.Android.SHOW_AS_ACTION_ALWAYS,
-	icon: Ti.Android.R.drawable.ic_menu_edit,
-},*/
-".label_align_left" : {
-	left   : 0,
-	bottom : '6dp'
+"#pickerClientByIdSeller": {
+	width: Ti.UI.FILL,
+	height: Ti.UI.SIZE,
+	bottom: '6dp',
+	bubbleParent : false
+	//softKeyboardOnFocus : Titanium.UI.Android.SOFT_KEYBOARD_DEFAULT_ON_FOCUS
 },
-"Button": {
-	width : Titanium.UI.FILL,
-	height: Titanium.UI.SIZE,
-	color : '#fff',
-	//borderColor: 'gray'
+"#textAreaCommentQuo": {
+	width: Ti.UI.FILL,
+	height: Ti.UI.SIZE,
+	hintText: 'Comentario...',
+	bottom: '6dp',
+	bubbleParent : false
+	//focusable : false,
+	//keyboardType : Titanium.UI.KEYBOARD_TYPE_NUMBER_PAD,
+	//softKeyboardOnFocus : Titanium.UI.Android.SOFT_KEYBOARD_HIDE_ON_FOCUS
+},
+"#viewSectionPriceDateEstimated": {
+	layout: 'vertical',
+	width: Ti.UI.FILL,
+	height: Ti.UI.SIZE,
+	top: '6dp',
+	bottom: 0,
+	left: '15dp',
+	right: '15dp'
+},
+"#labelTotalQuotation": {
+	color: '#000',
+	font: {
+		fontFamily: 'Arial',
+		fontSize: '18dp',
+		fontWeight: 'bold'
+	},
+	//top    : '6dp',
+	bottom: '6dp',
+	left: 0,
+	right: 0
+},
+"#labelDateEstimatedQuotation": {
+	color: '#000',
+	font: {
+		fontFamily: 'Arial',
+		fontSize: '18dp',
+		fontWeight: 'bold'
+	},
+	//top    : '6dp',
+	bottom: '6dp',
+	left: 0,
+	right: 0
+},
+"#viewSectionCommentQuo": {
+	layout: 'vertical',
+	width: Ti.UI.FILL,
+	height: Ti.UI.SIZE,
+	top: '6dp',
+	bottom: 0,
+	left: '15dp',
+	right: '15dp'
 }
-
-

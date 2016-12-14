@@ -57,6 +57,7 @@
 	top: 0
 },
 "#searBarQuotations" : {
-	softKeyboardOnFocus : Titanium.UI.Android.SOFT_KEYBOARD_HIDE_ON_FOCUS
+	softKeyboardOnFocus : Titanium.UI.Android.SOFT_KEYBOARD_HIDE_ON_FOCUS,
+	hintText : 'Buscar...'
 }
 

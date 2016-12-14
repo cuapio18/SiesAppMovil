@@ -1,8 +1,6 @@
 // Arguments passed into this controller can be accessed via the `$.args` object directly or:
 var args = $.args;
 
-//Ti.API.info("Argumentos pasados:" + JSON.stringify(args));
-
 // IMAGEVIEW CONVEYOR
 var imgConveyor = $.imgConveyor;
 
@@ -45,7 +43,6 @@ dataModelConveyor();
 // FUNCION PARA OBTENER EL MODELO Y LOS ACCESORIOS DEL TRANSPORTADOR
 
 function dataModelConveyor() {
-	//Ti.API.info("MODELO: " + JSON.stringify(objModelWS));
 
 	var titleConveyor = objModelWS.conveyor.conveyor + " - " + objModelWS.conveyor.keyShort;
 
@@ -68,14 +65,10 @@ function dataModelConveyor() {
 
 	if (objModelWS.longs != null) {
 
-		//Ti.API.info("ES LARGO");
-
 		// Asignamos un valor a nuestra variable
 		longOrGrade = objModelWS.longs.measure;
 
 	} else if (objModelWS.grade != null) {
-
-		//Ti.API.info("ES GRADO");
 
 		// Asignamos un valor a nuestra variable
 		longOrGrade = objModelWS.grade.measure;
