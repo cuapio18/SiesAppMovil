@@ -63,6 +63,7 @@ function getAllQuotations(idUser) {
 		},
 		timeout : 55000 // in milliseconds
 	});
+	
 	// Prepare the connection.
 	client.open("POST", url);
 
@@ -201,8 +202,13 @@ function onSelectDialog(event) {
 				ok : 'Aceptar',
 			}).show();
 		} else {
+			// ID DE LA COTIZACION
+			var idVCQ = parseInt(dataItemSelected.title_quotation.id);
+			
 			// Llamamos a la funcion
-			editQuotation(dataItemSelected);
+			verifyCountModelQuotation(idVCQ, dataItemSelected);
+			// Llamamos a la funcion
+			//editQuotation(dataItemSelected);
 		};
 
 		break;
@@ -234,6 +240,51 @@ function onSelectDialog(event) {
 	//OR
 	//var selectedIndex = dialog.selectedIndex();
 	//alert('Usted ha seleccionado ' + myArray[selectedIndex]);
+}
+
+// FUNCION PARA VALIDAR SI SE PUEDE AGREGAR UN NUEVO MODELO O NO
+function verifyCountModelQuotation(idQuotationAddModelTemp, dataItemSelected) {
+
+	var objVerQuo = {
+		"id" : idQuotationAddModelTemp
+	};
+
+	var url = "http://" + Alloy.Globals.URL_GLOBAL_SIES + "/sies-rest/quotation/verifyCountQuotation";
+
+	var client = Ti.Network.createHTTPClient({
+		onload : function(e) {
+
+			var responseVQWS = JSON.parse(this.responseText);
+
+			if (responseVQWS.flag == true) {
+
+				editQuotation(dataItemSelected);
+
+			} else {
+				Ti.UI.createAlertDialog({
+					message : 'No puedes agregar más modelos a tu cotización\nLlegaste al maximo permitido.',
+					title : 'Alerta',
+					ok : 'Aceptar',
+				}).show();
+			};
+
+		},
+		onerror : function(e) {
+			Ti.UI.createAlertDialog({
+				message : 'Ocurrio un error.\nIntentalo nuevamente.',
+				title : 'Error',
+				ok : 'Aceptar',
+			}).show();
+		},
+		timeout : 59000
+	});
+
+	client.open("POST", url);
+
+	client.setRequestHeader("Content-Type", "application/json; charset=utf-8");
+
+	client.send(JSON.stringify(objVerQuo));
+
 }
 
 // FUNCION PARA EDITAR UNA COTIZACION

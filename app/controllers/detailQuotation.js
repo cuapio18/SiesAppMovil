@@ -708,48 +708,59 @@ function changeQuantityModelTemp() {
 			setTimeout(function() {
 
 				if (responseWSQMT.success == true) {
+					
+					// VALIDAMOS SI SE PUEDE AMBIAR LA CANTIDAD O NO
+					if (responseWSQMT.flag == true) {				
 
-					// ***********************************************************
-					// TOTAL Y FECHA ESTIMADA DE LA COTIZACION
-					// ***********************************************************
-
-					// limpiamos nuestra variable global de total y fecha estimada
-					Alloy.Globals.DATE_ESTIMATED_TOTAL_QUOTATION = "";
-
-					// Asignamos el total y la fecha estimada a la variable global
-					Alloy.Globals.DATE_ESTIMATED_TOTAL_QUOTATION = {
-						"totalPrice" : responseWSQMT.totalPrice,
-						"estimated" : responseWSQMT.estimated
+						// ***********************************************************
+						// TOTAL Y FECHA ESTIMADA DE LA COTIZACION
+						// ***********************************************************
+	
+						// limpiamos nuestra variable global de total y fecha estimada
+						Alloy.Globals.DATE_ESTIMATED_TOTAL_QUOTATION = "";
+	
+						// Asignamos el total y la fecha estimada a la variable global
+						Alloy.Globals.DATE_ESTIMATED_TOTAL_QUOTATION = {
+							"totalPrice" : responseWSQMT.totalPrice,
+							"estimated" : responseWSQMT.estimated
+						};
+	
+						// ***********************************************************
+						// EJECUTAMOS LA FUNCIÓN QUE CARGA TOTAL Y FECHA ESTIMADA
+						// ***********************************************************
+	
+						setTotalAndDateEstimated();
+	
+						// Item seleccionado
+						var row = $.listViewModelConveyorQuotationDetail.sections[0].getItemAt(parseInt(itemIndexModelTemp));
+	
+						// Modificamos el atributo cantidad del item list seleccionado
+						row.quantityConveyor.text = "Cantidad: " + parseInt(valueSliderQMT.value);
+	
+						// Modificamos el atributo cantidad del item list seleccionado
+						row.modelConveyor.quantity = parseInt(valueSliderQMT.value);
+	
+						// Subtotal del Modelo Temp
+						var subtotalModelTemp = (parseInt(valueSliderQMT.value) * parseFloat(dataItemSelected.modelConveyor.price));
+	
+						// Modificamos el valor de subtotal del atributo modelConveyor
+						row.modelConveyor.subtotal = subtotalModelTemp;
+	
+						// Modificamos el atributo subtotal del item list seleccionado
+						row.totalConveyor.text = "Subtotal: $" + subtotalModelTemp;
+	
+						// Modificamos el item de la lista con los nuevos datos
+						$.listViewModelConveyorQuotationDetail.sections[0].updateItemAt(parseInt(itemIndexModelTemp), row, {
+							animated : true
+						});
+					
+					} else {
+						Ti.UI.createAlertDialog({
+							message : 'No puedes cambiar la cantidad del modelo\nLlegaste al maximo permitido.',
+							title : 'Alerta',
+							ok : 'Aceptar',
+						}).show();
 					};
-
-					// ***********************************************************
-					// EJECUTAMOS LA FUNCIÓN QUE CARGA TOTAL Y FECHA ESTIMADA
-					// ***********************************************************
-
-					setTotalAndDateEstimated();
-
-					// Item seleccionado
-					var row = $.listViewModelConveyorQuotationDetail.sections[0].getItemAt(parseInt(itemIndexModelTemp));
-
-					// Modificamos el atributo cantidad del item list seleccionado
-					row.quantityConveyor.text = "Cantidad: " + parseInt(valueSliderQMT.value);
-
-					// Modificamos el atributo cantidad del item list seleccionado
-					row.modelConveyor.quantity = parseInt(valueSliderQMT.value);
-
-					// Subtotal del Modelo Temp
-					var subtotalModelTemp = (parseInt(valueSliderQMT.value) * parseFloat(dataItemSelected.modelConveyor.price));
-
-					// Modificamos el valor de subtotal del atributo modelConveyor
-					row.modelConveyor.subtotal = subtotalModelTemp;
-
-					// Modificamos el atributo subtotal del item list seleccionado
-					row.totalConveyor.text = "Subtotal: $" + subtotalModelTemp;
-
-					// Modificamos el item de la lista con los nuevos datos
-					$.listViewModelConveyorQuotationDetail.sections[0].updateItemAt(parseInt(itemIndexModelTemp), row, {
-						animated : true
-					});
 
 				};
 

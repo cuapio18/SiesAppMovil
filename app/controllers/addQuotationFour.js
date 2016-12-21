@@ -214,7 +214,7 @@ function createAllModelsConveyorsQuotation(modelsConvQuotaion) {
 // ***************************************************
 
 $.listViewModelConveyorQuotationDetail.addEventListener('itemclick', function(e) {
-	
+
 	// Elemento seleccionado
 	var itemClickModelTemp = e.section.getItemAt(e.itemIndex);
 
@@ -610,21 +610,21 @@ function onSelectDialogModelTemp(event) {
 
 		// Validamos el status de la cotizacion
 		/*if (statusOfQuotationSelected == 4) {
-			// Mostramos mensaje
-			Ti.UI.createAlertDialog({
-				message : '¡El modelo seleccionado no se puede modificar!\nLa cotizacción esta terminada.',
-				title : 'Cotización terminada',
-				ok : 'Aceptar',
-			}).show();
+		// Mostramos mensaje
+		Ti.UI.createAlertDialog({
+		message : '¡El modelo seleccionado no se puede modificar!\nLa cotizacción esta terminada.',
+		title : 'Cotización terminada',
+		ok : 'Aceptar',
+		}).show();
 		} else {*/
 
-			// Modificar value del slider
-			var valueSQMT = $.sliderQuantityModelTemp;
+		// Modificar value del slider
+		var valueSQMT = $.sliderQuantityModelTemp;
 
-			valueSQMT.value = parseInt(dataItemSelected.modelConveyor.quantity);
+		valueSQMT.value = parseInt(dataItemSelected.modelConveyor.quantity);
 
-			// Mostramos el dialogo
-			dialogQuantityModlTemp.show();
+		// Mostramos el dialogo
+		dialogQuantityModlTemp.show();
 
 		//};
 
@@ -633,14 +633,14 @@ function onSelectDialogModelTemp(event) {
 
 		// Validamos el status de la cotizacion
 		/*if (statusOfQuotationSelected == 4) {
-			// Mostramos mensaje
-			Ti.UI.createAlertDialog({
-				message : '¡El modelo seleccionado no se puede eliminar!\nLa cotizacción esta terminada.',
-				title : 'Cotización terminada',
-				ok : 'Aceptar',
-			}).show();
-		} else {*/
-			deleteModelTemp(dataItemSelected);
+		 // Mostramos mensaje
+		 Ti.UI.createAlertDialog({
+		 message : '¡El modelo seleccionado no se puede eliminar!\nLa cotizacción esta terminada.',
+		 title : 'Cotización terminada',
+		 ok : 'Aceptar',
+		 }).show();
+		 } else {*/
+		deleteModelTemp(dataItemSelected);
 		//};
 
 		break;
@@ -698,47 +698,58 @@ function changeQuantityModelTemp() {
 
 				if (responseWSQMT.success == true) {
 
-					// ***********************************************************
-					// TOTAL Y FECHA ESTIMADA DE LA COTIZACION
-					// ***********************************************************
+					// VALIDAMOS SI SE PUEDE AMBIAR LA CANTIDAD O NO
+					if (responseWSQMT.flag == true) {
 
-					// limpiamos nuestra variable global de total y fecha estimada
-					Alloy.Globals.DATE_ESTIMATED_TOTAL_QUOTATION = "";
+						// ***********************************************************
+						// TOTAL Y FECHA ESTIMADA DE LA COTIZACION
+						// ***********************************************************
 
-					// Asignamos el total y la fecha estimada a la variable global
-					Alloy.Globals.DATE_ESTIMATED_TOTAL_QUOTATION = {
-						"totalPrice" : responseWSQMT.totalPrice,
-						"estimated" : responseWSQMT.estimated
+						// limpiamos nuestra variable global de total y fecha estimada
+						Alloy.Globals.DATE_ESTIMATED_TOTAL_QUOTATION = "";
+
+						// Asignamos el total y la fecha estimada a la variable global
+						Alloy.Globals.DATE_ESTIMATED_TOTAL_QUOTATION = {
+							"totalPrice" : responseWSQMT.totalPrice,
+							"estimated" : responseWSQMT.estimated
+						};
+
+						// ***********************************************************
+						// EJECUTAMOS LA FUNCIÓN QUE CARGA TOTAL Y FECHA ESTIMADA
+						// ***********************************************************
+
+						setTotalAndDateEstimated();
+
+						// Item seleccionado
+						var row = $.listViewModelConveyorQuotationDetail.sections[0].getItemAt(parseInt(itemIndexModelTemp));
+
+						// Modificamos el atributo cantidad del item list seleccionado
+						row.quantityConveyor.text = "Cantidad: " + parseInt(valueSliderQMT.value);
+
+						// Modificamos el atributo cantidad del item list seleccionado
+						row.modelConveyor.quantity = parseInt(valueSliderQMT.value);
+
+						// Subtotal del Modelo Temp
+						var subtotalModelTemp = (parseInt(valueSliderQMT.value) * parseFloat(dataItemSelected.modelConveyor.price));
+
+						// Modificamos el valor de subtotal del atributo modelConveyor
+						row.modelConveyor.subtotal = subtotalModelTemp;
+
+						// Modificamos el atributo subtotal del item list seleccionado
+						row.totalConveyor.text = "Subtotal: $" + subtotalModelTemp;
+
+						// Modificamos el item de la lista con los nuevos datos
+						$.listViewModelConveyorQuotationDetail.sections[0].updateItemAt(parseInt(itemIndexModelTemp), row, {
+							animated : true
+						});
+
+					} else {
+						Ti.UI.createAlertDialog({
+							message : 'No puedes cambiar la cantidad del modelo\nLlegaste al maximo permitido.',
+							title : 'Alerta',
+							ok : 'Aceptar',
+						}).show();
 					};
-
-					// ***********************************************************
-					// EJECUTAMOS LA FUNCIÓN QUE CARGA TOTAL Y FECHA ESTIMADA
-					// ***********************************************************
-
-					setTotalAndDateEstimated();
-
-					// Item seleccionado
-					var row = $.listViewModelConveyorQuotationDetail.sections[0].getItemAt(parseInt(itemIndexModelTemp));
-
-					// Modificamos el atributo cantidad del item list seleccionado
-					row.quantityConveyor.text = "Cantidad: " + parseInt(valueSliderQMT.value);
-
-					// Modificamos el atributo cantidad del item list seleccionado
-					row.modelConveyor.quantity = parseInt(valueSliderQMT.value);
-
-					// Subtotal del Modelo Temp
-					var subtotalModelTemp = (parseInt(valueSliderQMT.value) * parseFloat(dataItemSelected.modelConveyor.price));
-
-					// Modificamos el valor de subtotal del atributo modelConveyor
-					row.modelConveyor.subtotal = subtotalModelTemp;
-
-					// Modificamos el atributo subtotal del item list seleccionado
-					row.totalConveyor.text = "Subtotal: $" + subtotalModelTemp;
-
-					// Modificamos el item de la lista con los nuevos datos
-					$.listViewModelConveyorQuotationDetail.sections[0].updateItemAt(parseInt(itemIndexModelTemp), row, {
-						animated : true
-					});
 
 				};
 
@@ -921,7 +932,7 @@ function deleteModelTemp(dataItemSelected) {
 // ***********************************************************
 
 function setTotalAndDateEstimated() {
-	
+
 	// Total de la cotizacion
 	var totalQuotation = $.labelTotalQuotation;
 
@@ -1131,25 +1142,8 @@ winAddQuotationFour.addEventListener("open", function(evt) {
 
 							if (e.index == 0) {
 
-								// Asignamos un valor a la variable 0 - Nueva 1 - Editar
-								flagHomeStatus = 1;
-
-								// Parametros a enviar
-								var objHomeParameters = {
-									flagHomeStatus : flagHomeStatus
-								};
-
-								// Limpiamos el valor del id de la cotizacion
-								Alloy.Globals.ID_GLOBAL_QUOTATION = 0;
-
-								// Asignamos un id
-								Alloy.Globals.ID_GLOBAL_QUOTATION = parseInt(idQuotationAddModelTemp);
-
-								// Venta principal de cotizaciones
-								var winHomeQuotations = Alloy.createController('home', objHomeParameters).getView();
-
-								// Abrimos ventana
-								winHomeQuotations.open();
+								// FUNCION PARA VALIDAR SI SE PUEDE AGREGAR O NO UN NUEVO MODELO
+								verifyCountModelQuotation(idQuotationAddModelTemp);
 
 							};
 
@@ -1205,6 +1199,69 @@ winAddQuotationFour.addEventListener("open", function(evt) {
 	};
 
 });
+
+// FUNCION PARA VALIDAR SI SE PUEDE AGREGAR UN NUEVO MODELO O NO
+function verifyCountModelQuotation(idQuotationAddModelTemp) {
+
+	var objVerQuo = {
+		"id" : idQuotationAddModelTemp
+	};
+
+	var url = "http://" + Alloy.Globals.URL_GLOBAL_SIES + "/sies-rest/quotation/verifyCountQuotation";
+
+	var client = Ti.Network.createHTTPClient({
+		onload : function(e) {
+
+			var responseVQWS = JSON.parse(this.responseText);
+
+			if (responseVQWS.flag == true) {
+
+				// Asignamos un valor a la variable 0 - Nueva 1 - Editar
+				flagHomeStatus = 1;
+
+				// Parametros a enviar
+				var objHomeParameters = {
+					flagHomeStatus : flagHomeStatus
+				};
+
+				// Limpiamos el valor del id de la cotizacion
+				Alloy.Globals.ID_GLOBAL_QUOTATION = 0;
+
+				// Asignamos un id
+				Alloy.Globals.ID_GLOBAL_QUOTATION = parseInt(idQuotationAddModelTemp);
+
+				// Venta principal de cotizaciones
+				var winHomeQuotations = Alloy.createController('home', objHomeParameters).getView();
+
+				// Abrimos ventana
+				winHomeQuotations.open();
+
+			} else {
+				Ti.UI.createAlertDialog({
+					message : 'No puedes agregar más modelos a tu cotización\nLlegaste al maximo permitido.',
+					title : 'Alerta',
+					ok : 'Aceptar',
+				}).show();
+			};
+
+		},
+		onerror : function(e) {
+			Ti.UI.createAlertDialog({
+				message : 'Ocurrio un error.\nIntentalo nuevamente.',
+				title : 'Error',
+				ok : 'Aceptar',
+			}).show();
+		},
+		timeout : 59000
+	});
+
+	client.open("POST", url);
+
+	client.setRequestHeader("Content-Type", "application/json; charset=utf-8");
+
+	client.send(JSON.stringify(objVerQuo));
+
+}
 
 // ***************************************
 // CLICK EN EL BOTON FISICO VOLVER
