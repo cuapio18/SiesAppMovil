@@ -48,8 +48,6 @@ function getAllConveyors() {
 
 function fillConveyorsView(objJsonConveyor) {
 
-	console.log(objJsonConveyor);
-
 	//tableView_data = [];
 	var tableView_rows = [];
 

@@ -1,23 +1,20 @@
 // Arguments passed into this controller can be accessed via the `$.args` object directly or:
 var args = $.args;
 
-Ti.API.info("ARGUMENTOS RECIBIDOS:" + JSON.stringify(args));
-
 var tabGroupQuotations = $.tabGroupQuotations;
 
 // *****************************
 // CLICK EN CERRAR SESION
 // *****************************
 function logutApp(e) {
-	Ti.API.info("Info del evento: " + e);
-	//alert(e);
+	
 	// Creamos una ventana tipo dialog
 	var dialog = Ti.UI.createAlertDialog({
 		cancel : 1,
 		buttonNames : ['Confirmar', 'Cancelar'],
 		message : '¿Cerrar la sesión de sies?',
 		title : 'Cerrar sesión',
-		//persistent:true,
+		persistent:true,
 		//canceledOnTouchOutside: true
 	});
 	//dialog.
@@ -51,7 +48,6 @@ function showSettings(e) {
 		var aBS = winSettings.activity.actionBar;
 		aBS.displayHomeAsUp = true;
 		aBS.onHomeIconItemSelected = function(e) {
-			//alert(e);
 			winSettings.close();
 		};
 	});

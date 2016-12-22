@@ -3,7 +3,6 @@ var args = $.args;
 
 // ID DEL USUARIO
 var idUsuarioSession = Alloy.Globals.PROPERTY_INFO_USER.userLogin.id;
-//Ti.API.info("idUsuarioSession: " + idUsuarioSession);
 
 var listViewQuot = $.listViewQuotations;
 
@@ -17,11 +16,8 @@ listViewQuot.addEventListener('itemclick', function(e) {
 	// Elemento seleccionado
 	var itemClickQuotation = e.section.getItemAt(e.itemIndex);
 
-	//Ti.API.info("ITEM:" + JSON.stringify(itemClickQuotation));
-
 	// Variable global para almacenar los datos de la cotizacion
 	Alloy.Globals.ALL_DATA_QUOTATION = itemClickQuotation;
-	//Ti.API.info("Alloy.Globals.ALL_DATA_QUOTATION: " + JSON.stringify(Alloy.Globals.ALL_DATA_QUOTATION));
 
 	// Ventana
 	var windDetailQuotation = Alloy.createController('detailQuotation', itemClickQuotation).getView();
@@ -45,10 +41,9 @@ function getAllQuotations(idUser) {
 	var client = Ti.Network.createHTTPClient({
 		// function called when the response data is available
 		onload : function(e) {
-			//Ti.API.info("Received text: " + this.responseText);
 
 			var responseWS = JSON.parse(this.responseText);
-			//Ti.API.info("ResponseWSQuotations: " + this.responseText);
+			
 			// FUNCION QUE GENERA LA LISTA DE COTIZACIONES
 			createListAllQuotations(responseWS.quotations);
 		},
@@ -77,8 +72,6 @@ function getAllQuotations(idUser) {
 
 // FUNCION QUE GENERA LA LISTA DE COTIZACIONES
 function createListAllQuotations(quotations) {
-
-	//Ti.API.info("Informacion recibida: " + quotations);
 
 	var items = [];
 	//var dateQuo = '';
@@ -158,13 +151,10 @@ function longCB(e) {
 
 	// Datos del elemento presionado
 	dataItemSelected = e.section.items[parseInt(itemIndexQuotation)];
-	//Ti.API.info("LONGCB: " + JSON.stringify(dataItemSelected));
 
 	// Variable global para almacenar los datos de la cotizacion
 	Alloy.Globals.ALL_DATA_QUOTATION = dataItemSelected;
-	//Ti.API.info("Alloy.Globals.ALL_DATA_QUOTATION: " + JSON.stringify(Alloy.Globals.ALL_DATA_QUOTATION));
 
-	//alert(JSON.stringify(e.section.items[parseInt(itemIndex)].title_quotation.text ));
 	// Creamos dialogo
 	dialogQuotation = Ti.UI.createOptionDialog(optsDialogQuo);
 	// Mostramos
@@ -178,13 +168,8 @@ function longCB(e) {
 
 function onSelectDialog(event) {
 
-	//Ti.API.info("Opción seleccionada: " + JSON.stringify(event));
-	//Ti.API.info("Cotizacion seleccionada: " + JSON.stringify(dataItemSelected));
-
 	// indice del elemento seleccionado
 	var selectedIndexDialogQuotation = event.source.selectedIndex;
-
-	//Ti.API.info("Index del elemento seleccionado: " + parseInt(selectedIndex));
 
 	// Estatus de la cotización
 	var statusOfQuotationSelected = dataItemSelected.title_quotation.statusQuo;
@@ -234,7 +219,6 @@ function onSelectDialog(event) {
 		break;
 	default:
 		return false;
-		//Ti.API.info("Opcion no encontrada.");
 		break;
 	}
 	//OR
@@ -302,25 +286,18 @@ function editQuotation(dataItemSelected) {
 	// Modificamos titulo del tab
 	tabGroupQuot.getActiveTab().setTitle("Editar Cot.");
 
-	//Ti.API.info('Alloy.Globals.TABGROUP_QUOTATIONS' + tabGroupQuot.getTabsBackgroundColor());
-
 	// Limpiamos el valor del id de la cotizacion
 	Alloy.Globals.ID_GLOBAL_QUOTATION = 0;
-	//Ti.API.info("Editar la cotización. " + dataItemSelected.title_quotation.text + " # " + dataItemSelected.title_quotation.id);
-	//Ti.API.info("ID Cotización: " + Alloy.Globals.ID_GLOBAL_QUOTATION);
 
 	// Asignamos un id
 	Alloy.Globals.ID_GLOBAL_QUOTATION = parseInt(dataItemSelected.title_quotation.id);
-	//Ti.API.info("ID Cotización 2: " + Alloy.Globals.ID_GLOBAL_QUOTATION);
 
 }
 
 // FUNCION PAARA ELIMINAR UNA COTIZACION
 
 function deleteQuotation(dataItemSelected) {
-	//Ti.API.info("ITEM SELECCIONADO: " + JSON.stringify(dataItemSelected));
-	//Ti.API.info("Eliminar la cotización. " + dataItemSelected.title_quotation.text + " # " + dataItemSelected.title_quotation.id);
-
+	
 	// Objeto con el id de la cotizacion
 	var objIdQuotation = {
 		"id" : parseInt(dataItemSelected.title_quotation.id)
@@ -347,8 +324,6 @@ function deleteQuotation(dataItemSelected) {
 			// Cliente para realizar la peticion
 			var client = Ti.Network.createHTTPClient({
 				onload : function(e) {
-
-					//Ti.API.info("Received text: " + this.responseText);
 
 					//var responseWS = JSON.parse(this.responseText);
 
@@ -412,7 +387,6 @@ function deleteQuotation(dataItemSelected) {
 // FUNCION PARA VER LOS COMETRIOS DE UNA COTIZACION
 
 function seeCommentsQuotation(dataItemSelected) {
-	//Ti.API.info("Cometarios de la cotización. " + dataItemSelected.title_quotation.text + " # " + dataItemSelected.title_quotation.id);
 
 	// JSON FINAL DE ACCESORIOS
 	var jsonIdQuotation = {
@@ -427,8 +401,6 @@ function seeCommentsQuotation(dataItemSelected) {
 	var client = Ti.Network.createHTTPClient({
 		// función de llamada cuando los datos de respuesta está disponible
 		onload : function(e) {
-
-			//Ti.API.info("Received text: " + this.responseText);
 
 			// Respuesta del servicio
 			var objResponseWS = JSON.parse(this.responseText);
