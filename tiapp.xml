@@ -45,11 +45,10 @@
             <!-- For the Titanium SDK 3.2.x and earlier, when using the Holo Theme
              you can only use Android 3.0.x and later -->
             <uses-sdk android:minSdkVersion="14" android:targetSdkVersion="23"/>
-           
-           	<uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
-           	<uses-permission android:name="android.permission.ACCESS_WIFI_STATE"/>
+            <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
+            <uses-permission android:name="android.permission.ACCESS_WIFI_STATE"/>
             <uses-permission android:name="android.permission.INTERNET"/>
-            <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+            <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
         </manifest>
     </android>
     <mobileweb>
@@ -62,13 +61,13 @@
     </mobileweb>
     <modules/>
     <deployment-targets>
-        <target device="iphone">false</target>
+        <target device="iphone">true</target>
         <target device="ipad">false</target>
         <target device="android">true</target>
         <target device="mobileweb">false</target>
         <target device="windows">false</target>
     </deployment-targets>
-    <sdk-version>5.3.1.GA</sdk-version>
+    <sdk-version>6.0.1.GA</sdk-version>
     <plugins>
         <plugin version="1.0">ti.alloy</plugin>
     </plugins>
